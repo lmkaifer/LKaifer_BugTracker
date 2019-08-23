@@ -1,0 +1,208 @@
+﻿@model LKaifer_BugTracker.Models.IndexViewModel
+@using Microsoft.AspNet.Identity
+@using LKaifer_BugTracker.Models
+@using LKaifer_BugTracker.Helpers
+@{
+    ViewBag.Title = "User Profile";
+    ApplicationDbContext db = new ApplicationDbContext();
+    UserRolesHelper helper = new UserRolesHelper();
+    ApplicationUser currentUser = db.Users.Find(User.Identity.GetUserId());
+    var currentRole = helper.ListUserRoles(User.Identity.GetUserId()).FirstOrDefault();
+    var assignedTickets = db.Tickets.Where(t => t.AssignedToUserId.Equals(currentUser.Id)).ToList();
+    var ownedTickets = db.Tickets.Where(t => t.OwnerUserId.Equals(currentUser.Id)).ToList();
+}
+<!-- Ionicons -->
+<link rel="stylesheet" href="~/Content/css/ionicons.min.css">
+<!-- Theme style -->
+<link rel="stylesheet" href="~/Content/css/AdminLTE.min.css">
+<!-- AdminLTE Skins. Choose a skin from the css/skins
+     folder instead of downloading all of them to reduce the load. -->
+<link rel="stylesheet" href="~/Content/css/_all-skins.min.css">
+
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+<script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+<![endif]-->
+<!-- Google Font -->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+
+<div class="content-wrapper" style="margin-left:0px;">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h1>
+            <i class="fa fa-user"></i> User Profile
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="@Url.Action("Index","Home")"><i class="fa fa-dashboard"></i> Dashboard</a></li>
+            <li><a href="#"></a></li>
+            <li class="active">User profile</li>
+        </ol>
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+
+        <div class="row">
+            <div class="col-md-3">
+
+                <!-- Profile Image -->
+                <div class="box box-primary">
+                    <div class="box-body box-profile">
+                        <img class="profile-user-img img-responsive img-circle" src="@Url.Content(currentUser.AvatarUrl)" alt="User avatar">
+
+                        <h3 class="profile-username text-center">@currentUser.FullName</h3>
+
+                        <p class="text-muted text-center">@currentUser.Email</p>
+                        <p class="text-muted text-center">@currentRole</p>
+                        <ul class="list-group list-group-unbordered">
+                            <li class="list-group-item">
+                                <b>Total Assigned Projects</b> <a class="pull-right">@currentUser.Projects.Count</a>
+                            </li>
+                            @if (User.IsInRole("Submitter"))
+                            {
+                                <li class="list-group-item">
+                                    <b>Total Owned Tickets</b> <a class="pull-right">@ownedTickets.Count</a>
+                                </li>
+                            }
+                            else
+                            {
+                                <li class="list-group-item">
+                                    <b>Total Assigned Tickets</b> <a class="pull-right">@assignedTickets.Count</a>
+                                </li>
+                            }
+                        </ul>
+
+                        <a href="@Url.Action("MyNotifications","TicketNotifications")" class="btn btn-primary btn-block">
+                            <b>
+                                Ticket Notifications
+                            </b>
+                            <span class="badge-danger" style="position:absolute;border-radius:50%;padding:0px 5px;bottom:22px;">
+                                @NotificationHelper.GetNewUserNotificationCount()
+                            </span>
+                        </a>
+                    </div>
+                    <!-- /.box-body -->
+                </div>
+                <!-- /.box -->
+            </div>
+            <!-- /.col -->
+            <div class="col-md-9">
+                <div class="nav-tabs-custom">
+                    <ul class="nav nav-tabs">
+                        <li class="active"><a href="#namechange" data-toggle="tab">Name Management</a></li>
+                        <li><a href="#passwordchange" data-toggle="tab">Password Management </a></li>
+                        <li><a href="#avatarchange" data-toggle="tab">Avatar Management</a></li>
+                    </ul>
+                    <div class="tab-content">
+                        <div class="active tab-pane" id="namechange">
+                            @using (Html.BeginForm("Index", "Manage", FormMethod.Post, new { @class = "form-horizontal" }))
+                            {
+                                @Html.AntiForgeryToken()
+                                @Html.ValidationSummary("", new { @class = "text-danger" })
+                                <div class="form-group">
+                                    <label for="FirstName" class="col-sm-2 control-label">First Name</label>
+
+                                    <div class="col-sm-10">
+                                        @Html.EditorFor(model => model.FirstName, new { htmlAttributes = new { @class = "form-control", placeholder = "First Name", required = "required" } })
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="LastName" class="col-sm-2 control-label">Last Name</label>
+
+                                    <div class="col-sm-10">
+                                        @Html.EditorFor(model => model.LastName, new { htmlAttributes = new { @class = "form-control", placeholder = "Last Name", required = "required" } })
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="col-sm-offset-2 col-sm-10">
+                                        <button type="submit" class="btn btn-danger">Submit</button>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                        <!-- /.tab-pane -->
+                        <div class="tab-pane" id="passwordchange">
+                            @using (Html.BeginForm("ChangePassword", "Manage", FormMethod.Post, new { @class = "form-horizontal" }))
+                            {
+                                @Html.AntiForgeryToken()
+                                @Html.ValidationSummary("", new { @class = "text-danger" })
+                                <div class="form-group">
+                                    <label for="OldPassword" class="col-sm-2 control-label">Current Password</label>
+
+                                    <div class="col-sm-10">
+                                        <input type="password" class="form-control" id="OldPassword" name="OldPassword" placeholder="Current Password" required />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="NewPassword" class="col-sm-2 control-label">New Password</label>
+
+                                    <div class="col-sm-10">
+                                        <input type="password" class="form-control" id="NewPassword" name="NewPassword" placeholder="New Password" required />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="ConfirmPassword" class="col-sm-2 control-label">Confirm Password</label>
+
+                                    <div class="col-sm-10">
+                                        <input type="password" class="form-control" id="ConfirmPassword" name="ConfirmPassword" placeholder="Confirm Password" required />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-sm-offset-2 col-sm-10">
+                                        <button type="submit" class="btn btn-danger">Submit</button>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                        <!-- /.tab-pane -->
+
+                        <div class="tab-pane" id="avatarchange">
+                            @using (Html.BeginForm("ChangeAvatar", "Manage", FormMethod.Post, new { @class = "form-horizontal", enctype = "Multipart/form-data" }))
+                            {
+                                @Html.AntiForgeryToken()
+                                @Html.ValidationSummary("", new { @class = "text-danger" })
+                                <div class="form-group">
+                                    <label for="AvatarFile" class="col-sm-2 control-label">Upload Avatar</label>
+
+                                    <div class="col-sm-10">
+                                        <input type="file" id="AvatarFile" name="AvatarFile" placeholder="Avatar" required />
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="col-sm-offset-2 col-sm-10">
+                                        <button type="submit" class="btn btn-danger">Submit</button>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                        <!-- /.tab-pane -->
+                    </div>
+                    <!-- /.tab-content -->
+                </div>
+                <!-- /.nav-tabs-custom -->
+            </div>
+            <!-- /.col -->
+        </div>
+        <!-- /.row -->
+
+    </section>
+    <!-- /.content -->
+</div>
+@section scripts{
+    <!-- FastClick -->
+    <script src="~/Scripts/js/fastclick.js"></script>
+    <!-- AdminLTE App -->
+    <script src="~/Scripts/js/adminlte.min.js"></script>
+    <!-- AdminLTE for demo purposes -->
+    <script src="~/Scripts/js/demo.js"></script>
+    <script>
+        var message = "@ViewBag.StatusMessage";
+        if (message != "") {
+            swal("Success!", message, "success");
+        }
+    </script>
+}

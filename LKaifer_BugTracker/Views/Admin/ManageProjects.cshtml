@@ -1,0 +1,28 @@
+﻿
+@{
+    ViewBag.Title = "ManageProjects";
+}
+
+<h2>Manage Projects for Multiple Users</h2>
+
+@using (Html.BeginForm())
+{
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-5"></div>
+        @Html.ListBox("Users", null, htmlAttributes: new { @class = "form-control" })
+    </div>
+    <div class="cold-md-offset-1 col-md-3">
+        @Html.DropDownList("ProjectIds", null, "--Select Project--", htmlAttributes: new { @class = "form-control" })
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-offset-2 cold-md-10">
+            <input type="submit" value="Assign" class="btn: btn-default" />
+        </div>
+    </div>
+}
+<hr />
+
+<h5>Back to <a href="@Url.Action("UserIndex")">User Index</a></h5>
+
+

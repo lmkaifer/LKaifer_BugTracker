@@ -1,0 +1,66 @@
+﻿@model LKaifer_BugTracker.ViewModels.AssignUserRoleViewModel
+@{
+    ViewBag.Title = "Manage User Role";
+}
+<style>
+    img.avatar-style{
+        width: 120px;
+        border-radius: 50%;
+        background-color: aliceblue;
+        padding-top: 10px;
+        padding-left: 0px;
+    }
+</style>
+<h2>Manage User Role</h2>
+<hr />
+<div class="row">
+    <div class="col-md-3" style="padding-left:60px;">
+        <br />
+
+        @if (!string.IsNullOrEmpty(Model.PersonWhoWillBeAssignedtotheRole.AvatarUrl))
+        {
+
+            <img class="img-responsive avatar-style" src="@Url.Content(Model.PersonWhoWillBeAssignedtotheRole.AvatarUrl)" />
+        }
+        else
+        {
+            <img class="img-responsive avatar-style" src="@Url.Content("~/Uploads/avatar-1577909_1280.png")" />
+        }
+        <br />
+        <h3>@Model.PersonWhoWillBeAssignedtotheRole.DisplayName</h3>
+        <br />
+    </div>
+    <div class="col-md-8">
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+            @Html.Hidden("UserRole", Model.PersonWhoWillBeAssignedtotheRole.Id)
+
+            <div class="form-group">
+                @Html.Label("Assign Role", null, htmlAttributes: new { @class = "control-label" })
+                <div class="row" style="margin-top:10px;">
+                    <div class="col-md-8">
+                        @Html.DropDownList("SelectedRole", Model.RoleList, "--Select Role--", htmlAttributes: new { @class = "form-control", style="height:40px;padding:5px 12px;border-radius:3px;" })
+                    </div>
+                    <div class="col-md-4">
+                        <input type="submit" value="Assign" class="btn: btn-default" style="height:40px;width:100%;border-radius:3px;"/>
+                    </div>
+                </div>
+            </div>
+
+            @*<div class="form-body group">
+                <div class="col-md-offset-2 cold-md-10">
+                    
+                </div>
+            </div>*@
+        }
+    </div>
+</div>
+
+<div style="margin-top:50px;">
+    @Html.ActionLink("Back to User Index", "UserIndex", "Admin")
+</div>
+
+
+
+

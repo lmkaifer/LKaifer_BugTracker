@@ -1,0 +1,120 @@
+﻿@model LKaifer_BugTracker.Models.Ticket
+
+@{
+    ViewBag.Title = "Edit";
+}
+<style>
+    a.badge:hover {
+        background-color: lightgray;
+        color: black;
+    }
+
+   
+    h2 {
+        text-shadow: 2px 2px 5px red;
+    }
+
+
+</style>
+<h2>Edit Your Ticket</h2>
+
+@using (Html.BeginForm("Edit", "Tickets", FormMethod.Post, new { enctype = "Multipart/form-data" }))
+
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.Id)
+        @Html.HiddenFor(model => model.Created)
+        @Html.HiddenFor(model => model.ProjectId)
+        @Html.HiddenFor(model => model.OwnerUserId)
+        @Html.HiddenFor(model => model.TicketStatusId)
+        @Html.HiddenFor(model => model.AssignedToUserId)
+
+
+
+
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.TicketTypeId, "TicketTypeId", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("TicketTypeId", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.TicketTypeId, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.TicketPriorityId, "TicketPriorityId", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("TicketPriorityId", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.TicketPriorityId, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.TicketAttachments, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <input name="files" type="file" class="form-control" id="fileUpload" multiple /><br />
+                @if (Model.TicketAttachments != null)
+                {
+                    if (Model.TicketAttachments.Count > 0)
+                    {
+                        foreach (var attachment in Model.TicketAttachments)
+                        {
+                            <a href="@Url.Content(attachment.AttachmentUrl)" download style="margin-right:10px;"><i class="fa @attachment.Description"></i> @attachment.Title</a>@Html.ActionLink("Remove", "Delete", "TicketAttachments", new { id = attachment.Id }, new { @class = "badge" })<br />
+                        }
+                    }
+                    else
+                    {
+                        <p>No attachment </p><br />
+                    }
+                }
+                <br />
+
+                @*@if (User.IsInRole("Manager"))
+                    {<div class="form-group">
+                            @Html.LabelFor(model => model.AssignedToUserId, "AssignedToUserId", htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.DropDownList("AssignedToUserId", null, htmlAttributes: new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.AssignedToUserId, "", new { @class = "text-danger" })
+
+                            </div>
+                        </div>
+                    }*@
+
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

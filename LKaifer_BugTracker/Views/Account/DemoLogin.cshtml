@@ -1,0 +1,617 @@
+﻿@{
+    Layout = null;
+}
+
+@using LKaifer_BugTracker.Models
+@model LKaifer_BugTracker.Models.LoginViewModel
+
+
+
+@{
+    ViewBag.Title = "DemoLogin";
+}
+<!DOCTYPE html>
+<!--
+author: W3layouts
+author URL: http://w3layouts.com
+License: Creative Commons Attribution 3.0 Unported
+License URL: http://creativecommons.org/licenses/by/3.0/
+-->
+
+<html lang="zxx">
+<head>
+    <title>Bugs Be Gone | Lisa Kaifer, Web Developer</title>
+    <link rel="icon" type="image/png" href="~/images/favicon-32x32.png" />
+    <!-- custom-theme -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="keywords" content="HTML, CSS, XML, XHTML, JavaScript" />
+    <meta name="description" content="Free Web Application to Track Bugs in Other Web Applications">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="author" content="Lisa Kaifer" />
+    <script type="application/x-javascript">
+        addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false);
+               function hideURLbar(){ window.scrollTo(0,1); } </script>
+    <!-- //custom-theme -->
+    <link href="~/Content/css/bootstrap.css" rel="stylesheet" type="text/css" media="all" />
+    <link href="~/Content/css/table-style.css" rel="stylesheet" type="text/css" media="all" />
+    <link href="~/Content/css/basictable.css" rel="stylesheet" type="text/css" media="all" />
+    <link href="~/Content/css/component.css" rel="stylesheet" type="text/css" media="all" />
+    <link href="~/Content/css/export.css" rel="stylesheet" type="text/css" media="all" />
+    <link href="~/Content/css/flipclock.css" rel="stylesheet" type="text/css" media="all" />
+    <link href="~/Content/css/circles.css" rel="stylesheet" type="text/css" media="all" />
+    <link href="~/Content/css/style_grid.css" rel="stylesheet" type="text/css" media="all" />
+    <link href="~/Content/css/style.css" rel="stylesheet" type="text/css" media="all" />
+
+    <!-- font-awesome-icons -->
+    <link href="~/Content/css/font-awesome.css" rel="stylesheet">
+
+    <!--Datatables Link-->
+    <link href="~/Content/jquery.dataTables.min.css" rel="stylesheet" />
+    <link href="https://cdn.datatables.net/buttons/1.5.6/css/buttons.dataTables.min.css" />
+    <!-- //font-awesome-icons -->
+    <link href="//fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800" rel="stylesheet">
+    <style>
+        div.over_lay_agile_pages_w3ls.two {
+            height: 80rem;
+        }
+
+        div.signin-form.profile {
+            position: absolute;
+            width: 90%;
+            left: 5%;
+            background-color: rgba(255,255,255,0.5);
+            border-radius:10px;
+        }
+
+         div.signin-form.profile div.link-container{
+             position:absolute;
+             top:110%;
+             left:40%;
+             text-align:left;
+        }
+         div.signin-form.profile div.link-container h6{
+             color:white;
+        }
+
+        ul.ca-menu {
+            list-style: none outside none;
+            margin: 0;
+            padding-left:2%;
+            text-align: center;
+        }
+
+            ul.ca-menu li {
+                margin: 0 10px;
+                display: inline;
+                border-radius:10px;
+            }
+
+                ul.ca-menu li h3 {
+                    position: relative;
+                    font-size: 1.2em;
+                    font-weight: bold;
+                    color: white;
+                    margin: 0px;
+                }
+
+                ul.ca-menu li h4 {
+                    font-size: large;
+                }
+
+                ul.ca-menu li i {
+                    margin-top: 10%;
+                }
+
+                ul.ca-menu li div.ca-content {
+                    top: 55%;
+                    padding-left:10px;
+                    padding-right:10px;
+                }
+
+        div.copyrights_agile.two {
+            position: absolute;
+            top: 75%;
+            left: 30%;
+        }
+        div.copyrights_agile.two p {
+            color:white;
+        }
+
+        @@media(max-width:1440px) and (min-height:860px){
+                    div.copyrights_agile.two {
+            top: 90%;
+            left: 20%;
+        }
+        div.copyrights_agile.two p{
+                color:black;
+            }
+        }
+        @@media (max-width:500px) and (min-height:770px) {
+            ul.ca-menu li h4 {
+                font-size: small;
+            }
+
+            ul.ca-menu li i {
+                margin-top: 20%;
+            }
+
+            ul.ca-menu li h3 {
+                font-size: small;
+            }
+
+            div.copyrights_agile.two {
+                left: 5%;
+                top: 95%;
+            }
+            div.copyrights_agile.two p{
+                font-size:8px;
+                color:black;
+            }
+        }
+
+        @@media (min-height:940px) {
+            div.copyrights_agile.two p{
+                color:black;
+            }
+                div.copyrights_agile.two {
+                top: 90%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- /pages_agile_info_w3l -->
+
+    <div class="pages_agile_info_w3l">
+        <!-- /login -->
+        <div class="over_lay_agile_pages_w3ls two">
+            <div class="registration">
+                <div class="signin-form profile">
+                    <h2>Demo User Login</h2>
+                    <!-- /inner_content_w3_agile_info-->
+                    <!-- /agile_top_w3_grids-->
+                    <div class="agile_top_w3_grids">
+                        <ul class="ca-menu">
+
+
+
+                            @using (Html.BeginForm("DemoLogin", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { id = "admin-demo-login" }))
+
+                            {
+                                @Html.AntiForgeryToken()
+                                @Html.Hidden("demoRole", "AdminDemo")
+                                <li>
+                                    <a href="javascript:document.getElementById('admin-demo-login').submit()" class="demoUserLink">
+                                        <h3 class="ca-sub">Admin Login</h3>
+                                        <i class="fa fa-shield" aria-hidden="true"></i>
+                                        <div class="ca-content">
+                                            <h4 class="ca-main">Admin has the power.</h4>
+                                        </div>
+                                    </a>
+                                </li>
+                            }
+
+
+                            @using (Html.BeginForm("DemoLogin", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { id = "manager-demo-login" }))
+                            {
+                                @Html.AntiForgeryToken()
+                                @Html.Hidden("demoRole", "ManagerDemo")
+
+                                <li>
+                                    <a href="javascript:document.getElementById('manager-demo-login').submit()">
+                                        <h3 class="ca-sub one">Manager Login</h3>
+                                        <i class="fa fa-list-alt" aria-hidden="true"></i>
+                                        <div class="ca-content">
+                                            <h4 class="ca-main one">The Manager enjoys assigning tickets.</h4>
+                                        </div>
+                                    </a>
+                                </li>
+                            }
+
+                            @using (Html.BeginForm("DemoLogin", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { id = "developer-demo-login" }))
+                            {
+                                @Html.AntiForgeryToken()
+                                @Html.Hidden("demoRole", "DeveloperDemo")
+
+                                <li>
+                                    <a href="javascript:document.getElementById('developer-demo-login').submit()">
+                                        <h3 class="ca-sub two">Developer Login</h3>
+                                        <i class="fa fa-tasks" aria-hidden="true"></i>
+                                        <div class="ca-content">
+                                            <h4 class="ca-main two">The Developer works hard on all the tickets.</h4>
+                                        </div>
+                                    </a>
+                                </li>
+                            }
+
+
+                            @using (Html.BeginForm("DemoLogin", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { id = "submitter-demo-login" }))
+                            {
+                                @Html.AntiForgeryToken()
+                                @Html.Hidden("demoRole", "SubmitterDemo")
+
+
+                                <li>
+                                    <a href="javascript:document.getElementById('submitter-demo-login').submit()">
+                                        <h3 class="ca-sub three">Submitter Login</h3>
+                                        <i class="fa fa-ticket" aria-hidden="true"></i>
+                                        <div class="ca-content">
+                                            <h4 class="ca-main three">The submitter starts the ticket fury.</h4>
+                                        </div>
+                                    </a>
+                                </li>
+                            }
+                        </ul>
+                    </div>
+                    <br />
+                    <div class="link-container">
+                        <h6>Don't have an account? Click<a href="@Url.Action("Register")"> here.</a></h6>
+                        <h6>Want to go back to login page? Click<a href="@Url.Action("Login")"> here.</a></h6>
+                    </div>
+                </div>
+            </div>
+            <!--copy rights start here-->
+            <div class="copyrights_agile two">
+                <p>© @DateTime.Now.Year Bug Tracker. All Rights Reserved | Design by Lisa Kaifer </p>
+            </div>
+            <!--copy rights end here-->
+        </div>
+    </div>
+
+
+
+
+    <!-- js -->
+    <script type="text/javascript" src="~/Scripts/js/jquery-2.1.4.min.js"></script>
+
+    <!-- /amcharts -->
+    <script src="~/Scripts/js/amcharts.js"></script>
+    <script src="~/Scripts/js/serial.js"></script>
+    <script src="~/Scripts/js/export.js"></script>
+    <script src="~/Scripts/js/light.js"></script>
+    <!-- Chart code -->
+    <script>
+        //Clickable DemoLogin Forms
+        $(".demoUserLink").click(function () {
+            $(this).closest("form").submit();
+        });
+
+
+
+        var chart = AmCharts.makeChart("chartdiv", {
+            "theme": "light",
+            "type": "serial",
+            "startDuration": 2,
+            "dataProvider": [{
+                "country": "USA",
+                "visits": 4025,
+                "color": "#FF0F00"
+            }, {
+                "country": "China",
+                "visits": 1882,
+                "color": "#FF6600"
+            }, {
+                "country": "Japan",
+                "visits": 1809,
+                "color": "#FF9E01"
+            }, {
+                "country": "Germany",
+                "visits": 1322,
+                "color": "#FCD202"
+            }, {
+                "country": "UK",
+                "visits": 1122,
+                "color": "#F8FF01"
+            }, {
+                "country": "France",
+                "visits": 1114,
+                "color": "#B0DE09"
+            }, {
+                "country": "India",
+                "visits": 984,
+                "color": "#04D215"
+            }, {
+                "country": "Spain",
+                "visits": 711,
+                "color": "#0D8ECF"
+            }, {
+                "country": "Netherlands",
+                "visits": 665,
+                "color": "#0D52D1"
+            }, {
+                "country": "Russia",
+                "visits": 580,
+                "color": "#2A0CD0"
+            }, {
+                "country": "South Korea",
+                "visits": 443,
+                "color": "#8A0CCF"
+            }, {
+                "country": "Canada",
+                "visits": 441,
+                "color": "#CD0D74"
+            }, {
+                "country": "Brazil",
+                "visits": 395,
+                "color": "#754DEB"
+            }, {
+                "country": "Italy",
+                "visits": 386,
+                "color": "#DDDDDD"
+            }, {
+                "country": "Taiwan",
+                "visits": 338,
+                "color": "#333333"
+            }],
+            "valueAxes": [{
+                "position": "left",
+                "axisAlpha": 0,
+                "gridAlpha": 0
+            }],
+            "graphs": [{
+                "balloonText": "[[category]]: <b>[[value]]</b>",
+                "colorField": "color",
+                "fillAlphas": 0.85,
+                "lineAlpha": 0.1,
+                "type": "column",
+                "topRadius": 1,
+                "valueField": "visits"
+            }],
+            "depth3D": 40,
+            "angle": 30,
+            "chartCursor": {
+                "categoryBalloonEnabled": false,
+                "cursorAlpha": 0,
+                "zoomable": false
+            },
+            "categoryField": "country",
+            "categoryAxis": {
+                "gridPosition": "start",
+                "axisAlpha": 0,
+                "gridAlpha": 0
+
+            },
+            "export": {
+                "enabled": true
+            }
+
+        }, 0);
+    </script>
+    <!-- Chart code -->
+    <script>
+        var chart = AmCharts.makeChart("chartdiv1", {
+            "type": "serial",
+            "theme": "light",
+            "legend": {
+                "horizontalGap": 10,
+                "maxColumns": 1,
+                "position": "right",
+                "useGraphSettings": true,
+                "markerSize": 10
+            },
+            "dataProvider": [{
+                "year": 2017,
+                "europe": 2.5,
+                "namerica": 2.5,
+                "asia": 2.1,
+                "lamerica": 0.3,
+                "meast": 0.2,
+                "africa": 0.1
+            }, {
+                "year": 2016,
+                "europe": 2.6,
+                "namerica": 2.7,
+                "asia": 2.2,
+                "lamerica": 0.3,
+                "meast": 0.3,
+                "africa": 0.1
+            }, {
+                "year": 2015,
+                "europe": 2.8,
+                "namerica": 2.9,
+                "asia": 2.4,
+                "lamerica": 0.3,
+                "meast": 0.3,
+                "africa": 0.1
+            }],
+            "valueAxes": [{
+                "stackType": "regular",
+                "axisAlpha": 0.5,
+                "gridAlpha": 0
+            }],
+            "graphs": [{
+                "balloonText": "<b>[[title]]</b><br><span style='font-size:14px'>[[category]]: <b>[[value]]</b></span>",
+                "fillAlphas": 0.8,
+                "labelText": "[[value]]",
+                "lineAlpha": 0.3,
+                "title": "Europe",
+                "type": "column",
+                "color": "#000000",
+                "valueField": "europe"
+            }, {
+                "balloonText": "<b>[[title]]</b><br><span style='font-size:14px'>[[category]]: <b>[[value]]</b></span>",
+                "fillAlphas": 0.8,
+                "labelText": "[[value]]",
+                "lineAlpha": 0.3,
+                "title": "North America",
+                "type": "column",
+                "color": "#000000",
+                "valueField": "namerica"
+            }, {
+                "balloonText": "<b>[[title]]</b><br><span style='font-size:14px'>[[category]]: <b>[[value]]</b></span>",
+                "fillAlphas": 0.8,
+                "labelText": "[[value]]",
+                "lineAlpha": 0.3,
+                "title": "Asia-Pacific",
+                "type": "column",
+                "color": "#000000",
+                "valueField": "asia"
+            }, {
+                "balloonText": "<b>[[title]]</b><br><span style='font-size:14px'>[[category]]: <b>[[value]]</b></span>",
+                "fillAlphas": 0.8,
+                "labelText": "[[value]]",
+                "lineAlpha": 0.3,
+                "title": "Latin America",
+                "type": "column",
+                "color": "#000000",
+                "valueField": "lamerica"
+            }, {
+                "balloonText": "<b>[[title]]</b><br><span style='font-size:14px'>[[category]]: <b>[[value]]</b></span>",
+                "fillAlphas": 0.8,
+                "labelText": "[[value]]",
+                "lineAlpha": 0.3,
+                "title": "Middle-East",
+                "type": "column",
+                "color": "#000000",
+                "valueField": "meast"
+            }, {
+                "balloonText": "<b>[[title]]</b><br><span style='font-size:14px'>[[category]]: <b>[[value]]</b></span>",
+                "fillAlphas": 0.8,
+                "labelText": "[[value]]",
+                "lineAlpha": 0.3,
+                "title": "Africa",
+                "type": "column",
+                "color": "#000000",
+                "valueField": "africa"
+            }],
+            "rotate": true,
+            "categoryField": "year",
+            "categoryAxis": {
+                "gridPosition": "start",
+                "axisAlpha": 0,
+                "gridAlpha": 0,
+                "position": "left"
+            },
+            "export": {
+                "enabled": true
+            }
+        });
+    </script>
+
+    <!-- //amcharts -->
+    <script src="~/Scripts/js/Chart.min.js"></script>
+    <script src="~/Scripts/js/Chart.min.js"></script>
+    <script src="~/Scripts/js/modernizr.custom.js"></script>
+
+    <script src="~/Scripts/js/classie.js"></script>
+    <script src="~/Scripts/js/gnmenu.js"></script>
+    <script>
+        new gnMenu(document.getElementById('gn-menu'));
+        $(document).ready(function () {
+            initSidebarMenu();
+        });
+    </script>
+    <!-- script-for-menu -->
+    <script src="~/Scripts/js/jquery.basictable.min.js"></script>
+    <!-- /circle-->
+    <script type="text/javascript" src="~/Scripts/js/circles.js"></script>
+    <script>
+        var colors = [
+            ['#ffffff', '#fd9426'], ['#ffffff', '#fc3158'], ['#ffffff', '#53d769'], ['#ffffff', '#147efb']
+        ];
+        for (var i = 1; i <= 7; i++) {
+            var child = document.getElementById('circles-' + i),
+                percentage = 30 + (i * 10);
+
+            Circles.create({
+                id: child.id,
+                percentage: percentage,
+                radius: 80,
+                width: 10,
+                number: percentage / 1,
+                text: '%',
+                colors: colors[i - 1]
+            });
+        }
+
+    </script>
+    <!-- //circle -->
+    <!--skycons-icons-->
+    <script src="~/Scripts/js/skycons.js"></script>
+    <script>
+        var icons = new Skycons({ "color": "#fcb216" }),
+            list = [
+                "partly-cloudy-day"
+            ],
+            i;
+
+        for (i = list.length; i--;)
+            icons.set(list[i], list[i]);
+        icons.play();
+    </script>
+    <script>
+        var icons = new Skycons({ "color": "#fff" }),
+            list = [
+                "clear-night", "partly-cloudy-night", "cloudy", "clear-day", "sleet", "snow", "wind", "fog"
+            ],
+            i;
+
+        for (i = list.length; i--;)
+            icons.set(list[i], list[i]);
+        icons.play();
+    </script>
+    <!--//skycons-icons-->
+    <!-- //js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/screenfull.js/4.2.1/screenfull.min.js"></script>
+    <script>
+        $(function () {
+            $('#supported').text('Supported/allowed: ' + !!screenfull.enabled);
+
+            if (!screenfull.enabled) {
+                return false;
+            }
+
+
+
+            $('#toggle').click(function () {
+                screenfull.toggle($('#container')[0]);
+            });
+        });
+    </script>
+    <script src="~/Scripts/js/flipclock.js"></script>
+
+    <script type="text/javascript">
+        var clock;
+
+        $(document).ready(function () {
+
+            clock = $('.clock').FlipClock({
+                clockFace: 'HourlyCounter'
+            });
+        });
+    </script>
+    <script src="~/Scripts/js/bars.js"></script>
+    <script src="~/Scripts/js/jquery.nicescroll.js"></script>
+    <script src="~/Scripts/js/scripts.js"></script>
+    <!--Datatables Link-->
+    <script src="~/Scripts/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.5.6/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.5.6/js/buttons.flash.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.5.6/js/buttons.html5.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.5.6/js/buttons.print.min.js"></script>
+    <script type="text/javascript" src="~/Scripts/js/bootstrap-3.1.1.min.js"></script>
+    <script>
+        function initSidebarMenu() {
+            $('ul.gn-menu ul.gn-submenu').hide();
+            $('#gn-menu ul.gn-menu > li > a.submenu-toggle-button').on('click', function () {
+                //$('#gn-menu ul.gn-menu ul.gn-submenu').slideUp("slow");
+                //$(this).next().slideDown("slow");
+                $(this).next().slideToggle("slow");
+            });
+        }
+        $('table').dataTable({
+            dom: 'Bfrtip',
+            buttons: [
+                'copy', 'csv', 'excel', 'pdf', 'print'
+            ]
+        });
+    </script>
+
+
+</body>
+</html>
+

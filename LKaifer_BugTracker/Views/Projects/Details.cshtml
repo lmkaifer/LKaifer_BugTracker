@@ -1,0 +1,112 @@
+﻿@model LKaifer_BugTracker.Models.Project
+
+@{
+    ViewBag.Title = "Details";
+}
+
+
+
+
+<h2>Project Assignment Details</h2>
+<br />
+<hr />
+
+<div id="prjinfo">
+
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Description)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Created)
+        </dt>
+        <dd>
+          @Model.Created.ToString("d")
+        </dd>
+
+    </dl>
+</div>
+
+
+
+
+
+<br>
+
+<td>
+    @*@foreach (var users in userProjectsHelper.ListUsersonProject(Model.Id).ToList())
+    { 
+    users.FullName@: @Html.ActionLink("Remove" + Users.FirstName + "RemoveProjectUser", "Admin", new { userId = users.Id, project.Id = Model.Id }, new class="btn btn-danger btn-xsmall))<br />
+                    </ td >}*@
+
+
+
+    @using (Html.BeginForm("ManageProjectsUsers", "Admin", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+        @Html.Hidden("projectId",Model.Id)
+
+        <div class="row">
+            <div class="col-md-4">
+                <h2>Project Manager</h2>
+                <br />
+                @Html.ListBox("ProjectManagers")
+            </div>
+
+
+
+            <div class="col-md-4">
+                <h2>Developers</h2>
+                <br />
+                @Html.ListBox("Developers")
+            </div>
+
+
+
+            <div class="col-md-4">
+                <h2>Submitters</h2>
+                <br />
+                @Html.ListBox("Submitters")
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    @if (User.IsInRole("Admin"))
+                    {
+                        <h2>Administrators</h2>
+                        <br/>
+                        @Html.ListBox("Administrators")
+                    }
+
+                </div>
+            </div>
+            </div>
+        <br />
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <button type="submit" class="btn btn-primary btn-lg">ASSIGN</button>
+            </div>
+        </div>
+
+        @*<div class="row">
+                <div class="col-md-12 text-center">
+                    <button type="submit" class="btn btn-primary btn-lg">REMOVE</button>
+                </div>
+            </div>*@
+
+
+    }
+
+
+    <p>
+        @Html.ActionLink("Back to List", "Index")
+    </p>

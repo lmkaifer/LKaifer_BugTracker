@@ -1,0 +1,77 @@
+﻿
+@model IEnumerable<LKaifer_BugTracker.Models.Project>
+@using LKaifer_BugTracker.Models
+@using LKaifer_BugTracker.Helpers
+
+@{
+    ViewBag.Title = "User Project Assignment List";
+    UserRolesHelper usersRole = new UserRolesHelper();
+}
+
+<h2>All Projects Index</h2>
+<br />
+@*<h2>
+        @Html.ActionLink("Create New", "Create")
+    </h2>*@
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                Assigned to User
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Description)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Created)
+            </th>
+           
+            @*<th>
+        </tr>*@
+
+
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @foreach (var AssignedUser in item.Users)
+                {
+                    @Html.DisplayFor(modelItem => AssignedUser.FullName)
+                    foreach (string role in usersRole.ListUserRoles(AssignedUser.Id))
+                    {
+                        <p style="font-size:10px;color:darkgray;font-style:italic;display:inline-block;">- @role</p>
+                    }
+                    <br />
+
+                }
+
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                @item.Created.ToString("d")
+            </td>
+            
+                @*<td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.Id })
+                
+                @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+            </td>*@
+            </tr>
+        }
+    </tbody>
+</table>
+
+<button type="button" class="grow" style="background-color:#E53238; color:antiquewhite !important">
+    @Html.ActionLink("Create New Project", "Create")
+</button>
+

@@ -1,0 +1,96 @@
+﻿
+@{
+    ViewBag.Title = "UserIndex";
+}
+@using LKaifer_BugTracker.ViewModels
+@model IEnumerable<UserProfileViewModel>
+@using LKaifer_BugTracker.Helpers
+<style>
+    .avatar {
+        max-height: 30px;
+        max-width: 30px;
+    }
+</style>
+@{
+    var roleHelper = new UserRolesHelper();
+    var projectsHelper = new ProjectsHelper();
+}
+
+<div class="agile-tables">
+       <div class="w3l-table-info agile_info_shadow">
+        <h3 class="w3_inner_tittle two">User Index</h3>
+        <table id="table">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayName("Avatar")
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Email)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.FirstName)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.LastName)
+                    </th>
+                    <th>
+                        @Html.DisplayName("Role")
+                    </th>
+                    @*<th>
+                        @Html.DisplayName("Assigned Projects")
+                    </th>*@
+                    <th>
+
+                    </th>
+
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var user in Model)
+                {
+                    <tr>
+                        <td class="avatar">
+                            @if (!string.IsNullOrEmpty(user.AvatarUrl))
+                            {
+
+                                <img src="@Url.Content(user.AvatarUrl)" class="img-responsive" />
+                            }
+                            else
+                            {
+                                <img src="@Url.Content("~/Uploads/avatar-1577909_1280.png")" class="img-responsive" />
+                            }
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => user.Email)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => user.FirstName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => user.LastName)
+                        </td>
+                        <td>
+                            @roleHelper.ListUserRoles(user.Id).FirstOrDefault()
+                        </td>
+                       
+
+                        <td>
+                            @Html.ActionLink("Manage Role", "ManageUserRole", "Admin", new { userId = user.Id }, null) |
+                            @Html.ActionLink("Manage Projects", "ManageUserProjects", "Admin", new { userId = user.Id }, null)
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+        @Html.ActionLink("Back to Dashboard", "Index", "Home")
+    </div>
+</div>
+@section scripts
+{
+    <script>
+        $('#table').basictable();
+         $("tblTarget").DataTable();
+    </script>
+}

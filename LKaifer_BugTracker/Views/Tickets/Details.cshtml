@@ -1,0 +1,522 @@
+﻿@using Microsoft.AspNet.Identity
+@model LKaifer_BugTracker.Models.Ticket
+@using LKaifer_BugTracker.Helpers
+@using LKaifer_BugTracker.ViewModels
+@using LKaifer_BugTracker.Models
+<style>
+    .avatar {
+        max-height: 30px;
+        max-width: 30px;
+    }
+
+    .socail_grid_agile.facebook {
+        background: #3d5da2;
+        height: 200px !important;
+    }
+
+    .socail_grid_agile.twitter {
+        background: #1da1f2;
+        height: 200px !important;
+    }
+
+    .socail_grid_agile.gmail {
+        background: #ea4335;
+        height: 200px !important;
+    }
+
+    .socail_grid_agile.dribble {
+        background: #ea4c89;
+        height: 200px !important
+    }
+
+    .img-responsive teamAvatar, .thumbnail > img, .thumbnail a > img, .carousel-inner > .item > img, .carousel-inner > .item > a > img {
+        display: block;
+        width: 90px;
+        height: 90px;
+    }
+</style>
+@{
+    var roleHelper = new UserRolesHelper();
+    var projectsHelper = new ProjectsHelper();
+    var ticketsdecisionHelper = new TicketDecisionHelper();
+    List<ApplicationUser> ticketProjectTeam = new List<ApplicationUser>();
+    foreach (ApplicationUser cUser in Model.Project.Users)
+    {
+        if (roleHelper.IsUserInRole(cUser.Id, "Manager"))
+        {
+            ticketProjectTeam.Add(cUser);
+        }
+        if (roleHelper.IsUserInRole(cUser.Id, "Admin"))
+        {
+            ticketProjectTeam.Add(cUser);
+        }
+
+    }
+    ticketProjectTeam.Add(Model.AssignedToUser);
+    ticketProjectTeam.Add(Model.OwnerUser);
+}
+
+
+<style>
+    a.badge:hover {
+        background-color: lightgray;
+        color: black;
+    }
+
+    a#addAttachBtn:hover {
+        background-color: #cae3f7 !important;
+        color: #007ee5;
+    }
+</style>
+
+<div class="row">
+    <div class="col-md-6">
+        <h4>Ticket Dashboard for @Model.Title created on @Model.Created.ToString("MM/dd/yyyy") </h4>
+    </div>
+    <div class="col-md-6">
+        @Html.ActionLink("Edit Ticket", "Edit", "Tickets", new { id = Model.Id }, null)
+    </div>
+    @if (User.IsInRole("Developer"))
+    {
+        <button class="label label-danger">Mark as In Progress</button>
+
+        <br />
+    }
+    @if (User.IsInRole("Manager"))
+    {
+        <button class="label label-danger">Mark as Completed</button>
+
+    }
+</div>
+
+<hr />
+<table class="table">
+    <tr>
+        <th>
+            Title
+        </th>
+        <th>
+            Project Name
+        </th>
+        <th>
+            Priority
+        </th>
+
+        <th>
+            Status
+        </th>
+        <th>
+            Type
+        </th>
+        <th>
+            Assigned Developer
+        </th>
+        <th>
+            Created by
+        </th>
+    </tr>
+
+    <tr>
+        <td>
+            @Html.DisplayFor(model => model.Title)
+        </td>
+        <td>
+            @Html.DisplayFor(model => model.Project.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(model => model.TicketPriority.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(model => model.TicketStatus.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(model => model.TicketType.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(model => model.AssignedToUser.FullName)
+            @if (User.IsInRole("Manager") || User.IsInRole("Admin"))
+            {
+                @Html.ActionLink("Assign", "AssignTicket", new { id = Model.Id })
+            }
+        </td>
+        <td>
+            @Html.DisplayFor(model => model.OwnerUser.FullName)
+        </td>
+    </tr>
+</table>
+<br>
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalLong">
+    Launch Comments for This Ticket
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Ticket Comments</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                @if (Request.IsAuthenticated)
+                {
+                    foreach (var comment in Model.TicketComments)
+                    {<p>
+                            <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                                Read Comments
+                            </button>
+                        </p>
+                        <div class="collapse" id="collapseExample">
+                            <div class="card card-body">
+                                @Html.DisplayFor(c => comment.CommentBody)
+                                <p style="font-size:smaller">Submitted by @Html.DisplayFor(c => comment.Author.FullName)</p>
+                            </div>
+                        </div>
+
+
+
+                        <br />
+
+                    }
+                }
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--Button trigger modal ends-->
+
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="panel panel-primary">
+            <div class="panel-heading">Ticket Attachments</div>
+            <div class="panel body">
+                @if (Model.TicketAttachments != null)
+                {
+                    if (Model.TicketAttachments.Count > 0)
+                    {
+                        foreach (var attachment in Model.TicketAttachments)
+                        {
+                            <a href="@Url.Content(attachment.AttachmentUrl)" download style="margin-right:10px;"><i class="fa @attachment.Description"></i> @attachment.Title</a>@Html.ActionLink("Remove", "Delete", "TicketAttachments", new { id = attachment.Id, originAction = "Details" }, new { @class = "badge" })<br />
+                        }
+                    }
+                    else
+                    {
+                        <p>No attachment </p><br />
+                    }
+                }
+
+                <div class="panel-footer">
+                    <a href="" id="addAttachBtn" class="badge" style="background-color:#007ee5;padding:1.5%;width:150px;" onclick="toggleAddAttachmentForm()">Add attachments</a>
+                    @using (Html.BeginForm("Create", "TicketAttachments", FormMethod.Post, new { @id = "attachmentAddForm", hidden = "hidden", enctype = "Multipart/form-data" }))
+                    {
+                        <a href="" id="cancelAttachBtn" class="badge" style="background-color:#007ee5;padding:1.5%;width:150px;" onclick="toggleAddAttachmentForm()">Cancel</a><br /><br />
+                        @Html.AntiForgeryToken()
+                        <input name="ticketId" type="hidden" value="@Model.Id" />
+                        <div class="col-md-8">
+                            <input name="files" type="file" class="form-control" id="fileUpload" multiple />
+                        </div>
+
+                        <div class="col-md-4">
+                            <input type="submit" value="Add" class="btn btn-default" style="height:5vh;" />
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="panel panel-primary">
+            <div class="panel-heading">Ticket Comments</div>
+            <div class="panel body">
+                @if (Request.IsAuthenticated)
+                {
+                    foreach (var comment in Model.TicketComments)
+                    {<p>
+                            <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                                Read Comments
+                            </button>
+                        </p>
+                        <div class="collapse" id="collapseExample">
+                            <div class="card card-body">
+                                @Html.DisplayFor(c => comment.CommentBody)
+                                <p style="font-size:smaller">Submitted by @Html.DisplayFor(c => comment.Author.FullName)</p>
+                            </div>
+                        </div>
+
+
+
+                        <br />
+
+                    }
+                }
+
+                @using (Html.BeginForm("Create", "TicketComments", FormMethod.Post))
+                {
+                    @Html.AntiForgeryToken()
+                    @Html.Hidden("TicketId", Model.Id)
+
+                    <div style="margin-left:30px">
+                        <textarea type="text" id="TicketCommentBody" name="CommentBody" rows="5" cols="70"></textarea>
+                        <button class="btn btn-primary" type="submit">Add</button>
+                    </div>
+
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="panel panel-danger">
+            <div class="panel-heading">Ticket History</div>
+            <div class="panel body">
+                @foreach (var history in Model.TicketHistories)
+                {
+                    <p>@history.PropertyName has changed from @history.OldValue to @history.NewValue on @history.Updated.ToString("g")</p>
+                }
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="panel panel-danger">
+            <div class="panel-heading">Ticket Description</div>
+            <div class="panel body">
+                @Model.Description
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /social_media-->
+<h3>Ticket Team</h3>
+<hr />
+<div class="social_media_w3ls">
+
+
+    @foreach (var user in ticketProjectTeam)
+    {
+        if (user == null)
+        {
+
+        }
+        else if (roleHelper.IsUserInRole(user.Id, "Admin"))
+        {
+            <div class="col-md-3 socail_grid_agile facebook">
+                <ul class="icon_w3_info">
+                    <li><a href="#" class="wthree_facebook"> @*<i class="fa fa-facebook" aria-hidden="true"></i>*@</a></li>
+                    <li>Ticket Administrator</li>
+                </ul>
+                @*<ul class="icon_w3_social">
+                        <li><i class="fa fa-comment-o" aria-hidden="true"></i></li>
+                        <li><i class="fa fa-envelope-o" aria-hidden="true"></i></li>
+                        <li><i class="fa fa-user" aria-hidden="true"></i></li>
+                    </ul>*@
+                <div class="clearfix"></div>
+                <div class="bottom_info_social">
+                    <div class="col-md-4 agile_w3l_social_media_text_img">
+                        <img src="@Url.Content(user.AvatarUrl)" class="img-responsive teamAvatar" />
+                    </div>
+                    <div class="col-md-8 agile_w3l_social_media_text">
+                        <h4>
+                            @user.FullName
+                        </h4>
+                        <p></p>
+                    </div>
+                    <div class="clearfix"></div>
+
+                </div>
+            </div>
+        }
+        if (user == null)
+        {
+
+        }
+
+        else if (roleHelper.IsUserInRole(user.Id, "Manager"))
+        {
+
+            <div class="col-md-3 socail_grid_agile twitter">
+                <ul class="icon_w3_info">
+                    @*<li><a href="#" class="wthree_facebook"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>*@
+                    <li>Ticket Manager</li>
+                </ul>
+                @*<ul class="icon_w3_social">
+                        <li><i class="fa fa-comment-o" aria-hidden="true"></i></li>
+                        <li><i class="fa fa-envelope-o" aria-hidden="true"></i></li>
+                        <li><i class="fa fa-user" aria-hidden="true"></i></li>
+                    </ul>*@
+                <div class="clearfix"></div>
+                <div class="bottom_info_social">
+                    <div class="col-md-4 agile_w3l_social_media_text_img">
+                        <img src="@Url.Content(user.AvatarUrl)" class="img-responsive teamAvatar" />
+                    </div>
+                    <div class="col-md-8 agile_w3l_social_media_text">
+                        <h4>@user.FullName</h4>
+                        <p></p>
+                    </div>
+
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+        }
+        if (user == null)
+        {
+
+        }
+        else if (roleHelper.IsUserInRole(user.Id, "Developer") && user.Roles != null)
+        {
+            <div class="col-md-3 socail_grid_agile gmail">
+                <ul class="icon_w3_info">
+                    @*<li><a href="#" class="wthree_facebook"><i class="fa fa-google-plus" aria-hidden="true"></i></a></li>*@
+                    <li>Ticket Developer</li>
+                </ul>
+                @*<ul class="icon_w3_social">
+                        <li><i class="fa fa-comment-o" aria-hidden="true"></i></li>
+                        <li><i class="fa fa-envelope-o" aria-hidden="true"></i></li>
+                        <li><i class="fa fa-user" aria-hidden="true"></i></li>
+                    </ul>*@
+                <div class="clearfix"></div>
+                <div class="bottom_info_social">
+                    <div class="col-md-4 agile_w3l_social_media_text_img">
+                        <img src="@Url.Content(user.AvatarUrl)" class="img-responsive teamAvatar" />
+                    </div>
+                    <div class="col-md-8 agile_w3l_social_media_text">
+                        <h4>
+
+                            @Html.DisplayFor(modelItem => Model.AssignedToUser.FullName)
+
+                        </h4>
+                        <p></p>
+                    </div>
+
+                    <div class="clearfix"></div>
+                </div>
+            </div>}
+        if (user == null)
+        {
+
+        }
+        else if (roleHelper.IsUserInRole(user.Id, "Submitter"))
+        {
+
+            <div class="col-md-3 socail_grid_agile dribble">
+
+                <ul class="icon_w3_info">
+                    @*<li><a href="#" class="wthree_facebook"><i class="fa fa-dribbble" aria-hidden="true"></i></a></li>*@
+                    <li>Ticket Submitter</li>
+                </ul>
+                @*<ul class="icon_w3_social">
+                        <li><i class="fa fa-comment-o" aria-hidden="true"></i></li>
+                        <li><i class="fa fa-envelope-o" aria-hidden="true"></i></li>
+                        <li><i class="fa fa-user" aria-hidden="true"></i></li>
+                    </ul>*@
+                <div class="clearfix"></div>
+                <div class="bottom_info_social">
+                    <div class="col-md-4 agile_w3l_social_media_text_img">
+                        <img src="@Url.Content(user.AvatarUrl)" class="img-responsive teamAvatar" />
+                    </div>
+                    <div class="col-md-8 agile_w3l_social_media_text">
+                        <h4>@Html.DisplayFor(modelItem => Model.OwnerUser.FullName)</h4>
+                        <p></p>
+                    </div>
+
+                    <div class="clearfix"></div>
+                </div>
+
+            </div>}
+    }
+    <div class="clearfix"></div>
+
+
+</div>
+<!-- //social_media-->
+@*<li style="position: absolute;left: 0px;">
+        <div class="notification_bottom">
+            <a href="@Url.Action("MyNotifications", "TicketNotifications")">See all Notifications</a>
+        </div>
+    </li>
+                                </ul>
+                            </li>
+
+                        </ul>
+                    </li>
+    <li class="second top_bell_nav">
+                <ul class="top_dp_agile ">
+                    <li class="dropdown head-dpdn">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true"><i class="fa fa-envelope-o" aria-hidden="true"></i> <span class="badge blue">3</span></a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <div class="notification_header">
+                                    <h3>Your Messages</h3>
+                                </div>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <div class="user_img"><img src="~/images/a3.jpg" alt=""></div>
+                                    <div class="notification_desc">
+                                        <h6>John Smith</h6>
+                                        <p>Lorem ipsum dolor</p>
+                                        <p><span>3 hour ago</span></p>
+                                    </div>
+                                    <div class="clearfix"></div>
+                                </a>
+                            </li>
+                            <li class="odd">
+                                <a href="#">
+                                    <div class="user_img"><img src="~/images/a1.jpg" alt=""></div>
+                                    <div class="notification_desc">
+                                        <h6>Jasmin Leo</h6>
+                                        <p>Lorem ipsum dolor</p>
+                                        <p><span>2 hour ago</span></p>
+                                    </div>
+                                    <div class="clearfix"></div>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <div class="user_img"><img src="~/images/a2.jpg" alt=""></div>
+                                    <div class="notification_desc">
+                                        <h6>James Smith</h6>
+                                        <p>Lorem ipsum dolor</p>
+                                        <p><span>1 hour ago</span></p>
+                                    </div>
+                                    <div class="clearfix"></div>
+                                </a>
+                            </li>
+                            <li>
+                                <div class="notification_bottom">
+                                    <a href="#">See all Messages</a>
+                                </div>
+                            </li>
+                        </ul>
+                    </li>
+
+                </ul>
+            </li>*@
+
+
+@using (Html.BeginForm())
+{@Html.AntiForgeryToken()
+@Html.Hidden("ticketid", Model.Id)
+
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>}
+@section scripts{
+    <script>
+        function toggleAddAttachmentForm() {
+            event.preventDefault();
+            $('#attachmentAddForm').toggle();
+            $('#addAttachBtn').toggle();
+        }
+    </script>
+}

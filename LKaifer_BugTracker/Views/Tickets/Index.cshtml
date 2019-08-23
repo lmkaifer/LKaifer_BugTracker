@@ -1,0 +1,165 @@
+﻿@model IEnumerable<LKaifer_BugTracker.Models.Ticket>
+@using LKaifer_BugTracker.Models
+@using LKaifer_BugTracker.Helpers
+
+@{
+    ViewBag.Title = "Index";
+    UserRolesHelper usersRole = new UserRolesHelper();
+
+}
+
+<h2>Tickets Index</h2>
+
+<p>
+    @if (User.IsInRole("Submitter"))
+    {
+        @Html.ActionLink("Create New", "Create")
+    }
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Assigned Developer
+            </th>
+            <th>
+                Ticket Creater
+            </th>
+            <th>
+                Project Name
+            </th>
+            <th>
+                Priority
+            </th>
+            <th>
+                Status
+            </th>
+            <th>
+                Type
+            </th>
+            <th>
+                Title
+            </th>
+            <th>
+                Description
+            </th>
+            <th>
+                Created
+            </th>
+            <th>
+                Updated
+            </th>
+            <th>
+                Attachment Count
+            </th>
+
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        <!--Top row will be for the entire display-->
+        <!--1. Show the attachment image/icon
+        2. Show the attachment file name.
+        3. Show the created date.
+        4. Show the title.
+        5. Show the description.
+        6. Show the author name.-->
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AssignedToUser.FirstName)
+                    @if (User.IsInRole("Manager") || (User.IsInRole("Admin") && item.AssignedToUser == null))
+                    {
+                        <a href="@Url.Action("AssignTicket", "Tickets", new { id = item.Id })">
+                            <span class="label label-danger" id="hidebtn">Assign Developer</span>
+                        </a>
+                        <br />
+                    }
+                    @if (User.IsInRole("Manager") || (User.IsInRole("Admin") && item.AssignedToUser != null))
+                    {
+                <a href="@Url.Action("AssignTicket", "Tickets", new { id = item.Id })">
+                    <span class="label label-success" id="hidebtn">Reassign Developer</span>
+                </a>
+                    }
+                    </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.OwnerUser.FirstName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Project.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TicketPriority.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TicketStatus.Name)
+                    <br />
+
+                    @if (User.IsInRole("Developer") && item.TicketStatus.Name == "Assigned")
+                    {
+                        <a class="demoMark" href="@Url.Action("MarkInProgress", "Tickets", new { id = item.Id })">
+                            <span class="label label-danger" id="hidebtn">Mark As In Progress</span>
+                        </a>
+
+                        <br />
+                    }
+                    @if (User.IsInRole("Developer") && item.TicketStatus.Name == "In Progress")
+                    {
+                        <a class="demoMark" href="@Url.Action("MarkAsCompleted", "Tickets", new { id = item.Id })">
+                            <span class="label label-success" id="hidebtn">Mark As Completed</span>
+                        </a>
+                        <br />
+
+                    }
+
+                    @if (User.IsInRole("Manager") && item.TicketStatus.Name == "Completed")
+                    {
+                        <a class="demoMark" href="@Url.Action("MarkAsArchived","Tickets", new {id = item.Id})">
+                            <span class="label label-info" id="hidebtn">Mark As Archived</span>
+                        </a>
+
+
+                    }
+
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TicketType.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Title)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Created)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Updated)
+                </td>
+                <td>
+                    @if (item.TicketAttachments != null)
+                    {
+                        @Html.DisplayFor(modelItem => item.TicketAttachments.Count)
+                    }
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.Id }) <br />
+                    @Html.ActionLink("Details", "Details", new { id = item.Id }) <br />
+                    @*@Html.ActionLink("Delete", "Delete", new { id = item.Id }) <br />*@
+
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+@section scripts
+    {
+    <script>
+        $("#hidebtn").click(function () {
+            $(this).hide();
+        });
+    </script>
+}

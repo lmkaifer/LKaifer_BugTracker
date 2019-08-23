@@ -1,0 +1,94 @@
+﻿@using LKaifer_BugTracker.Models
+@model IEnumerable<LKaifer_BugTracker.Models.Project>
+@using LKaifer_BugTracker.Helpers
+@{
+    ViewBag.Title = "My Project Index";
+    UserRolesHelper usersRole = new UserRolesHelper();
+
+
+}
+
+<h2>My Projects</h2>
+<div class="agile-tables">
+    <div class="w3l-table-info agile_info_shadow">
+
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Name)
+                    </th>
+
+                    <th>
+                        @Html.DisplayNameFor(model => model.Description)
+                    </th>
+                    <th>
+                        Assigned Project Members
+                    </th>
+
+                    @if (User.IsInRole("Admin") || (User.IsInRole("Manager") || (User.IsInRole("Submitter"))))
+                    {
+                        <th>
+                        </th>
+                    }
+
+                </tr>
+            </thead>
+
+
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Description)
+
+                        </td>
+                        <td>
+                            @foreach (var AssignedUser in item.Users)
+                            {
+                            @Html.DisplayFor(modelItem => AssignedUser.FullName)
+                                foreach (string role in usersRole.ListUserRoles(AssignedUser.Id))
+                            {
+                                    <p style="font-size:10px;color:darkgray;font-style:italic;display:inline-block;">- @role</p>
+                                }
+                                <br />
+                            }
+                        </td>
+
+                        <td>
+                            @if (User.IsInRole("Admin") || (User.IsInRole("Manager")))
+                            {
+                                @Html.ActionLink("Edit", "Edit", new { id = item.Id }) <br />
+                                @Html.ActionLink("Assign", "Details", new { id = item.Id })
+                                @*@Html.ActionLink("Delete", "Delete", new { id = item.Id }) <br />*@
+                            }
+
+                            @if (User.IsInRole("Submitter"))
+                            {
+                                @Html.ActionLink("Create A Ticket", "Create", "Tickets", new { id = item.Id }, null)
+                            }
+                        </td>
+
+                        
+                    </tr>
+
+
+                }
+
+            </tbody>
+        </table>
+
+
+        <button type="button" class="grow" style="background-color:#E53238; color:antiquewhite !important">
+            @if (User.IsInRole("Manager") || (User.IsInRole("Admin")))
+            {
+                @Html.ActionLink("Create A New Project", "Create", "Projects")
+            }
+        </button>
+    </div>
+</div>

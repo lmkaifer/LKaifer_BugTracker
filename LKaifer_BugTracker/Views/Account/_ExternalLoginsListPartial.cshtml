@@ -1,0 +1,35 @@
+﻿@model LKaifer_BugTracker.Models.ExternalLoginListViewModel
+@using Microsoft.Owin.Security
+
+
+
+@{
+    var loginProviders = Context.GetOwinContext().Authentication.GetExternalAuthenticationTypes();
+    if (loginProviders.Count() == 0) {
+        <div>
+            <p>
+                There are no external authentication services configured. See <a href="https://go.microsoft.com/fwlink/?LinkId=403804">this article</a>
+                for details on setting up this ASP.NET application to support logging in via external services.
+            </p>
+        </div>
+    }
+    else {
+        using (Html.BeginForm("ExternalLogin", "Account", new { ReturnUrl = Model.ReturnUrl },FormMethod.Post, new { id = "externalloginform"})) {
+            @Html.AntiForgeryToken()
+            <div id="socialLoginList">
+                <p>
+                    <ul>
+                        @foreach (AuthenticationDescription p in loginProviders)
+                        {
+                            if (p.Caption == "Facebook")
+                            {
+                                <input name="provider" id="@p.AuthenticationType" value="@p.AuthenticationType" type="hidden" />
+                            <li><a href="javascript:document.getElementById('externalloginform').submit()" title="Log in using your @p.Caption account"><i class="fa fa-facebook"></i></a></li>
+                            }
+                        }
+                    </ul>
+</p>
+            </div>
+        }
+    }
+}

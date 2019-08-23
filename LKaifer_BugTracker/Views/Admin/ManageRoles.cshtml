@@ -1,0 +1,70 @@
+﻿
+
+@using LKaifer_BugTracker.Helpers
+@using LKaifer_BugTracker.ViewModels
+@model  IEnumerable<UserProfileViewModel>
+
+
+@{
+    ViewBag.Title = "ManageRoles";
+    var roleHelper = new UserRolesHelper();
+}
+
+<h2>Manage Roles For Multiple Users</h2>
+<br />
+
+
+@using (Html.BeginForm())
+{
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-5"></div>
+        @Html.ListBox("Users", null, htmlAttributes: new { @class = "form-control" })
+    </div>
+    <div class="cold-md-offset-1 col-md-3">
+        @Html.DropDownList("RoleName", null, "--Select Role--", htmlAttributes: new { @class = "form-control" })
+    </div>
+    <br/>
+    <div class="form-group">
+        <div class="col-md-offset-2 cold-md-10">
+            <input type="submit" value="Assign" class="btn: btn-default" />
+        </div>
+    </div>
+}
+<hr />
+<table class=table>
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.LastName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Email)
+        </th>
+        <th>
+            Role
+        </th>
+    </tr>
+    @foreach (var user in Model)
+    {
+<tr>
+    <td>
+        @Html.DisplayFor(model => user.FirstName)
+    </td>
+    <td>
+        @Html.DisplayFor(model => user.LastName)
+    </td>
+    <td>
+        @Html.DisplayFor(model => user.Email)
+    </td>
+
+    <td>
+        @roleHelper.ListUserRoles(user.Id).FirstOrDefault()
+    </td>
+</tr>}
+</table>
+<br />
+
+
+@Html.ActionLink("Back to User Index", "UserIndex", "Admin")

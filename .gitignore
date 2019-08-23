@@ -347,3 +347,9 @@ healthchecksdb
 
 # Backup folder for Package Reference Convert tool in Visual Studio 2017
 MigrationBackup/
+
+# Main project folder with sensitive info
+LKaifer_BugTracker/Migrations/Configuration.cs
+LKaifer_BugTracker/Web.config
+LKaifer_BugTracker/Private.config
+LKaifer_BugTracker/App_Start/Startup.Auth.cs

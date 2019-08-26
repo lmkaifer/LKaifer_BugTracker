@@ -34,6 +34,13 @@
         width: 90px;
         height: 90px;
     }
+
+    a.collapsed > i.fa-chevron-up {
+        transform: rotate(180deg);
+    }
+    div.panel-heading{
+        cursor:move;
+    }
 </style>
 @{
     var roleHelper = new UserRolesHelper();
@@ -71,10 +78,10 @@
 
 <div class="row">
     <div class="col-md-6">
-        <h4>Ticket Dashboard for @Model.Title created on @Model.Created.ToString("MM/dd/yyyy") </h4>
+        <h2>Ticket Dashboard</h2>
     </div>
     <div class="col-md-6">
-        @Html.ActionLink("Edit Ticket", "Edit", "Tickets", new { id = Model.Id }, null)
+        @Html.ActionLink("Edit Ticket", "Edit", "Tickets", new { id = Model.Id }, new { @class = "btn btn-danger" })
     </div>
     @if (User.IsInRole("Developer"))
     {
@@ -87,7 +94,7 @@
         <button class="label label-danger">Mark as Completed</button>
 
     }
-</div>
+@*</div>*@
 
 <hr />
 <table class="table">
@@ -113,6 +120,9 @@
         </th>
         <th>
             Created by
+        </th>
+        <th>
+            Created Date
         </th>
     </tr>
 
@@ -142,16 +152,20 @@
         <td>
             @Html.DisplayFor(model => model.OwnerUser.FullName)
         </td>
+        <td>
+            @Html.DisplayFor(model => model.Created)
+        </td>
     </tr>
 </table>
 <br>
+
 <!-- Button trigger modal -->
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalLong">
+@*<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalLong">
     Launch Comments for This Ticket
-</button>
+</button>*@
 
 <!-- Modal -->
-<div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+@*<div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -188,114 +202,9 @@
                 <button type="button" class="btn btn-primary">Save changes</button>
             </div>
         </div>
-    </div>
-</div>
+    </div>*@
+@*</div>*@
 <!--Button trigger modal ends-->
-
-
-<div class="row">
-    <div class="col-md-6">
-        <div class="panel panel-primary">
-            <div class="panel-heading">Ticket Attachments</div>
-            <div class="panel body">
-                @if (Model.TicketAttachments != null)
-                {
-                    if (Model.TicketAttachments.Count > 0)
-                    {
-                        foreach (var attachment in Model.TicketAttachments)
-                        {
-                            <a href="@Url.Content(attachment.AttachmentUrl)" download style="margin-right:10px;"><i class="fa @attachment.Description"></i> @attachment.Title</a>@Html.ActionLink("Remove", "Delete", "TicketAttachments", new { id = attachment.Id, originAction = "Details" }, new { @class = "badge" })<br />
-                        }
-                    }
-                    else
-                    {
-                        <p>No attachment </p><br />
-                    }
-                }
-
-                <div class="panel-footer">
-                    <a href="" id="addAttachBtn" class="badge" style="background-color:#007ee5;padding:1.5%;width:150px;" onclick="toggleAddAttachmentForm()">Add attachments</a>
-                    @using (Html.BeginForm("Create", "TicketAttachments", FormMethod.Post, new { @id = "attachmentAddForm", hidden = "hidden", enctype = "Multipart/form-data" }))
-                    {
-                        <a href="" id="cancelAttachBtn" class="badge" style="background-color:#007ee5;padding:1.5%;width:150px;" onclick="toggleAddAttachmentForm()">Cancel</a><br /><br />
-                        @Html.AntiForgeryToken()
-                        <input name="ticketId" type="hidden" value="@Model.Id" />
-                        <div class="col-md-8">
-                            <input name="files" type="file" class="form-control" id="fileUpload" multiple />
-                        </div>
-
-                        <div class="col-md-4">
-                            <input type="submit" value="Add" class="btn btn-default" style="height:5vh;" />
-                        </div>
-                    }
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-6">
-        <div class="panel panel-primary">
-            <div class="panel-heading">Ticket Comments</div>
-            <div class="panel body">
-                @if (Request.IsAuthenticated)
-                {
-                    foreach (var comment in Model.TicketComments)
-                    {<p>
-                            <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
-                                Read Comments
-                            </button>
-                        </p>
-                        <div class="collapse" id="collapseExample">
-                            <div class="card card-body">
-                                @Html.DisplayFor(c => comment.CommentBody)
-                                <p style="font-size:smaller">Submitted by @Html.DisplayFor(c => comment.Author.FullName)</p>
-                            </div>
-                        </div>
-
-
-
-                        <br />
-
-                    }
-                }
-
-                @using (Html.BeginForm("Create", "TicketComments", FormMethod.Post))
-                {
-                    @Html.AntiForgeryToken()
-                    @Html.Hidden("TicketId", Model.Id)
-
-                    <div style="margin-left:30px">
-                        <textarea type="text" id="TicketCommentBody" name="CommentBody" rows="5" cols="70"></textarea>
-                        <button class="btn btn-primary" type="submit">Add</button>
-                    </div>
-
-                }
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="row">
-    <div class="col-md-6">
-        <div class="panel panel-danger">
-            <div class="panel-heading">Ticket History</div>
-            <div class="panel body">
-                @foreach (var history in Model.TicketHistories)
-                {
-                    <p>@history.PropertyName has changed from @history.OldValue to @history.NewValue on @history.Updated.ToString("g")</p>
-                }
-            </div>
-        </div>
-    </div>
-    <div class="col-md-6">
-        <div class="panel panel-danger">
-            <div class="panel-heading">Ticket Description</div>
-            <div class="panel body">
-                @Model.Description
-            </div>
-        </div>
-    </div>
-</div>
-<!-- /social_media-->
 <h3>Ticket Team</h3>
 <hr />
 <div class="social_media_w3ls">
@@ -314,11 +223,11 @@
                     <li><a href="#" class="wthree_facebook"> @*<i class="fa fa-facebook" aria-hidden="true"></i>*@</a></li>
                     <li>Ticket Administrator</li>
                 </ul>
-                @*<ul class="icon_w3_social">
-                        <li><i class="fa fa-comment-o" aria-hidden="true"></i></li>
+                <ul class="icon_w3_social">
+                        @*<li><i class="fa fa-comment-o" aria-hidden="true"></i></li>*@
                         <li><i class="fa fa-envelope-o" aria-hidden="true"></i></li>
-                        <li><i class="fa fa-user" aria-hidden="true"></i></li>
-                    </ul>*@
+                        @*<li><i class="fa fa-user" aria-hidden="true"></i></li>*@
+                    </ul>
                 <div class="clearfix"></div>
                 <div class="bottom_info_social">
                     <div class="col-md-4 agile_w3l_social_media_text_img">
@@ -348,11 +257,11 @@
                     @*<li><a href="#" class="wthree_facebook"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>*@
                     <li>Ticket Manager</li>
                 </ul>
-                @*<ul class="icon_w3_social">
-                        <li><i class="fa fa-comment-o" aria-hidden="true"></i></li>
+                <ul class="icon_w3_social">
+                        @*<li><i class="fa fa-comment-o" aria-hidden="true"></i></li>*@
                         <li><i class="fa fa-envelope-o" aria-hidden="true"></i></li>
-                        <li><i class="fa fa-user" aria-hidden="true"></i></li>
-                    </ul>*@
+                        @*<li><i class="fa fa-user" aria-hidden="true"></i></li>*@
+                    </ul>
                 <div class="clearfix"></div>
                 <div class="bottom_info_social">
                     <div class="col-md-4 agile_w3l_social_media_text_img">
@@ -378,11 +287,11 @@
                     @*<li><a href="#" class="wthree_facebook"><i class="fa fa-google-plus" aria-hidden="true"></i></a></li>*@
                     <li>Ticket Developer</li>
                 </ul>
-                @*<ul class="icon_w3_social">
-                        <li><i class="fa fa-comment-o" aria-hidden="true"></i></li>
+                <ul class="icon_w3_social">
+                        @*<li><i class="fa fa-comment-o" aria-hidden="true"></i></li>*@
                         <li><i class="fa fa-envelope-o" aria-hidden="true"></i></li>
-                        <li><i class="fa fa-user" aria-hidden="true"></i></li>
-                    </ul>*@
+                        @*<li><i class="fa fa-user" aria-hidden="true"></i></li>*@
+                    </ul>
                 <div class="clearfix"></div>
                 <div class="bottom_info_social">
                     <div class="col-md-4 agile_w3l_social_media_text_img">
@@ -413,11 +322,11 @@
                     @*<li><a href="#" class="wthree_facebook"><i class="fa fa-dribbble" aria-hidden="true"></i></a></li>*@
                     <li>Ticket Submitter</li>
                 </ul>
-                @*<ul class="icon_w3_social">
-                        <li><i class="fa fa-comment-o" aria-hidden="true"></i></li>
+                <ul class="icon_w3_social">
+                        @*<li><i class="fa fa-comment-o" aria-hidden="true"></i></li>*@
                         <li><i class="fa fa-envelope-o" aria-hidden="true"></i></li>
-                        <li><i class="fa fa-user" aria-hidden="true"></i></li>
-                    </ul>*@
+                        @*<li><i class="fa fa-user" aria-hidden="true"></i></li>*@
+                    </ul>
                 <div class="clearfix"></div>
                 <div class="bottom_info_social">
                     <div class="col-md-4 agile_w3l_social_media_text_img">
@@ -433,6 +342,136 @@
 
             </div>}
     }
+    <br />
+    <br/>
+    <hr />
+<h2>Ticket Information & Actions</h2>
+<div class="row">
+    <div class="col-md-6">
+        <div class="panel panel-danger">
+            <div class="panel-heading">
+                Ticket History
+                <a href="#ticket-history-panel"  data-toggle="collapse"  aria-expanded="true" id="ticket-history-collapse-button" title="collapse">
+                    <i class="fa fa-chevron-up pull-right"></i>
+                </a>
+            </div>
+            <div class="panel body panel-collapse in" aria-expanded="true" id="ticket-history-panel">
+                @foreach (var history in Model.TicketHistories)
+                {
+                    <p>@history.PropertyName has changed from @history.OldValue to @history.NewValue on @history.Updated.ToString("g")</p>
+                    <hr>
+                }
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="panel panel-danger">
+            <div class="panel-heading">
+                Ticket Description
+                <a href="#ticket-description-panel" data-toggle="collapse" aria-expanded="true" id="ticket-description-collapse-button" title="collapse">
+                    <i class="fa fa-chevron-up pull-right"></i>
+                </a>
+            </div>
+            <div class="panel body panel-collapse in" aria-expanded="true" id="ticket-description-panel">
+                @Model.Description
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="row">
+<div class="col-md-6">
+    <div class="panel panel-danger">
+        <div class="panel-heading">
+            Ticket Attachments
+            <a href="#ticket-attachments-panel" data-toggle="collapse" aria-expanded="true" id="ticket-attachment-collapse-button" title="collapse">
+                <i class="fa fa-chevron-up pull-right"></i>
+            </a>
+        </div>
+        <div class="panel body panel-collapse in" aria-expanded="true" id="ticket-attachment-panel">
+            @if (Model.TicketAttachments != null)
+            {
+                if (Model.TicketAttachments.Count > 0)
+                {
+                    foreach (var attachment in Model.TicketAttachments)
+                    {
+                        <a href="@Url.Content(attachment.AttachmentUrl)" download style="margin-right:10px;"><i class="fa @attachment.Description"></i> @attachment.Title</a>@Html.ActionLink("Remove", "Delete", "TicketAttachments", new { id = attachment.Id, originAction = "Details" }, new { @class = "badge" })<br />
+                    }
+                }
+                else
+                {
+                    <p>No attachment </p><br />
+                }
+            }
+
+            <div class="panel-footer">
+                <a href="" id="addAttachBtn" class="badge" style="background-color:#007ee5;padding:1.5%;width:150px;" onclick="toggleAddAttachmentForm()">Add attachments</a>
+                @using (Html.BeginForm("Create", "TicketAttachments", FormMethod.Post, new { @id = "attachmentAddForm", hidden = "hidden", enctype = "Multipart/form-data" }))
+                {
+                    <a href="" id="cancelAttachBtn" class="badge" style="background-color:#007ee5;padding:1.5%;width:150px;" onclick="toggleAddAttachmentForm()">Cancel</a><br /><br />
+                    @Html.AntiForgeryToken()
+                    <input name="ticketId" type="hidden" value="@Model.Id" />
+                    <div class="col-md-8">
+                        <input name="files" type="file" class="form-control" id="fileUpload" multiple />
+                    </div>
+
+                    <div class="col-md-4">
+                        <input type="submit" value="Add" class="btn btn-default" style="height:5vh;" />
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+<div class="col-md-6">
+    <div class="panel panel-danger">
+        <div class="panel-heading">
+            Ticket Comments
+            <a href="#ticket-comments-panel" data-toggle="collapse" aria-expanded="true" id="ticket-comment-collapse-button" title="collapse">
+                <i class="fa fa-chevron-up pull-right"></i>
+            </a>
+        </div>
+        <div class="panel body panel-collapse in" aria-expanded="true" id="comment-panel">
+            @if (Request.IsAuthenticated)
+            {
+                foreach (var comment in Model.TicketComments)
+                {<p>
+                        <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="true" aria-controls="collapseExample">
+                            Read Comments
+                        </button>
+                    </p>
+                    <div class="collapse" id="collapseExample">
+                        <div class="card card-body">
+                            @Html.DisplayFor(c => comment.CommentBody)
+                            <p style="font-size:smaller">Submitted by @Html.DisplayFor(c => comment.Author.FullName), @Html.DisplayFor(c => comment.Created)</p>
+                        </div>
+                    </div>
+
+
+
+                    <br />
+
+                }
+            }
+
+            @using (Html.BeginForm("Create", "TicketComments", FormMethod.Post))
+            {
+                @Html.AntiForgeryToken()
+                @Html.Hidden("TicketId", Model.Id)
+
+                <div style="margin-left:30px">
+                    <textarea type="text" id="TicketCommentBody" name="CommentBody" rows="5" cols="70"></textarea>
+                    <button class="btn btn-primary" type="submit">Add</button>
+                </div>
+
+            }
+        </div>
+    </div>
+</div>
+@*</div>*@
+
+<!-- /social_media-->
     <div class="clearfix"></div>
 
 
@@ -503,6 +542,7 @@
             </li>*@
 
 
+
 @using (Html.BeginForm())
 {@Html.AntiForgeryToken()
 @Html.Hidden("ticketid", Model.Id)
@@ -518,5 +558,19 @@
             $('#attachmentAddForm').toggle();
             $('#addAttachBtn').toggle();
         }
+
+        //ticket history collapse button title
+        $('a[data-toggle="collapse"]').click(function () {
+            if ($(this).hasClass('collapsed')) {
+                $(this).attr('title', 'collapse');
+            }
+            else {
+                $(this).attr('title', 'expand');
+            }
+        });
+
+
+        //sortable rows
+        $('div.row').sortable();
     </script>
 }

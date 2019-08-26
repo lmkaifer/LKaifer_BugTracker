@@ -31,7 +31,8 @@ License URL: http://creativecommons.org/licenses/by/3.0/
     <link href="~/Content/css/circles.css" rel="stylesheet" type="text/css" media="all" />
     <link href="~/Content/css/style_grid.css" rel="stylesheet" type="text/css" media="all" />
     <link href="~/Content/css/style.css" rel="stylesheet" type="text/css" media="all" />
-
+    <link href="~/Content/themes/base/jquery-ui.min.css" rel="stylesheet" />
+    <link href="~/Content/css/multi-select.css" rel="stylesheet" />
     <!-- font-awesome-icons -->
     <link href="~/Content/css/font-awesome.css" rel="stylesheet">
 
@@ -41,6 +42,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
     <!-- //font-awesome-icons -->
     <link href="//fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800" rel="stylesheet">
     <style>
+
         ul.top_dp_agile li.profile_details_drop {
             max-width: 280px !important;
             width: auto;
@@ -436,6 +438,9 @@ License URL: http://creativecommons.org/licenses/by/3.0/
             <div class="inner_content_w3_agile_info two_in">
                 @RenderBody()
             </div>
+            <br />
+            <br />
+
         </div>
         <div class="copyrights navbar-fixed-bottom">
             <p>© 2019 Bugs Be Gone. All Rights Reserved | Design by Lisa Kaifer  <a href="https://lisakaifer-portfolio.azurewebsites.net/" target="_blank">Web Developer</a> </p>
@@ -444,6 +449,14 @@ License URL: http://creativecommons.org/licenses/by/3.0/
     </div>
     <!-- js -->
     <script type="text/javascript" src="~/Scripts/js/jquery-2.1.4.min.js"></script>
+    <script src="~/Scripts/jquery-ui-1.12.1.min.js"></script>
+    <!--High Charts-->
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/highcharts-3d.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+    <script src="https://code.highcharts.com/modules/export-data.js"></script>
+
+
 
     <!-- /amcharts -->
     <script src="~/Scripts/js/amcharts.js"></script>
@@ -767,6 +780,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
     <script src="https://cdn.datatables.net/buttons/1.5.6/js/buttons.html5.min.js"></script>
     <script src="https://cdn.datatables.net/buttons/1.5.6/js/buttons.print.min.js"></script>
     <script type="text/javascript" src="~/Scripts/js/bootstrap-3.1.1.min.js"></script>
+    <script src="~/Scripts/js/jquery.multi-select.js"></script>
     <script>
         function initSidebarMenu() {
             $('ul.gn-menu ul.gn-submenu').hide();

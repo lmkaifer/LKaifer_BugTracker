@@ -3,110 +3,154 @@
 @{
     ViewBag.Title = "Details";
 }
+<style>
 
+    .custom-header {
+        background-color: darkred;
+        color: white;
+        margin-top: 30px;
+        text-align: center;
+        font-weight: bolder;
+    }
+    .ms-container, button.btn-primary{
+        width:100%;
+        margin-bottom:20px;
+    }
+    .center-align {
+  letter-spacing: -4px;
+  text-align: center;
+  font-size: 0;
+}
 
-
+.center-align [class*='col-'] {
+  display: inline-block;
+  vertical-align: top;
+  letter-spacing: 0;
+  font-size: 14px;
+  float: none;
+}
+</style>
+@section scripts{
+    <script>
+        $('select#ProjectManagers').multiSelect({
+            selectableHeader: "<div class='custom-header'>Select Manager</div>",
+            selectionHeader: "<div class='custom-header'>Selected Manager</div>"
+        })
+        $('select#Developers').multiSelect({
+            selectableHeader: "<div class='custom-header'>Select Developers</div>",
+            selectionHeader: "<div class='custom-header'>Selected Developers</div>"
+        })
+        $('select#Submitters').multiSelect({
+            selectableHeader: "<div class='custom-header'>Select Submitters</div>",
+            selectionHeader: "<div class='custom-header'>Selected Submitters</div>"
+        })
+        $('select#Administrators').multiSelect({
+            selectableHeader: "<div class='custom-header'>Select Admin</div>",
+            selectionHeader: "<div class='custom-header'>Selected Admin</div>"
+        })
+    </script>
+}
 
 <h2>Project Assignment Details</h2>
 <br />
 <hr />
+<table class="table">
+    <tr>
+        <th>
+            Project Name
+        </th>
+        <th>
+            Description
+        </th>
+        <th>
+            Created Date
+        </th>
+    </tr>
 
-<div id="prjinfo">
+    <tr>
+    <td>
+        @Html.DisplayFor(model => model.Name)
+    </td>
 
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Name)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Description)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Description)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Created)
-        </dt>
-        <dd>
-          @Model.Created.ToString("d")
-        </dd>
+    <td>
+        @Html.DisplayFor(model => model.Description)
+    </td>
+    <td>
+        @Model.Created.ToString("d")
+    </td>
+    </tr>
+    </table>
 
-    </dl>
-</div>
-
-
-
-
-
-<br>
-
-<td>
-    @*@foreach (var users in userProjectsHelper.ListUsersonProject(Model.Id).ToList())
-    { 
-    users.FullName@: @Html.ActionLink("Remove" + Users.FirstName + "RemoveProjectUser", "Admin", new { userId = users.Id, project.Id = Model.Id }, new class="btn btn-danger btn-xsmall))<br />
-                    </ td >}*@
+   
 
 
 
-    @using (Html.BeginForm("ManageProjectsUsers", "Admin", FormMethod.Post))
-    {
-        @Html.AntiForgeryToken()
-        @Html.Hidden("projectId",Model.Id)
 
-        <div class="row">
-            <div class="col-md-4">
-                <h2>Project Manager</h2>
-                <br />
-                @Html.ListBox("ProjectManagers")
-            </div>
+
+    <br>
+
+    <td>
+        @*@foreach (var users in userProjectsHelper.ListUsersonProject(Model.Id).ToList())
+            {
+            users.FullName@: @Html.ActionLink("Remove" + Users.FirstName + "RemoveProjectUser", "Admin", new { userId = users.Id, project.Id = Model.Id }, new class="btn btn-danger btn-xsmall))<br />
+                            </ td >}*@
 
 
 
-            <div class="col-md-4">
-                <h2>Developers</h2>
-                <br />
-                @Html.ListBox("Developers")
-            </div>
+        @using (Html.BeginForm("ManageProjectsUsers", "Admin", FormMethod.Post))
+        {
+            @Html.AntiForgeryToken()
+            @Html.Hidden("projectId", Model.Id)
+
+            <div class="row center-align">
+                <div class="col-md-5">
+                    @*<h2>Project Manager</h2>
+                        <br />*@
+                    @Html.ListBox("ProjectManagers")
+                </div>
+                <div class="col-md-2"></div>
+                <div class="col-md-5">
+                    @*<h2>Developers</h2>
+                        <br />*@
+                    @Html.ListBox("Developers")
+                </div>
 
 
 
-            <div class="col-md-4">
-                <h2>Submitters</h2>
-                <br />
-                @Html.ListBox("Submitters")
-            </div>
-
-            <div class="row">
-                <div class="col-md-12">
+                <div class="col-md-5">
+                    @*<h2>Submitters</h2>
+                        <br />*@
+                    @Html.ListBox("Submitters")
+                </div>
+                <div class="col-md-2"></div>
+                <div class="col-md-5">
                     @if (User.IsInRole("Admin"))
                     {
-                        <h2>Administrators</h2>
-                        <br/>
+                        @*<h2>Administrators</h2>
+                            <br/>*@
                         @Html.ListBox("Administrators")
                     }
 
                 </div>
             </div>
-            </div>
-        <br />
-        <div class="row">
-            <div class="col-md-12 text-center">
-                <button type="submit" class="btn btn-primary btn-lg">ASSIGN</button>
-            </div>
-        </div>
-
-        @*<div class="row">
+            <br />
+            <div class="row">
                 <div class="col-md-12 text-center">
-                    <button type="submit" class="btn btn-primary btn-lg">REMOVE</button>
+                    <button type="submit" class="btn btn-primary btn-lg">ASSIGN</button>
                 </div>
-            </div>*@
+            </div>
+
+            @*<div class="row">
+                    <div class="col-md-12 text-center">
+                        <button type="submit" class="btn btn-primary btn-lg">REMOVE</button>
+                    </div>
+                </div>*@
 
 
-    }
+        }
 
 
-    <p>
-        @Html.ActionLink("Back to List", "Index")
-    </p>
+        <p>
+            @Html.ActionLink("Back to List", "Index")
+        </p>
+

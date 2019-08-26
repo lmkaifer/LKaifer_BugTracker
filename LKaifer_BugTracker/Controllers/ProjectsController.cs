@@ -58,11 +58,11 @@ namespace LKaifer_BugTracker.Controllers
             ViewBag.ProjectManagers = new MultiSelectList(allProjectManagers, "Id", "FullNameWithEmail", currentProjectManagers);
 
             var allSubmitters = roleHelper.UsersInRole("Submitter");
-            var currentProjectSubmitters = projectHelper.UsersInRoleOnProject(project.Id, "ProjectSubmitter");
+            var currentProjectSubmitters = projectHelper.UsersInRoleOnProject(project.Id, "Submitter");
             ViewBag.Submitters = new MultiSelectList(allSubmitters, "Id", "FullNameWithEmail", currentProjectSubmitters);
 
             var allDevelopers = roleHelper.UsersInRole("Developer");
-            var currentProjectDevelopers = projectHelper.UsersInRoleOnProject(project.Id, "ProjectDeveloper");
+            var currentProjectDevelopers = projectHelper.UsersInRoleOnProject(project.Id, "Developer");
             ViewBag.Developers = new MultiSelectList(allDevelopers,"Id", "FullNameWithEmail", currentProjectDevelopers);
 
             var allAdministrators = roleHelper.UsersInRole("Admin");

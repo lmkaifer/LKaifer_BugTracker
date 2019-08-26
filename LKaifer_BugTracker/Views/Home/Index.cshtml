@@ -18,6 +18,9 @@
 
 }
 
+            <!--High Charts-->
+            <div id="tickets-status-high-chart" style="height: 400px"></div>
+
 
 <!-- //nav -->
 
@@ -32,21 +35,21 @@
             <ul class="ca-menu">
                 <li>
 
-                    
-                        <a href="@Url.Action("MyIndex", "Tickets")">
-                            <i class="fa fa-building-o" aria-hidden="true"></i>
-                            <div class="ca-content">
-                                <h4 class="ca-main one"></h4>
-                                <h3 class="ca-sub">Unassigned Tickets</h3>
-                            </div>
-                        </a>
-                    
+
+                    <a href="@Url.Action("MyIndex", "Tickets")">
+                        <i class="fa fa-building-o" aria-hidden="true"></i>
+                        <div class="ca-content">
+                            <h4 class="ca-main one">@unassignedTickets.Count</h4>
+                            <h3 class="ca-sub">Unassigned Tickets</h3>
+                        </div>
+                    </a>
+
                 </li>
                 <li>
-                    <a href="@Url.Action("MyIndex", "Projects")">
+                    <a href="@Url.Action("Index", "Projects")">
                         <i class="fa fa-briefcase" aria-hidden="true"></i>
                         <div class="ca-content">
-                            @*<h4 class="ca-main one">@projectshelper.ProjectsMissingRoles().badProjectsCount</h4>*@
+                            <h4 class="ca-main one">@projectshelper.ProjectsMissingRoles().Count</h4>
                             <h3 class="ca-sub one">Unassigned Projects</h3>
                         </div>
                     </a>
@@ -55,32 +58,35 @@
                     <a href="@Url.Action("MyNotifications", "TicketNotifications")">
                         <i class="fa fa-flash" aria-hidden="true"></i>
                         <div class="ca-content">
-                            <h4 class="ca-main two">@NotificationHelper.GetAllUserNotificationCount()
-                            
-                            </h4>
-                            <h3 class="ca-sub two">My Notifications</h3>
-                        </div>
-                    </a>
-                </li>
-                @*<li>
-                        <a href="#">
-                            <i class="fa fa-tasks" aria-hidden="true"></i>
-                            <div class="ca-content">
-                                <h4 class="ca-main three">49,436</h4>
-                                <h3 class="ca-sub three">Old Projects</h3>
-                            </div>
-                        </a>
-                    </li>*@
-                <li>
-                    <a href="#">
-                        <i class="fa fa-clone" aria-hidden="true"></i>
-                        <div class="ca-content">
-                            <h4 class="ca-main four">30,808</h4>
-                            <h3 class="ca-sub four">New Messages</h3>
-                        </div>
-                    </a>
-                </li>
-                <div class="clearfix"></div>
+                            <h4 class="ca-main two">
+                                @NotificationHelper.GetAllUserNotificationCount()
+
+                        </h4>
+                        <h3 class="ca-sub two">My Notifications</h3>
+                    </div>
+                </a>
+            </li>
+            @*<li>
+        <a href="#">
+            <i class="fa fa-tasks" aria-hidden="true"></i>
+            <div class="ca-content">
+                <h4 class="ca-main three">49,436</h4>
+                <h3 class="ca-sub three">Old Projects</h3>
+            </div>
+        </a>
+    </li>*@
+            <li>
+                <a href="#">
+                    <i class="fa fa-clone" aria-hidden="true"></i>
+                    <div class="ca-content">
+                        <h4 class="ca-main four">30,808</h4>
+                        <h3 class="ca-sub four">New Messages</h3>
+                    </div>
+                </a>
+            </li>
+
+
+            <div class="clearfix"></div>
             </ul>
         </div>
         <!-- //agile_top_w3_grids-->
@@ -474,3 +480,51 @@
     </div>
 <!-- banner -->
 <!--copy rights start here-->
+@section scripts{
+    <script>
+        //Ajax Code for 3D Donut Highcharts for Ticket Statuses
+        $.ajax({
+            url: '@Url.Action("TicketStatusData", "Home")',
+            success: function (response) {
+                Highchartinitforticketstatuses(response);
+            }
+        });
+        //Data transforming into right format
+        function TransformData(data) {
+            var result = [];
+            $.each(data, function (index, item) {
+                var ticketStatusObj = [item.TicketStatusName, Number(item.TicketCount)];
+                result.push(ticketStatusObj);
+            });
+            return result;
+        }
+        //Highcharts for Ticket Statuses
+        function Highchartinitforticketstatuses(data) {
+            Highcharts.chart('tickets-status-high-chart', {
+                chart: {
+                    type: 'pie',
+                    options3d: {
+                        enabled: true,
+                        alpha: 45
+                    }
+                },
+                title: {
+                    text: 'Ticket Status Counts'
+                },
+                subtitle: {
+                    text: 'Detail of New, Assigned, In Progress, Completed and Archived'
+                },
+                plotOptions: {
+                    pie: {
+                        innerSize: 100,
+                        depth: 45
+                    }
+                },
+                series: [{
+                    name: 'Tickets Count',
+                    data: TransformData(data)
+                }]
+            });
+        }
+    </script>
+    }

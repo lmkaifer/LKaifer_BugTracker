@@ -15,11 +15,16 @@ namespace LKaifer_BugTracker.Models
         public IList<UserLoginInfo> Logins { get; set; }
         public string PhoneNumber { get; set; }
         public HttpPostedFileBase AvatarFile { get; set; }
+        [MaxLength(50, ErrorMessage = "Name cannot be greater than 50 characters")]
+
         public string FirstName { get; set; }
+        [MaxLength(50, ErrorMessage = "Name cannot be greater than 50 characters")]
+
         public string LastName { get; set; }
         public bool TwoFactor { get; set; }
         public bool BrowserRemembered { get; set; }
 
+        [MaxLength(25, ErrorMessage = "Name cannot be greater than 25 characters")]
         [DataType(DataType.Password)]
         [Display(Name = "Current password")]
         public string OldPassword { get; set; }

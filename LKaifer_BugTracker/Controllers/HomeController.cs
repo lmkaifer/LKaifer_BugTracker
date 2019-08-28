@@ -15,6 +15,9 @@ namespace LKaifer_BugTracker.Controllers
 
         public ActionResult Index()
         {
+            ViewBag.AllProjectList = db.Projects.ToList();
+      
+            
             return View();
         }
         public ActionResult About()

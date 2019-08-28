@@ -1,40 +1,70 @@
 ﻿@model LKaifer_BugTracker.Models.Ticket
 
 @{
-    ViewBag.Title = "AssignTicket";
+    ViewBag.Title = "Assign Ticket";
 }
 
 <h2>AssignTicket</h2>
 
-@using (Html.BeginForm())
-{
-    @Html.AntiForgeryToken()
-    
-    <div class="form-horizontal">
-        <h4>Ticket</h4>
-        <hr/>
-        @Html.ValidationSummary(true, "", new { @class = "text-danger"})
-        @Html.HiddenFor(model => model.Id)
-        <h4>Project Name : @Model.Project.Name</h4>
-        <h4>Ticket Name: @Model.Title</h4>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.AssignedToUserId, "Assign Developer", new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("AssignedToUserId", null, new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.AssignedToUserId, "", new { @class = "text-danger" })
+<table class="table">
+    <tr>
+        <th>
+            Project Name
+        </th>
+        <th>
+            Ticket Name
+        </th>
+        <th>
+            Developer Assignment
+        </th>
+        @*<th>
+    </tr>*@
 
-            </div>
-        </div>
+    <tr>
+        <td>
+            @Model.Project.Name
+        </td>
+        <td>
+            @Html.DisplayFor(model => model.Title)
+        </td>
+        @*<td>
+            @Html.DisplayFor(model => model.AssignedToUser.FullName)
+        </td>*@
+        <td>
 
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
-            </div>
-        </div>
-   
-    </div>
-}
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+
+                <div class="form-horizontal">
+                    <hr />
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    @Html.HiddenFor(model => model.Id)
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.AssignedToUserId, " Developer", new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.DropDownList("AssignedToUserId", null, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.AssignedToUserId, "", new { @class = "text-danger" })
+
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-10">
+                            <input type="submit" value="Assign" class="btn btn-default" />
+                        </div>
+                    </div>
+
+                </div>
+            }
+
+        </td>
+    </tr>
+</table>
+<br>
+
 
 <div>
     @Html.ActionLink("Back to List", "MyIndex")

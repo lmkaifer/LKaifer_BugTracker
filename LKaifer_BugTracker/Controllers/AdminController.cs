@@ -11,7 +11,7 @@ using System.Web.Security;
 namespace LKaifer_BugTracker.Controllers
 {
     [RequireHttps]
-    [Authorize(Roles = "Admin")]
+    [Authorize]
     public class AdminController : Controller
 
     {
@@ -39,8 +39,8 @@ namespace LKaifer_BugTracker.Controllers
             return View();
 
         }
-        
 
+        [Authorize(Roles = "Admin")]
         public ActionResult ManageUserRole(string userId)
         {
             //My code; not Jason's

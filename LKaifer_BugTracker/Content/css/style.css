@@ -1893,7 +1893,7 @@ margin: 0.5em 0 1.5em 0;
     -moz-background-size: cover;
     -o-background-size: cover;
     -ms-background-size: cover;
-    min-height:800px
+    /*min-height:800px*/
 }
 .over_lay_agile_pages_w3ls {
     background: url(../../images/overlay.png)repeat;

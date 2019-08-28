@@ -6,6 +6,7 @@
 @model IEnumerable<UserProfileViewModel>
 @using LKaifer_BugTracker.Helpers
 <style>
+
     .avatar {
         max-height: 30px;
         max-width: 30px;
@@ -17,7 +18,7 @@
 }
 
 <div class="agile-tables">
-       <div class="w3l-table-info agile_info_shadow">
+    <div class="w3l-table-info agile_info_shadow">
         <h3 class="w3_inner_tittle two">User Index</h3>
         <table id="table">
             <thead>
@@ -38,8 +39,8 @@
                         @Html.DisplayName("Role")
                     </th>
                     @*<th>
-                        @Html.DisplayName("Assigned Projects")
-                    </th>*@
+                            @Html.DisplayName("Assigned Projects")
+                        </th>*@
                     <th>
 
                     </th>
@@ -73,11 +74,17 @@
                         <td>
                             @roleHelper.ListUserRoles(user.Id).FirstOrDefault()
                         </td>
-                       
+
 
                         <td>
-                            @Html.ActionLink("Manage Role", "ManageUserRole", "Admin", new { userId = user.Id }, null) |
-                            @Html.ActionLink("Manage Projects", "ManageUserProjects", "Admin", new { userId = user.Id }, null)
+                            @if (User.IsInRole("Admin"))
+                            {
+                                @Html.ActionLink("Manage Role", "ManageUserRole", "Admin", new { userId = user.Id }, null)
+                            }
+                            @if (User.IsInRole("Admin") || User.IsInRole("Manager"))
+                            {
+                                @Html.ActionLink("Manage Projects", "ManageUserProjects", "Admin", new { userId = user.Id }, null)
+                            }
                         </td>
                     </tr>
                 }
@@ -91,6 +98,6 @@
 {
     <script>
         $('#table').basictable();
-         $("tblTarget").DataTable();
+        $("tblTarget").DataTable();
     </script>
 }

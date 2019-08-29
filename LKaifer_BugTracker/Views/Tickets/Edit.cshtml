@@ -1,20 +1,18 @@
 ﻿@model LKaifer_BugTracker.Models.Ticket
-
 @{
     ViewBag.Title = "Edit";
 }
 <style>
+
     a.badge:hover {
         background-color: lightgray;
         color: black;
     }
 
-   
+
     h2 {
         text-shadow: 2px 2px 5px red;
     }
-
-
 </style>
 <h2>Edit Your Ticket</h2>
 
@@ -24,7 +22,7 @@
     @Html.AntiForgeryToken()
 
     <div class="form-horizontal">
-        
+
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         @Html.HiddenFor(model => model.Id)
@@ -33,7 +31,6 @@
         @Html.HiddenFor(model => model.OwnerUserId)
         @Html.HiddenFor(model => model.TicketStatusId)
         @Html.HiddenFor(model => model.AssignedToUserId)
-
 
 
 

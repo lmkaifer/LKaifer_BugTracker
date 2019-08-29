@@ -32,39 +32,45 @@
 }
 <hr />
 <table class=table>
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.FirstName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.LastName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Email)
-        </th>
-        <th>
-            Role
-        </th>
-    </tr>
-    @foreach (var user in Model)
-    {
-<tr>
-    <td>
-        @Html.DisplayFor(model => user.FirstName)
-    </td>
-    <td>
-        @Html.DisplayFor(model => user.LastName)
-    </td>
-    <td>
-        @Html.DisplayFor(model => user.Email)
-    </td>
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LastName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Email)
+            </th>
+            <th>
+                Role
+            </th>
+        </tr>
+    </thead>
 
-    <td>
-        @roleHelper.ListUserRoles(user.Id).FirstOrDefault()
-    </td>
-</tr>}
-</table>
-<br />
+    <tbody>
+        @foreach (var user in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(model => user.FirstName)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => user.LastName)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => user.Email)
+                </td>
+
+                <td>
+                    @roleHelper.ListUserRoles(user.Id).FirstOrDefault()
+                </td>
+                </tr>
+
+}
+    </table>
+    <br />
 
 
-@Html.ActionLink("Back to User Index", "UserIndex", "Admin")
+    @Html.ActionLink("Back to User Index", "UserIndex", "Admin")

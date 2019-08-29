@@ -22,8 +22,7 @@ namespace LKaifer_BugTracker.Controllers
         private UserRolesHelper roleHelper = new UserRolesHelper();
         private ProjectsHelper projectHelper = new ProjectsHelper();
 
-
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin, Manager")]
 
         // GET: Tickets
         public ActionResult Index()
@@ -292,6 +291,8 @@ namespace LKaifer_BugTracker.Controllers
             return RedirectToAction("Index");
         }
 
+        [Authorize(Roles = "Admin, Manager")]
+
         public ActionResult AssignTicket(int? id)
         {
             UserRolesHelper helper = new UserRolesHelper();
@@ -302,7 +303,7 @@ namespace LKaifer_BugTracker.Controllers
             return View(ticket);
 
         }
-
+        [Authorize(Roles = "Admin, Manager")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> AssignTicket(Ticket model)

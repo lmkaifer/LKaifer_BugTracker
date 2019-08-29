@@ -90,6 +90,18 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                                             <li class="mini_list_w3_line"><a href="@Url.Action("Index", "TicketHistories")"><i class="fa fa-caret-right" aria-hidden="true"></i>Ticket Histories</a></li>
                                         </ul>
                                     </li>*@
+                                    @if (User.IsInRole("Admin") || User.IsInRole("Manager"))
+                                    {
+                                        <a href="#" class="submenu-toggle-button"><i class="fa fa-cogs" aria-hidden="true"></i>Index Overview<i class="fa fa-angle-down" aria-hidden="true"></i></a>
+                                        <ul class="gn-submenu">
+                                            <li class="mini_list_agile"><a href="@Url.Action("Index", "Tickets")"><i class="fa fa-caret-right" aria-hidden="true"></i>All Tickets Index</a></li>
+                                            <li class="mini_list_agile"><a href="@Url.Action("Index", "Projects")"><i class="fa fa-caret-right" aria-hidden="true"></i>All Projects Index</a></li>
+                                            <li class="mini_list_w3_line"><a href="@Url.Action("Create", "Projects")"><i class="fa fa-caret-right" aria-hidden="true"></i>Create a Project</a></li>
+                                            @*<li class="mini_list_w3_line"><a href="@Url.Action("MyIndex", "Projects")"><i class="fa fa-caret-right" aria-hidden="true"></i> My Projects</a></li>*@
+
+                                        </ul>
+                                    }
+                                </li>
                                 <li>
                                     @if (User.IsInRole("Submitter"))
                                     {
@@ -104,18 +116,6 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                                 </li>
 
                                 <li>
-                                    @if (User.IsInRole("Admin") || User.IsInRole("Manager"))
-                                    {
-                                        <a href="#" class="submenu-toggle-button"><i class="fa fa-cogs" aria-hidden="true"></i>Index Overview<i class="fa fa-angle-down" aria-hidden="true"></i></a>
-                                        <ul class="gn-submenu">
-                                            <li class="mini_list_agile"><a href="@Url.Action("Index", "Tickets")"><i class="fa fa-caret-right" aria-hidden="true"></i>All Tickets Index</a></li>
-                                            <li class="mini_list_agile"><a href="@Url.Action("Index", "Projects")"><i class="fa fa-caret-right" aria-hidden="true"></i>All Projects Index</a></li>
-                                            <li class="mini_list_w3_line"><a href="@Url.Action("Create", "Projects")"><i class="fa fa-caret-right" aria-hidden="true"></i>Create a Project</a></li>
-                                            @*<li class="mini_list_w3_line"><a href="@Url.Action("MyIndex", "Projects")"><i class="fa fa-caret-right" aria-hidden="true"></i> My Projects</a></li>*@
-
-                                        </ul>
-                                    }
-                                </li>
 
                                 <li>
                                     @if (User.IsInRole("Submitter") || User.IsInRole("Manager") || User.IsInRole("Developer"))

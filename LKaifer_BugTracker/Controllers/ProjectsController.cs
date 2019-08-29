@@ -11,7 +11,8 @@ using LKaifer_BugTracker.Models;
 using Microsoft.AspNet.Identity;
 
 namespace LKaifer_BugTracker.Controllers
-{   [Authorize]
+{
+    [Authorize(Roles = "Admin, Manager, Submitter, Developer")]
     [RequireHttps]
     public class ProjectsController : Controller
     {
@@ -23,7 +24,7 @@ namespace LKaifer_BugTracker.Controllers
         {
             return View(db.Projects.ToList());
         }
-
+        [Authorize(Roles = "Admin, Manager, Submitter, Developer")]
         public ActionResult MyIndex()
         {
             
@@ -36,7 +37,7 @@ namespace LKaifer_BugTracker.Controllers
             
 
         }
-
+        [Authorize(Roles = "Admin, Manager, Submitter, Developer")]
         // GET: Projects/Details/5
         public ActionResult Details(int? id)
         {
@@ -72,7 +73,7 @@ namespace LKaifer_BugTracker.Controllers
 
             return View(project);
         }
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin, Manager")]
         // GET: Projects/Create
         public ActionResult Create()
         {

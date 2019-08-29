@@ -85,24 +85,9 @@
 
 
 <div class="row">
-    <div class="col-md-6">
         <h2>Ticket Dashboard</h2>
     </div>
-    <div class="col-md-6">
-        @Html.ActionLink("Edit Ticket", "Edit", "Tickets", new { id = Model.Id }, new { @class = "btn btn-danger" })
-    </div>
-    @if (User.IsInRole("Developer"))
-    {
-        <button class="label label-danger">Mark as In Progress</button>
-
-        <br />
-    }
-    @if (User.IsInRole("Manager"))
-    {
-        <button class="label label-danger">Mark as Completed</button>
-
-    }
-    @*</div>*@
+  
 
     <hr />
     <table class="table">
@@ -171,52 +156,6 @@
     </table>
     <br>
 
-    <!-- Button trigger modal -->
-    @*<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalLong">
-            Launch Comments for This Ticket
-        </button>*@
-
-    <!-- Modal -->
-    @*<div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLongTitle">Ticket Comments</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    @if (Request.IsAuthenticated)
-                    {
-                        foreach (var comment in Model.TicketComments)
-                        {<p>
-                                <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
-                                    Read Comments
-                                </button>
-                            </p>
-                            <div class="collapse" id="collapseExample">
-                                <div class="card card-body">
-                                    @Html.DisplayFor(c => comment.CommentBody)
-                                    <p style="font-size:smaller">Submitted by @Html.DisplayFor(c => comment.Author.FullName)</p>
-                                </div>
-                            </div>
-
-
-
-                            <br />
-
-                        }
-                    }
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
-                </div>
-            </div>
-        </div>*@
-    @*</div>*@
-    <!--Button trigger modal ends-->
     <h3>Ticket Team</h3>
     <hr />
     <div class="social_media_w3ls">
@@ -354,10 +293,33 @@
 
                 </div>}
         }
+        </div>
         <br />
         <br />
         <hr />
+<div class="row">
+    <div class="col-md-4">
         <h3>Ticket Information & Actions</h3>
+    <div class="col-md-4">
+        @Html.ActionLink("Edit Ticket", "Edit", "Tickets", new { id = Model.Id }, new { @class = "label label-danger" })
+    </div>
+    <div class="col-md-4">
+
+    @if (User.IsInRole("Developer"))
+    {
+        <button class="label label-danger">Mark as In Progress</button>
+
+        <br />
+    }
+    @if (User.IsInRole("Manager"))
+    {
+        <button class="label label-success">Mark as Completed</button>
+
+    }
+    </div>
+
+    </div>
+</div>
         <div class="row">
             <div class="col-md-6">
                 <div class="panel panel-danger">
@@ -370,7 +332,7 @@
                     <div class="panel body panel-collapse in" aria-expanded="true" id="ticket-history-panel">
                         @foreach (var history in Model.TicketHistories)
                         {
-                            <p>@history.PropertyName has changed from @history.OldValue to @history.NewValue on @history.Updated.ToString("g")</p>
+                        <p>@history.PropertyName has changed from @history.OldValue to @history.NewValue on @history.Updated.ToString("g")</p>
                             <hr>
                         }
                     </div>
@@ -501,7 +463,8 @@
                                             <p><small class="text-muted"><i class="glyphicon glyphicon-time"></i> @history.Updated.ToString("g")</small></p>
                                         </div>
                                         <div class="timeline-body">
-                                            <p>@history.PropertyName has changed from @history.OldValue to @history.NewValue</p>
+                                                <p>@history.PropertyName has changed from @history.OldValue to @history.NewValue</p>
+
                                         </div>
                                     </div>
                                 </li>

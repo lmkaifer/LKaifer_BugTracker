@@ -76,100 +76,121 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                                     @if (User.IsInRole("Admin"))
 
                                     {
-                                        <a href="#" class="submenu-toggle-button"><i class="fa fa-cogs" aria-hidden="true"></i>User Administration <i class="fa fa-angle-down" aria-hidden="true"></i></a>
+                                        <a href="#" class="submenu-toggle-button"><i class="fa fa-users" aria-hidden="true"></i>User Administration <i class="fa fa-angle-down" aria-hidden="true"></i></a>
                                         <ul class="gn-submenu">
                                             <li class="mini_list_w3_line"><a href="@Url.Action("UserIndex", "Admin")"><i class="fa fa-caret-right" aria-hidden="true"></i>Manage Users</a></li>
                                             <li class="mini_list_w3"><a href="@Url.Action("ManageRoles", "Admin")"><i class="fa fa-caret-right" aria-hidden="true"></i> Manage Roles</a></li>
                                         </ul>
                                     }
                                 </li>
-
-                                @*<li>
-                                        <a href="#" class="submenu-toggle-button"><i class="fa fa-cogs" aria-hidden="true"></i>Tickets <i class="fa fa-angle-down" aria-hidden="true"></i></a>
-                                        <ul class="gn-submenu">
-                                            <li class="mini_list_w3_line"><a href="@Url.Action("Index", "TicketHistories")"><i class="fa fa-caret-right" aria-hidden="true"></i>Ticket Histories</a></li>
-                                        </ul>
-                                    </li>*@
+                                <li>
                                     @if (User.IsInRole("Admin") || User.IsInRole("Manager"))
+
                                     {
-                                        <a href="#" class="submenu-toggle-button"><i class="fa fa-cogs" aria-hidden="true"></i>Index Overview<i class="fa fa-angle-down" aria-hidden="true"></i></a>
+                                        <a href="#" class="submenu-toggle-button"><i class="fa fa-cogs" aria-hidden="true"></i>My Work <i class="fa fa-angle-down" aria-hidden="true"></i></a>
+                                        <ul class="gn-submenu">
+                                            <li class="mini_list_w3_line"><a href="@Url.Action("MyIndex", "Projects")"><i class="fa fa-caret-right" aria-hidden="true"></i>My Projects Work</a></li>
+                                            <li class="mini_list_w3"><a href="@Url.Action("MyIndex", "Tickets")"><i class="fa fa-caret-right" aria-hidden="true"></i> My Tickets Work</a></li>
+                                            <li class="mini_list_w3_line"><a href="@Url.Action("Create", "Projects")"><i class="fa fa-caret-right" aria-hidden="true"></i>Create a Project</a></li>
+                                        </ul>
+                                    }
+                                </li>
+                                @*<li>
+            <a href="#" class="submenu-toggle-button"><i class="fa fa-cogs" aria-hidden="true"></i>Tickets <i class="fa fa-angle-down" aria-hidden="true"></i></a>
+            <ul class="gn-submenu">
+                <li class="mini_list_w3_line"><a href="@Url.Action("Index", "TicketHistories")"><i class="fa fa-caret-right" aria-hidden="true"></i>Ticket Histories</a></li>
+            </ul>
+        </li>*@
+                                <li>
+                                    @if (User.IsInRole("Admin"))
+                                    {
+                                        <a href="#" class="submenu-toggle-button"><i class="fa fa-list" aria-hidden="true"></i>Index Overview<i class="fa fa-angle-down" aria-hidden="true"></i></a>
                                         <ul class="gn-submenu">
                                             <li class="mini_list_agile"><a href="@Url.Action("Index", "Tickets")"><i class="fa fa-caret-right" aria-hidden="true"></i>All Tickets Index</a></li>
                                             <li class="mini_list_agile"><a href="@Url.Action("Index", "Projects")"><i class="fa fa-caret-right" aria-hidden="true"></i>All Projects Index</a></li>
-                                            <li class="mini_list_w3_line"><a href="@Url.Action("Create", "Projects")"><i class="fa fa-caret-right" aria-hidden="true"></i>Create a Project</a></li>
-                                            @*<li class="mini_list_w3_line"><a href="@Url.Action("MyIndex", "Projects")"><i class="fa fa-caret-right" aria-hidden="true"></i> My Projects</a></li>*@
 
                                         </ul>
                                     }
                                 </li>
                                 <li>
-                                    @if (User.IsInRole("Submitter"))
+                                    @if (User.IsInRole("Manager"))
                                     {
-
-                                        <a href="#" class="submenu-toggle-button"><i class="fa fa-cogs" aria-hidden="true"></i>Ticket Administration <i class="fa fa-angle-down" aria-hidden="true"></i></a>
+                                        <a href="#" class="submenu-toggle-button"><i class="fa fa-list" aria-hidden="true"></i>Index Overview<i class="fa fa-angle-down" aria-hidden="true"></i></a>
                                         <ul class="gn-submenu">
-                                            <li class="mini_list_agile"><a href="@Url.Action("Index", "Tickets")"><i class="fa fa-caret-right" aria-hidden="true"></i>Ticket Index</a></li>
-                                            <li class="mini_list_w3_line"><a href="@Url.Action("Create", "Tickets")"><i class="fa fa-caret-right" aria-hidden="true"></i>Create a Ticket</a></li>
+                                            <li class="mini_list_agile"><a href="@Url.Action("UserIndex", "Admin")"><i class="fa fa-caret-right" aria-hidden="true"></i>User Index</a></li>
+                                            <li class="mini_list_agile"><a href="@Url.Action("Index", "Projects")"><i class="fa fa-caret-right" aria-hidden="true"></i>All Projects Index</a></li>
 
                                         </ul>
                                     }
                                 </li>
 
-                                <li>
+                <li>
+                    @if (User.IsInRole("Submitter"))
+                       
 
-                                <li>
-                                    @if (User.IsInRole("Submitter") || User.IsInRole("Manager") || User.IsInRole("Developer"))
+                    {
+                        <a href="#" class="submenu-toggle-button"><i class="fa fa-cogs" aria-hidden="true"></i>My Work<i class="fa fa-angle-down" aria-hidden="true"></i></a>
+                        <ul class="gn-submenu">
+                            <li class="mini_list_agile"><a href="@Url.Action("MyIndex", "Tickets")"><i class="fa fa-caret-right" aria-hidden="true"></i>My Tickets</a></li>
+                            <li class="mini_list_w3_line"><a href="@Url.Action("MyIndex", "Projects")"><i class="fa fa-caret-right" aria-hidden="true"></i>My Projects</a></li>
+                            <li class="mini_list_w3_line"><a href="@Url.Action("Create", "Tickets")"><i class="fa fa-caret-right" aria-hidden="true"></i>Create Tickets</a></li>
+                        </ul>
+
+                    }
+                </li>
+                <li>
+                    @if (User.IsInRole("Developer"))
+                    {
+                        <a href="#" class="submenu-toggle-button"><i class="fa fa-cogs" aria-hidden="true"></i>My Work<i class="fa fa-angle-down" aria-hidden="true"></i></a>
+                        <ul class="gn-submenu">
+                            <li class="mini_list_agile"><a href="@Url.Action("MyIndex", "Tickets")"><i class="fa fa-caret-right" aria-hidden="true"></i>My Tickets</a></li>
+                            <li class="mini_list_w3_line"><a href="@Url.Action("MyIndex", "Projects")"><i class="fa fa-caret-right" aria-hidden="true"></i>My Projects</a></li>
+                            <li class="mini_list_w3_line"><a href="@Url.Action("MyNotifications", "TicketNotifications")"><i class="fa fa-caret-right" aria-hidden="true"></i>My Notifications</a></li>
+                        </ul>
 
 
-                                    {
-                                        <a href="#" class="submenu-toggle-button"><i class="fa fa-cogs" aria-hidden="true"></i>My Work<i class="fa fa-angle-down" aria-hidden="true"></i></a>
+                    }
+                </li>
+
+                @*<a href="#" class="submenu-toggle-button"> <i class="fa fa-file-text-o" aria-hidden="true"></i>Forms <i class="fa fa-angle-down" aria-hidden="true"></i></a>
                                         <ul class="gn-submenu">
-                                            <li class="mini_list_agile"><a href="@Url.Action("MyIndex", "Tickets")"><i class="fa fa-caret-right" aria-hidden="true"></i>My Tickets</a></li>
-                                            <li class="mini_list_w3_line"><a href="@Url.Action("MyIndex", "Projects")"><i class="fa fa-caret-right" aria-hidden="true"></i> My Projects</a></li>
-
+                                            <li class="mini_list_agile"><a href="input.html"><i class="fa fa-caret-right" aria-hidden="true"></i> Inputs</a></li>
+                                            <li class="mini_list_w3"><a href="validation.html"><i class="fa fa-caret-right" aria-hidden="true"></i> Validation</a></li>
                                         </ul>
+                        </li>
+                        <li><a href="table.html"> <i class="fa fa-table" aria-hidden="true"></i> Tables</a></li>
+                        <li>
+                            <a href="#" class="submenu-toggle-button"><i class="fa fa-list" aria-hidden="true"></i>Short Codes <i class="fa fa-angle-down" aria-hidden="true"> </i></a>
+                            <ul class="gn-submenu">
+                                <li class="mini_list_agile"><a href="typo.html"><i class="fa fa-caret-right" aria-hidden="true"></i> Typography</a></li>
+                                <li class="mini_list_w3"><a href="icons.html"> <i class="fa fa-caret-right" aria-hidden="true"></i> Icons</a></li>
 
-                                    }
-                                </li>
-                                @*<a href="#" class="submenu-toggle-button"> <i class="fa fa-file-text-o" aria-hidden="true"></i>Forms <i class="fa fa-angle-down" aria-hidden="true"></i></a>
-                                                        <ul class="gn-submenu">
-                                                            <li class="mini_list_agile"><a href="input.html"><i class="fa fa-caret-right" aria-hidden="true"></i> Inputs</a></li>
-                                                            <li class="mini_list_w3"><a href="validation.html"><i class="fa fa-caret-right" aria-hidden="true"></i> Validation</a></li>
-                                                        </ul>
-                                        </li>
-                                        <li><a href="table.html"> <i class="fa fa-table" aria-hidden="true"></i> Tables</a></li>
-                                        <li>
-                                            <a href="#" class="submenu-toggle-button"><i class="fa fa-list" aria-hidden="true"></i>Short Codes <i class="fa fa-angle-down" aria-hidden="true"> </i></a>
-                                            <ul class="gn-submenu">
-                                                <li class="mini_list_agile"><a href="typo.html"><i class="fa fa-caret-right" aria-hidden="true"></i> Typography</a></li>
-                                                <li class="mini_list_w3"><a href="icons.html"> <i class="fa fa-caret-right" aria-hidden="true"></i> Icons</a></li>
+                            </ul>
+                        </li>
 
-                                            </ul>
-                                        </li>
+                        <li><a href="charts.html"> <i class="fa fa-line-chart" aria-hidden="true"></i> Charts</a></li>
+                        <li><a href="maps.html"><i class="fa fa-map-o" aria-hidden="true"></i> Maps</a></li>
+                        <li class="page">
+                            <a href="#" class="submenu-toggle-button"><i class="fa fa-files-o" aria-hidden="true"></i> Pages <i class="fa fa-angle-down" aria-hidden="true"></i></a>
+                            <ul class="gn-submenu">
 
-                                        <li><a href="charts.html"> <i class="fa fa-line-chart" aria-hidden="true"></i> Charts</a></li>
-                                        <li><a href="maps.html"><i class="fa fa-map-o" aria-hidden="true"></i> Maps</a></li>
-                                        <li class="page">
-                                            <a href="#" class="submenu-toggle-button"><i class="fa fa-files-o" aria-hidden="true"></i> Pages <i class="fa fa-angle-down" aria-hidden="true"></i></a>
-                                            <ul class="gn-submenu">
+                                <li class="mini_list_agile"> <a href="signin.html"> <i class="fa fa-caret-right" aria-hidden="true"></i> Sign In</a></li>
+                                <li class="mini_list_w3"><a href="signup.html"> <i class="fa fa-caret-right" aria-hidden="true"></i> Sign Up</a></li>
+                                <li class="mini_list_agile error"><a href="404.html"> <i class="fa fa-caret-right" aria-hidden="true"></i> Error 404 </a></li>
 
-                                                <li class="mini_list_agile"> <a href="signin.html"> <i class="fa fa-caret-right" aria-hidden="true"></i> Sign In</a></li>
-                                                <li class="mini_list_w3"><a href="signup.html"> <i class="fa fa-caret-right" aria-hidden="true"></i> Sign Up</a></li>
-                                                <li class="mini_list_agile error"><a href="404.html"> <i class="fa fa-caret-right" aria-hidden="true"></i> Error 404 </a></li>
-
-                                                <li class="mini_list_w3_line"><a href="calendar.html"> <i class="fa fa-caret-right" aria-hidden="true"></i> Calendar</a></li>
-                                            </ul>
-                                        </li>
-                                        <li>
-                                            <a href="#" class="submenu-toggle-button"> <i class="fa fa-suitcase" aria-hidden="true"></i>More <i class="fa fa-angle-down" aria-hidden="true"></i></a>
-                                            <ul class="gn-submenu">
-                                                <li class="mini_list_agile"><a href="faq.html"> <i class="fa fa-caret-right" aria-hidden="true"></i> Faq</a></li>
-                                                <li class="mini_list_w3"><a href="blank.html"> <i class="fa fa-caret-right" aria-hidden="true"></i> Blank Page</a></li>
-                                            </ul>
-                                        </li>
-                                    </ul>*@
-                        </div><!-- /gn-scroller -->
-                    </nav>
+                                <li class="mini_list_w3_line"><a href="calendar.html"> <i class="fa fa-caret-right" aria-hidden="true"></i> Calendar</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="#" class="submenu-toggle-button"> <i class="fa fa-suitcase" aria-hidden="true"></i>More <i class="fa fa-angle-down" aria-hidden="true"></i></a>
+                            <ul class="gn-submenu">
+                                <li class="mini_list_agile"><a href="faq.html"> <i class="fa fa-caret-right" aria-hidden="true"></i> Faq</a></li>
+                                <li class="mini_list_w3"><a href="blank.html"> <i class="fa fa-caret-right" aria-hidden="true"></i> Blank Page</a></li>
+                            </ul>
+                        </li>
+                    </ul>*@
+                </div><!-- /gn-scroller -->
+                </nav>
                 </li>
                 <!-- //nav_agile_w3l -->
                 <li class="second logo"><h1><a href="main-page.html"><i class="fa fa-graduation-cap" aria-hidden="true"></i>Bugs Be Gone </a></h1></li>
@@ -414,14 +435,14 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                         </ul>
                     </li>*@
 
-                <li class="second w3l_search">
+                @*<li class="second w3l_search">
 
                     <form action="#" method="post">
                         <input type="search" name="search" placeholder="Search here..." required="">
                         <button class="btn btn-default" type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
                     </form>
 
-                </li>
+                </li>*@
                 <li class="second admin-pic">
                     @Html.Partial("_LoginPartial")
                 </li>
@@ -466,214 +487,214 @@ License URL: http://creativecommons.org/licenses/by/3.0/
     <script src="~/Scripts/js/light.js"></script>
     <!-- Chart code -->
     <script>
-        var chart = AmCharts.makeChart("chartdiv", {
-            "theme": "light",
-            "type": "serial",
-            "startDuration": 2,
-            "dataProvider": [{
-                "country": "USA",
-                "visits": 4025,
-                "color": "#FF0F00"
-            }, {
-                "country": "China",
-                "visits": 1882,
-                "color": "#FF6600"
-            }, {
-                "country": "Japan",
-                "visits": 1809,
-                "color": "#FF9E01"
-            }, {
-                "country": "Germany",
-                "visits": 1322,
-                "color": "#FCD202"
-            }, {
-                "country": "UK",
-                "visits": 1122,
-                "color": "#F8FF01"
-            }, {
-                "country": "France",
-                "visits": 1114,
-                "color": "#B0DE09"
-            }, {
-                "country": "India",
-                "visits": 984,
-                "color": "#04D215"
-            }, {
-                "country": "Spain",
-                "visits": 711,
-                "color": "#0D8ECF"
-            }, {
-                "country": "Netherlands",
-                "visits": 665,
-                "color": "#0D52D1"
-            }, {
-                "country": "Russia",
-                "visits": 580,
-                "color": "#2A0CD0"
-            }, {
-                "country": "South Korea",
-                "visits": 443,
-                "color": "#8A0CCF"
-            }, {
-                "country": "Canada",
-                "visits": 441,
-                "color": "#CD0D74"
-            }, {
-                "country": "Brazil",
-                "visits": 395,
-                "color": "#754DEB"
-            }, {
-                "country": "Italy",
-                "visits": 386,
-                "color": "#DDDDDD"
-            }, {
-                "country": "Taiwan",
-                "visits": 338,
-                "color": "#333333"
-            }],
-            "valueAxes": [{
-                "position": "left",
-                "axisAlpha": 0,
-                "gridAlpha": 0
-            }],
-            "graphs": [{
-                "balloonText": "[[category]]: <b>[[value]]</b>",
-                "colorField": "color",
-                "fillAlphas": 0.85,
-                "lineAlpha": 0.1,
-                "type": "column",
-                "topRadius": 1,
-                "valueField": "visits"
-            }],
-            "depth3D": 40,
-            "angle": 30,
-            "chartCursor": {
-                "categoryBalloonEnabled": false,
-                "cursorAlpha": 0,
-                "zoomable": false
-            },
-            "categoryField": "country",
-            "categoryAxis": {
-                "gridPosition": "start",
-                "axisAlpha": 0,
-                "gridAlpha": 0
+        //var chart = AmCharts.makeChart("chartdiv", {
+        //    "theme": "light",
+        //    "type": "serial",
+        //    "startDuration": 2,
+        //    "dataProvider": [{
+        //        "country": "USA",
+        //        "visits": 4025,
+        //        "color": "#FF0F00"
+        //    }, {
+        //        "country": "China",
+        //        "visits": 1882,
+        //        "color": "#FF6600"
+        //    }, {
+        //        "country": "Japan",
+        //        "visits": 1809,
+        //        "color": "#FF9E01"
+        //    }, {
+        //        "country": "Germany",
+        //        "visits": 1322,
+        //        "color": "#FCD202"
+        //    }, {
+        //        "country": "UK",
+        //        "visits": 1122,
+        //        "color": "#F8FF01"
+        //    }, {
+        //        "country": "France",
+        //        "visits": 1114,
+        //        "color": "#B0DE09"
+        //    }, {
+        //        "country": "India",
+        //        "visits": 984,
+        //        "color": "#04D215"
+        //    }, {
+        //        "country": "Spain",
+        //        "visits": 711,
+        //        "color": "#0D8ECF"
+        //    }, {
+        //        "country": "Netherlands",
+        //        "visits": 665,
+        //        "color": "#0D52D1"
+        //    }, {
+        //        "country": "Russia",
+        //        "visits": 580,
+        //        "color": "#2A0CD0"
+        //    }, {
+        //        "country": "South Korea",
+        //        "visits": 443,
+        //        "color": "#8A0CCF"
+        //    }, {
+        //        "country": "Canada",
+        //        "visits": 441,
+        //        "color": "#CD0D74"
+        //    }, {
+        //        "country": "Brazil",
+        //        "visits": 395,
+        //        "color": "#754DEB"
+        //    }, {
+        //        "country": "Italy",
+        //        "visits": 386,
+        //        "color": "#DDDDDD"
+        //    }, {
+        //        "country": "Taiwan",
+        //        "visits": 338,
+        //        "color": "#333333"
+        //    }],
+        //    "valueAxes": [{
+        //        "position": "left",
+        //        "axisAlpha": 0,
+        //        "gridAlpha": 0
+        //    }],
+        //    "graphs": [{
+        //        "balloonText": "[[category]]: <b>[[value]]</b>",
+        //        "colorField": "color",
+        //        "fillAlphas": 0.85,
+        //        "lineAlpha": 0.1,
+        //        "type": "column",
+        //        "topRadius": 1,
+        //        "valueField": "visits"
+        //    }],
+        //    "depth3D": 40,
+        //    "angle": 30,
+        //    "chartCursor": {
+        //        "categoryBalloonEnabled": false,
+        //        "cursorAlpha": 0,
+        //        "zoomable": false
+        //    },
+        //    "categoryField": "country",
+        //    "categoryAxis": {
+        //        "gridPosition": "start",
+        //        "axisAlpha": 0,
+        //        "gridAlpha": 0
 
-            },
-            "export": {
-                "enabled": true
-            }
+        //    },
+        //    "export": {
+        //        "enabled": true
+        //    }
 
-        }, 0);
+        //}, 0);
     </script>
     <!-- Chart code -->
     <script>
-        var chart = AmCharts.makeChart("chartdiv1", {
-            "type": "serial",
-            "theme": "light",
-            "legend": {
-                "horizontalGap": 10,
-                "maxColumns": 1,
-                "position": "right",
-                "useGraphSettings": true,
-                "markerSize": 10
-            },
-            "dataProvider": [{
-                "year": 2017,
-                "europe": 2.5,
-                "namerica": 2.5,
-                "asia": 2.1,
-                "lamerica": 0.3,
-                "meast": 0.2,
-                "africa": 0.1
-            }, {
-                "year": 2016,
-                "europe": 2.6,
-                "namerica": 2.7,
-                "asia": 2.2,
-                "lamerica": 0.3,
-                "meast": 0.3,
-                "africa": 0.1
-            }, {
-                "year": 2015,
-                "europe": 2.8,
-                "namerica": 2.9,
-                "asia": 2.4,
-                "lamerica": 0.3,
-                "meast": 0.3,
-                "africa": 0.1
-            }],
-            "valueAxes": [{
-                "stackType": "regular",
-                "axisAlpha": 0.5,
-                "gridAlpha": 0
-            }],
-            "graphs": [{
-                "balloonText": "<b>[[title]]</b><br><span style='font-size:14px'>[[category]]: <b>[[value]]</b></span>",
-                "fillAlphas": 0.8,
-                "labelText": "[[value]]",
-                "lineAlpha": 0.3,
-                "title": "Europe",
-                "type": "column",
-                "color": "#000000",
-                "valueField": "europe"
-            }, {
-                "balloonText": "<b>[[title]]</b><br><span style='font-size:14px'>[[category]]: <b>[[value]]</b></span>",
-                "fillAlphas": 0.8,
-                "labelText": "[[value]]",
-                "lineAlpha": 0.3,
-                "title": "North America",
-                "type": "column",
-                "color": "#000000",
-                "valueField": "namerica"
-            }, {
-                "balloonText": "<b>[[title]]</b><br><span style='font-size:14px'>[[category]]: <b>[[value]]</b></span>",
-                "fillAlphas": 0.8,
-                "labelText": "[[value]]",
-                "lineAlpha": 0.3,
-                "title": "Asia-Pacific",
-                "type": "column",
-                "color": "#000000",
-                "valueField": "asia"
-            }, {
-                "balloonText": "<b>[[title]]</b><br><span style='font-size:14px'>[[category]]: <b>[[value]]</b></span>",
-                "fillAlphas": 0.8,
-                "labelText": "[[value]]",
-                "lineAlpha": 0.3,
-                "title": "Latin America",
-                "type": "column",
-                "color": "#000000",
-                "valueField": "lamerica"
-            }, {
-                "balloonText": "<b>[[title]]</b><br><span style='font-size:14px'>[[category]]: <b>[[value]]</b></span>",
-                "fillAlphas": 0.8,
-                "labelText": "[[value]]",
-                "lineAlpha": 0.3,
-                "title": "Middle-East",
-                "type": "column",
-                "color": "#000000",
-                "valueField": "meast"
-            }, {
-                "balloonText": "<b>[[title]]</b><br><span style='font-size:14px'>[[category]]: <b>[[value]]</b></span>",
-                "fillAlphas": 0.8,
-                "labelText": "[[value]]",
-                "lineAlpha": 0.3,
-                "title": "Africa",
-                "type": "column",
-                "color": "#000000",
-                "valueField": "africa"
-            }],
-            "rotate": true,
-            "categoryField": "year",
-            "categoryAxis": {
-                "gridPosition": "start",
-                "axisAlpha": 0,
-                "gridAlpha": 0,
-                "position": "left"
-            },
-            "export": {
-                "enabled": true
-            }
-        });
+        //var chart = AmCharts.makeChart("chartdiv1", {
+        //    "type": "serial",
+        //    "theme": "light",
+        //    "legend": {
+        //        "horizontalGap": 10,
+        //        "maxColumns": 1,
+        //        "position": "right",
+        //        "useGraphSettings": true,
+        //        "markerSize": 10
+        //    },
+        //    "dataProvider": [{
+        //        "year": 2017,
+        //        "europe": 2.5,
+        //        "namerica": 2.5,
+        //        "asia": 2.1,
+        //        "lamerica": 0.3,
+        //        "meast": 0.2,
+        //        "africa": 0.1
+        //    }, {
+        //        "year": 2016,
+        //        "europe": 2.6,
+        //        "namerica": 2.7,
+        //        "asia": 2.2,
+        //        "lamerica": 0.3,
+        //        "meast": 0.3,
+        //        "africa": 0.1
+        //    }, {
+        //        "year": 2015,
+        //        "europe": 2.8,
+        //        "namerica": 2.9,
+        //        "asia": 2.4,
+        //        "lamerica": 0.3,
+        //        "meast": 0.3,
+        //        "africa": 0.1
+        //    }],
+        //    "valueAxes": [{
+        //        "stackType": "regular",
+        //        "axisAlpha": 0.5,
+        //        "gridAlpha": 0
+        //    }],
+        //    "graphs": [{
+        //        "balloonText": "<b>[[title]]</b><br><span style='font-size:14px'>[[category]]: <b>[[value]]</b></span>",
+        //        "fillAlphas": 0.8,
+        //        "labelText": "[[value]]",
+        //        "lineAlpha": 0.3,
+        //        "title": "Europe",
+        //        "type": "column",
+        //        "color": "#000000",
+        //        "valueField": "europe"
+        //    }, {
+        //        "balloonText": "<b>[[title]]</b><br><span style='font-size:14px'>[[category]]: <b>[[value]]</b></span>",
+        //        "fillAlphas": 0.8,
+        //        "labelText": "[[value]]",
+        //        "lineAlpha": 0.3,
+        //        "title": "North America",
+        //        "type": "column",
+        //        "color": "#000000",
+        //        "valueField": "namerica"
+        //    }, {
+        //        "balloonText": "<b>[[title]]</b><br><span style='font-size:14px'>[[category]]: <b>[[value]]</b></span>",
+        //        "fillAlphas": 0.8,
+        //        "labelText": "[[value]]",
+        //        "lineAlpha": 0.3,
+        //        "title": "Asia-Pacific",
+        //        "type": "column",
+        //        "color": "#000000",
+        //        "valueField": "asia"
+        //    }, {
+        //        "balloonText": "<b>[[title]]</b><br><span style='font-size:14px'>[[category]]: <b>[[value]]</b></span>",
+        //        "fillAlphas": 0.8,
+        //        "labelText": "[[value]]",
+        //        "lineAlpha": 0.3,
+        //        "title": "Latin America",
+        //        "type": "column",
+        //        "color": "#000000",
+        //        "valueField": "lamerica"
+        //    }, {
+        //        "balloonText": "<b>[[title]]</b><br><span style='font-size:14px'>[[category]]: <b>[[value]]</b></span>",
+        //        "fillAlphas": 0.8,
+        //        "labelText": "[[value]]",
+        //        "lineAlpha": 0.3,
+        //        "title": "Middle-East",
+        //        "type": "column",
+        //        "color": "#000000",
+        //        "valueField": "meast"
+        //    }, {
+        //        "balloonText": "<b>[[title]]</b><br><span style='font-size:14px'>[[category]]: <b>[[value]]</b></span>",
+        //        "fillAlphas": 0.8,
+        //        "labelText": "[[value]]",
+        //        "lineAlpha": 0.3,
+        //        "title": "Africa",
+        //        "type": "column",
+        //        "color": "#000000",
+        //        "valueField": "africa"
+        //    }],
+        //    "rotate": true,
+        //    "categoryField": "year",
+        //    "categoryAxis": {
+        //        "gridPosition": "start",
+        //        "axisAlpha": 0,
+        //        "gridAlpha": 0,
+        //        "position": "left"
+        //    },
+        //    "export": {
+        //        "enabled": true
+        //    }
+        //});
     </script>
 
     <!-- //amcharts -->

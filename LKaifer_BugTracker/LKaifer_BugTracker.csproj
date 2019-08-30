@@ -328,6 +328,7 @@
     <Content Include="images\Thumbs.db" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Scripts\BugsBeGoneCharts.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
     <Content Include="Scripts\jquery-3.3.1.min.map" />
@@ -376,13 +377,14 @@
     <Content Include="Scripts\js\xy.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Uploads\adultrs-1868750_1920.jpg" />
+    <Content Include="Uploads\application-1934972_1920.jpg" />
     <Content Include="Uploads\Attachments\achieve-1822503_1920.jpg" />
     <Content Include="Uploads\Attachments\apple-touch-icon.png" />
+    <Content Include="Uploads\Attachments\blog-2355684_1920 %281%29.jpg" />
     <Content Include="Uploads\Attachments\blog-2355684_1920.jpg" />
     <Content Include="Uploads\Attachments\butterfly-1278815_1920 %281%29.jpg" />
     <Content Include="Uploads\Attachments\butterfly-17057_1920.jpg" />
     <Content Include="Uploads\Attachments\dovetail-1548465_1920.jpg" />
-    <Content Include="Uploads\Attachments\girl-2714451_1920.jpg" />
     <Content Include="Uploads\Attachments\iconfinder_code-programming-javascript-software-develop-command-language_652581.png" />
     <Content Include="Uploads\Attachments\iris-3347806_1920.jpg" />
     <Content Include="Uploads\Attachments\laptop-2557571_1920.jpg" />
@@ -392,6 +394,7 @@
     <Content Include="Uploads\avatar-2027367_1280.png" />
     <Content Include="Uploads\beard-2345810_1920.jpg" />
     <Content Include="Uploads\business-woman-2697954_1920.jpg" />
+    <Content Include="Uploads\business-woman-2756210_1920.jpg" />
     <Content Include="Uploads\businessrs-3560916_1920.jpg" />
     <Content Include="Uploads\girl-2209147_1920.jpg" />
     <Content Include="Uploads\girl-2714451_1920.jpg" />
@@ -519,6 +522,7 @@
     <Content Include="Views\TicketTypes\Details.cshtml" />
     <Content Include="Views\TicketTypes\Edit.cshtml" />
     <Content Include="Views\TicketTypes\Index.cshtml" />
+    <Content Include="Uploads\Attachments\Bugs Be Gone  Lisa Kaifer, Web Developer.pdf" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

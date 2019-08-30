@@ -172,6 +172,7 @@
             right: 0 !important;
             width: 100%;
             margin-bottom: 20px;
+            max-width:20rem;
         }
 
             .timeline-horizontal .timeline-item .timeline-panel:before {

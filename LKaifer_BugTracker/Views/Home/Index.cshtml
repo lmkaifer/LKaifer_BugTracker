@@ -1,6 +1,7 @@
 ﻿@using Microsoft.AspNet.Identity
 @using LKaifer_BugTracker.Models
 @using LKaifer_BugTracker.Helpers
+@using LKaifer_BugTracker.ViewModels
 @{
     ViewBag.Title = "Dashboard";
     List<Project> ProjectList = ViewBag.AllProjectList as List<Project>;
@@ -17,23 +18,46 @@
     var unassignedTickets = db.Tickets.Where(t => t.AssignedToUser.Equals(null)).ToList();
     var allUsers = db.Users.ToList();
     var allProjects = db.Projects.ToList();
+    var totaladmincount = helper.UsersInRole("Admin")?.Count() ?? 0;
+    var totalmangrcount = helper.UsersInRole("Manager")?.Count() ?? 0;
+    var alldevlist = helper.UsersInRole("Developer").ToList();
+    var totaldevcount = alldevlist?.Count() ?? 0;
+    var totalsubcount = helper.UsersInRole("Submitter")?.Count() ?? 0;
+    string opendevticketsarr = "";
+    int indexCounter = 0;
+    foreach(var dev in alldevlist)
+    {
+        opendevticketsarr += dev.FirstName + " " + dev.Projects.Sum(t => t.Tickets.Count) + ",";
+        indexCounter++;
+    }
 
 
-}
+            }
+
+
 <style>
-    .panel-statistics{
-        background-color:#fd9426;
+    a.collapsed > i.fa-chevron-up {
+        transform: rotate(180deg);
+        }
+
+        div.panel-heading {
+        cursor: move;
+    }
+
+    .panel-statistics {
+        background-color: #fd9426;
         color: white
-            
-        
     }
 
-    .panel-projects{
-background-color:#147efb;
-color:white;
+    .panel-projects {
+        background-color: #147efb;
+        color: white;
     }
 
-
+    .panel-red {
+        background-color: #e53238;
+        color: white;
+    }
 </style>
 
 <!-- //w3_agileits_top_nav-->
@@ -43,187 +67,185 @@ color:white;
 @*<div class="inner_content_w3_agile_info">*@
 <!-- /agile_top_w3_grids-->
 @*<div class="agile_top_w3_grids">*@
-<ul class="ca-menu">
-    <div class="row" style="margin-left:100px !important" >
 
-    @if (User.IsInRole("Admin") || User.IsInRole("Manager"))
-    {
+<!--Start of Clickable Badges-->
+<div class="row" style="margin-left:100px !important">
+    <ul class="ca-menu">
+
+        @if (User.IsInRole("Admin") || User.IsInRole("Manager"))
+        {
+            <li>
+                <a href="@Url.Action("MyIndex", "Tickets")">
+                    <i class="fa fa-building-o" aria-hidden="true"></i>
+                    <div class="ca-content">
+                        <h4 class="ca-main one">@unassignedTickets.Count</h4>
+                        <h3 class="ca-sub">Unassigned Tickets</h3>
+                        <h3 class="ca-main one"></h3>
+                    </div>
+                </a>
+
+            </li>
+        }
+
+        @if (User.IsInRole("Developer"))
+        {
+            <li>
+                <a href="@Url.Action("MyIndex", "Tickets")">
+                    <i class="fa fa-building-o" aria-hidden="true"></i>
+                    <div class="ca-content">
+                        <h4 class="ca-main one">@assignedDevTickets.Count</h4>
+                        <h3 class="ca-sub">My Tickets</h3>
+                        <h3 class="ca-main one"></h3>
+                    </div>
+                </a>
+
+            </li>
+        }
+
+        @if (User.IsInRole("Submitter"))
+        {
+            <li>
+                <a href="@Url.Action("MyIndex", "Tickets")">
+                    <i class="fa fa-building-o" aria-hidden="true"></i>
+                    <div class="ca-content">
+                        <h4 class="ca-main one">@assignedSubTickets.Count</h4>
+                        <h3 class="ca-sub">My Tickets</h3>
+                        <h3 class="ca-main one"></h3>
+                    </div>
+                </a>
+
+            </li>
+        }
+
+
+        @if (User.IsInRole("Admin"))
+        {
+            <li>
+                <a href="@Url.Action("MyIndex", "Projects")">
+                    <i class="fa fa-briefcase" aria-hidden="true"></i>
+                    <div class="ca-content">
+                        <h4 class="ca-main one">@projectshelper.ProjectsMissingRoles().Count</h4>
+                        <h3 class="ca-sub one">Unassigned Projects</h3>
+                    </div>
+                </a>
+            </li>
+
+        }
+
+        @if (User.IsInRole("Manager") || User.IsInRole("Developer") || User.IsInRole("Submitter"))
+        {
+
+            <li>
+                <a href="@Url.Action("MyIndex", "Projects")">
+                    <i class="fa fa-briefcase" aria-hidden="true"></i>
+                    <div class="ca-content">
+                        <h4 class="ca-main one">@currentUser.Projects.Count</h4>
+                        <h3 class="ca-sub one">My Projects</h3>
+                    </div>
+                </a>
+            </li>
+
+        }
+
+
         <li>
-            <a href="@Url.Action("MyIndex", "Tickets")">
-                <i class="fa fa-building-o" aria-hidden="true"></i>
+            <a href="@Url.Action("UserIndex", "Admin")">
+                <i class="fa fa-user" aria-hidden="true"></i>
                 <div class="ca-content">
-                    <h4 class="ca-main one">@unassignedTickets.Count</h4>
-                    <h3 class="ca-sub">Unassigned Tickets</h3>
-                    <h3 class="ca-main one"></h3>
+                    <h4 class="ca-main two">
+                        @allUsers.Count
+                    </h4>
+                    <h3 class="ca-sub two">Team Members Index</h3>
                 </div>
             </a>
-
         </li>
-    }
+        @*<li>
+                <a href="#">
+                    <i class="fa fa-tasks" aria-hidden="true"></i>
+                    <div class="ca-content">
+                        <h4 class="ca-main three">49,436</h4>
+                        <h3 class="ca-sub three">Old Projects</h3>
+                    </div>
+                </a>
+            </li>*@
+        @if (User.IsInRole("Submitter"))
+        {
 
-    @if (User.IsInRole("Developer"))
-    {
-        <li>
-            <a href="@Url.Action("MyIndex", "Tickets")">
-                <i class="fa fa-building-o" aria-hidden="true"></i>
-                <div class="ca-content">
-                    <h4 class="ca-main one">@assignedDevTickets.Count</h4>
-                    <h3 class="ca-sub">My Tickets</h3>
-                    <h3 class="ca-main one"></h3>
+            <li>
+                <a href="@Url.Action("Create", "Tickets")">
+                    <i class="fa fa-clone" aria-hidden="true"></i>
+                    <div class="ca-content">
+                        <h4 class="ca-main four"></h4>
+                        <h3 class="ca-sub four">Create A Ticket</h3>
+                    </div>
+                </a>
+            </li>
+        }
+
+        @if (User.IsInRole("Manager") | User.IsInRole("Admin"))
+        {
+
+            <li>
+                <a href="@Url.Action("Create", "Projects")">
+                    <i class="fa fa-clone" aria-hidden="true"></i>
+                    <div class="ca-content">
+                        <h4 class="ca-main four">@allProjects.Count</h4>
+                        <h3 class="ca-sub four">Create A Project</h3>
+                    </div>
+                </a>
+            </li>
+        }
+
+        @if (User.IsInRole("Developer"))
+        {
+
+            <li>
+                <a href="#">
+                    <i class="fa fa-clone" aria-hidden="true"></i>
+                    <div class="ca-content">
+                        <h4 class="ca-main four"></h4>
+                        <h3 class="ca-sub four">My Work Notes</h3>
+                    </div>
+                </a>
+            </li>
+        }
+    </ul>
+</div>
+
+<!--End of Clickable Badges-->
+
+
+
+<br\>
+    <!--High Charts Begin-->
+    <div class="row" style="margin-top:50px">
+        <div class="col-md-6" style="margin-left:-15px">
+            <div class="panel-red">
+                <div class="panel-heading">
+                    Ticket Status
+                    <a href="#ticket-status-panel" data-toggle="collapse" aria-expanded="true" id="ticket-status-collapse-button" title="collapse">
+                        <i class="fa fa-chevron-up pull-right"></i>
+                    </a>
                 </div>
-            </a>
-
-        </li>
-    }
-
-    @if (User.IsInRole("Submitter"))
-    {
-        <li>
-            <a href="@Url.Action("MyIndex", "Tickets")">
-                <i class="fa fa-building-o" aria-hidden="true"></i>
-                <div class="ca-content">
-                    <h4 class="ca-main one">@assignedSubTickets.Count</h4>
-                    <h3 class="ca-sub">My Tickets</h3>
-                    <h3 class="ca-main one"></h3>
+                <div class="panel body panel-collapse in" aria-expanded="true" id="ticket-status-panel">
+                    <div id="tickets-status-high-chart" style="height: 460px"></div>
                 </div>
-            </a>
-
-        </li>
-    }
-
-
-
-    @if (User.IsInRole("Admin"))
-    {
-        <li>
-            <a href="@Url.Action("MyIndex", "Projects")">
-                <i class="fa fa-briefcase" aria-hidden="true"></i>
-                <div class="ca-content">
-                    <h4 class="ca-main one">@projectshelper.ProjectsMissingRoles().Count</h4>
-                    <h3 class="ca-sub one">Unassigned Projects</h3>
-                </div>
-            </a>
-        </li>
-
-    }
-
-    @if (User.IsInRole("Manager") || User.IsInRole("Developer") || User.IsInRole("Submitter"))
-    {
-
-        <li>
-            <a href="@Url.Action("MyIndex", "Projects")">
-                <i class="fa fa-briefcase" aria-hidden="true"></i>
-                <div class="ca-content">
-                    <h4 class="ca-main one">@currentUser.Projects.Count</h4>
-                    <h3 class="ca-sub one">My Projects</h3>
-                </div>
-            </a>
-        </li>
-
-    }
-
-
-    <li>
-        <a href="@Url.Action("UserIndex", "Admin")">
-            <i class="fa fa-user" aria-hidden="true"></i>
-            <div class="ca-content">
-                <h4 class="ca-main two">
-                    @allUsers.Count
-                            </h4>
-                <h3 class="ca-sub two">Team Members Index</h3>
             </div>
-        </a>
-    </li>
-    @*<li>
-            <a href="#">
-                <i class="fa fa-tasks" aria-hidden="true"></i>
-                <div class="ca-content">
-                    <h4 class="ca-main three">49,436</h4>
-                    <h3 class="ca-sub three">Old Projects</h3>
-                </div>
-            </a>
-        </li>*@
-    @if (User.IsInRole("Submitter"))
-    {
+        </div>
 
-        <li>
-            <a href="@Url.Action("Create", "Tickets")">
-                <i class="fa fa-clone" aria-hidden="true"></i>
-                <div class="ca-content">
-                    <h4 class="ca-main four"></h4>
-                    <h3 class="ca-sub four">Create A Ticket</h3>
-                </div>
-            </a>
-        </li>
-    }
+        <!--High Charts-->
+        <!-- Tickets Priorities Charts Begin -->
 
-    @if (User.IsInRole("Manager") | User.IsInRole("Admin"))
-    {
-
-        <li>
-            <a href="@Url.Action("Create", "Projects")">
-                <i class="fa fa-clone" aria-hidden="true"></i>
-                <div class="ca-content">
-                    <h4 class="ca-main four">@allProjects.Count</h4>
-                    <h3 class="ca-sub four">Create A Project</h3>
-                </div>
-            </a>
-        </li>
-    }
-
-    @if (User.IsInRole("Developer"))
-    {
-
-        <li>
-            <a href="#">
-                <i class="fa fa-clone" aria-hidden="true"></i>
-                <div class="ca-content">
-                    <h4 class="ca-main four"></h4>
-                    <h3 class="ca-sub four">My Work Notes</h3>
-                </div>
-            </a>
-        </li>
-    }
-    </div>
-
-    <div>
-
-    </div>
-       
-
-
-    <br\>
-
-        <div class="row" style="margin-top:50px">
-            <div class="col-md-6" style="margin-left:-15px">
+        <div class="col-md-6">
+            <div class="panel-statistics" style="margin-left:-10px">
                 <div class="panel-projects">
                     <div class="panel-heading">
-                        Ticket Status
-                        <a href="#ticket-status-panel" data-toggle="collapse" aria-expanded="true" id="ticket-status-collapse-button" title="collapse">
+                        Tickets Priority
+                        <a href="#ticket-priority-panel" data-toggle="collapse" aria-expanded="true" id="ticket-priority-collapse-button" title="collapse">
                             <i class="fa fa-chevron-up pull-right"></i>
                         </a>
                     </div>
-                    <div class="panel body panel-collapse in" aria-expanded="true" id="ticket-staus-panel">
-                        <!--High Charts-->
-                        <div id="tickets-status-high-chart" style="height: 460px"></div>
-                    </div>
-
-                </div>
-            </div>
-
-
-
-
-            <!-- //nav -->
-
-            <div class="col-md-6">
-                <div class="panel-statistics">
-                    <div class="panel-heading" >
-                        Tickets Priority <a href="#ticket-history-panel" data-toggle="collapse" aria-expanded="true" id="ticket-history-collapse-button" title="collapse">
-                            <i class="fa fa-chevron-up pull-right"></i>
-                        </a>
-                    </div>
-                    <div class="panel body panel-collapse in" aria-expanded="true" id="ticket-history-panel">
+                    <div class="panel body panel-collapse in" aria-expanded="true" id="ticket-priority-panel">
                         <div class="fallowers_agile agile_info_shadow">
                             <h3 class="w3_inner_tittle two">Urgent Ticket Progress</h3>
                             <div class="work-progres">
@@ -241,11 +263,15 @@ color:white;
                                         </thead>
                                         <tbody>
                                             <tr>
+
+                                                {
+
                                                 <td>1</td>
                                                 <td>Face book</td>
                                                 <td>Malorum</td>
                                                 <td><span class="label label-info">in progress</span></td>
                                                 <td><span class="badge badge-success">90%</span></td>
+                                                }
                                             </tr>
                                             <tr>
                                                 <td>2</td>
@@ -299,7 +325,7 @@ color:white;
             </div>
         </div>
 
-
+        <!--Tickets Priorities End-->
         @*<div class="col-md-6 agile_top_w3_post_info agile_info_shadow">
                 <div class="img_wthee_post1">
                     <h3 class="w3_inner_tittle"> Flip Clock</h3>
@@ -311,337 +337,113 @@ color:white;
                 </div>
             </div>*@
         @*</div>*@
-        @*<div class="clearfix"></div>
-
-                 //agile_top_w3_post_sections
-                /prograc-blocks_agileits
-            <div class="row"style="display:">
-                <div class="prograc-blocks_agileits">
-                        <div class="col-md-6 bars_agileits agile_info_shadow">
-                            <h3 class="w3_inner_tittle two">Projects with Open Tickets</h3>
-                            <div class='bar_group'>
-                                @foreach (Project proj in projectList)
-                {
-                                <div class='bar_group__bar thin' label='Bugs Be Gone' show_values='true' tooltip='true' value='15'></div>
-                                <div class='bar_group__bar thin' label='Cloud Solution' show_values='true' tooltip='true' value='5'></div>
-                                <div class='bar_group__bar thin' label='Financial Portal' show_values='true' tooltip='true' value='550'></div>
-                                <div class='bar_group__bar thin' label='Financial Portal Mobile App' show_values='true' tooltip='true' value='456'></div>
-                                <div class='bar_group__bar thin' label='School Dashboard' show_values='true' tooltip='true' value='343'></div>
-                                <div class='bar_group__bar thin' label='Leadership Dashboard' show_values='true' tooltip='true' value='235'></div>
-                                <div class='bar_group__bar thin' label='LKaifer Blog' show_values='true' tooltip='true' value='550'></div>
-                                <div class='bar_group__bar thin' label='LKaifer Portfolio' show_values='true' tooltip='true' value='456'></div>
-                                <div class='bar_group__bar thin' label='Visitor Check In App' show_values='true' tooltip='true' value='550'></div>
-                                <div class='bar_group__bar thin' label='Taekwondo Mobile App' show_values='true' tooltip='true' value='456'></div>
-
-                            </div>
-                            </div>
-                            </div>
-                        </div>
-
-            </div>
-            </div>*@
-
         <div class="clearfix"></div>
-</ul>
-        </div>
-<!-- //agile_top_w3_grids-->
-<!-- /w3ls_agile_circle_progress-->
-<div class="w3ls_agile_cylinder chart agile_info_shadow">
-    <h3 class="w3_inner_tittle two"> Open Tickets Per Project</h3>
 
-    <div id="chartdiv"></div>
-    <div class="agile_top_w3_post_sections">
-        <div class="agile_top_w3_post agile_info_shadow">
-            <div class="img_wthee_post">
-                <h3 class="w3_inner_tittle">Company Overview</h3>
-                <div class="stats-wrap">
-                    <div class="count_info"><h4 class="count">65,800,587 </h4><span class="year">Total Administrators</span></div>
-                    <div class="year-info"><p class="text-no">20 </p><span class="year">Tickets Today:</span></div>
-                    <div class="clearfix"></div>
+        <div class="row">
+            <div class="prograc-blocks_agileits">
+                <div class="col-md-6 bars_agileits agile_info_shadow">
+                    <h3 class="w3_inner_tittle two">Projects with Open Tickets</h3>
+                    <div class='bar_group'>
+                        @foreach (var project in allProjects)
+                        {
+
+                            <div class='bar_group__bar thin' label='@project.Name' show_values='true' tooltip='true' value='@project.Tickets.Where(t => !t.TicketStatus.Name.Equals("Completed")&&!t.TicketStatus.Name.Equals("Archvied")).Count()'></div>
+                        }
+                        @*<div class='bar_group__bar thin' label='Cloud Solution' show_values='true' tooltip='true' value='5'></div>
+                            <div class='bar_group__bar thin' label='Financial Portal' show_values='true' tooltip='true' value='550'></div>
+                            <div class='bar_group__bar thin' label='Financial Portal Mobile App' show_values='true' tooltip='true' value='456'></div>
+                            <div class='bar_group__bar thin' label='School Dashboard' show_values='true' tooltip='true' value='343'></div>
+                            <div class='bar_group__bar thin' label='Leadership Dashboard' show_values='true' tooltip='true' value='235'></div>
+                            <div class='bar_group__bar thin' label='LKaifer Blog' show_values='true' tooltip='true' value='550'></div>
+                            <div class='bar_group__bar thin' label='LKaifer Portfolio' show_values='true' tooltip='true' value='456'></div>
+                            <div class='bar_group__bar thin' label='Visitor Check In App' show_values='true' tooltip='true' value='550'></div>
+                            <div class='bar_group__bar thin' label='Taekwondo Mobile App' show_values='true' tooltip='true' value='456'></div>*@
+
+                    </div>
                 </div>
-                <div class="stats-wrap">
-                    <div class="count_info"><h4 class="count">2,690 </h4><span class="year">Total Managers</span></div>
-                    <div class="year-info"><p class="text-no">40 </p><span class="year">Tickets This Month</span></div>
-                    <div class="clearfix"></div>
-                </div>
-                <div class="stats-wrap">
-                    <div class="count_info"><h4 class="count">24,660 </h4><span class="year">Total Developers</span></div>
-                    <div class="year-info"><p class="text-no">30 </p><span class="year">Tickets This Week</span></div>
-                    <div class="clearfix"></div>
-                </div>
-                <div class="stats-wrap">
-                    <div class="count_info"><h4 class="count">1,204</h4><span class="year">Total Submitters</span></div>
-                    <div class="year-info"><p class="text-no">10 </p><span class="year">Tickets Today</span></div>
-                    <div class="clearfix"></div>
+            </div>
+        </div>
+
+    </div>
+
+
+    @*<div class="clearfix"></div>
+        </ul>
+            </div>*@
+    <!-- //agile_top_w3_grids-->
+    <!-- /w3ls_agile_circle_progress-->
+    <!--3d bar chart begins-->
+    <div class="clearfix"></div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-danger">
+                <div class="panel-statistics">
+                    <div class="panel-heading">
+                        Task Loads Per Developer
+                        <a href="#ticket-open-panel" data-toggle="collapse" aria-expanded="true" id="ticket-open-collapse-button" title="collapse">
+                            <i class="fa fa-chevron-up pull-right"></i>
+                        </a>
+                    </div>
+                    <div class="panel body panel-collapse in" aria-expanded="true" id="ticket-open-panel">
+
+                        <div class="w3ls_agile_cylinder chart agile_info_shadow">
+                            <h3 class="w3_inner_tittle two"> Number of Tickets Per Developer</h3>
+                            <div id="chartdiv"></div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-
-
-</div>
-<!-- /w3ls_agile_circle_progress-->
-<!-- /chart_agile-->
-<!-- /w3ls_agile_circle_progress-->
-@*<div class="w3ls_agile_circle_progress agile_info_shadow">
-
-        <div class="cir_agile_info ">
-            <h3 class="w3_inner_tittle">Circular Progress</h3>
-            <div class="skill-grids">
-                <div class="skills-grid text-center">
-                    <div class="circle" id="circles-1"></div>
-                    <p>HTML</p>
-                </div>
-                <div class="skills-grid text-center">
-                    <div class="circle" id="circles-2"></div>
-                    <p>PHOTOGRAPHY</p>
-                </div>
-                <div class="skills-grid text-center">
-                    <div class="circle" id="circles-3"></div>
-
-                    <p>ILLUSTRATOR</p>
-                </div>
-                <div class="skills-grid text-center">
-                    <div class="circle" id="circles-4"></div>
-                    <p>CSS3</p>
-                </div>
-
-
-
-                <div class="clearfix"></div>
-
-            </div>
-        </div>
-    </div>*@
-<!-- /w3ls_agile_circle_progress-->
-@*<div class="clearfix"></div>
-        </div>*@
-
-<!--//prograc-blocks_agileits-->
-<!-- /bottom_agileits_grids-->
-@*<div class="bottom_agileits_grids">
-        <div class="col-md-4 profile-main">
-            <div class="profile_bg_agile">
-                <div class="profile-pic wthree">
-                    <h2>Bason Durel</h2>
-                    <img src="~/images/profile.jpg" alt="Image">
-                    <p>Web Designer</p>
-                </div>
-                <div class="profile-ser">
-                    <div class="follow-grids-agileits-w3layouts">
-                        <div class="profile-ser-grids">
-                            <h3>Followers</h3>
-                            <h4>2486</h4>
-                        </div>
-                        <div class="profile-ser-grids agileinfo">
-                            <h3>Following</h3>
-                            <h4>1582</h4>
-                        </div>
-                        <div class="profile-ser-grids no-border">
-                            <h3>Tweets</h3>
-                            <h4>1468</h4>
-                        </div>
-                        <div class="clearfix"> </div>
+    <!--3d bar chart ends-->
+    <!--Company Overview begins-->
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-danger">
+                <div class="panel-projects">
+                    <div class="panel-heading">
+                        Company Overview
+                        <a href="#ticket-overview-panel" data-toggle="collapse" aria-expanded="true" id="ticket-overview-collapse-button" title="collapse">
+                            <i class="fa fa-chevron-up pull-right"></i>
+                        </a>
                     </div>
-                    <div class="w3l_social_icons w3l_social_icons1">
-                        <ul>
-                            <li><a href="#" class="facebook"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
-                            <li><a href="#" class="twitter"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
-                            <li><a href="#" class="google_plus"><i class="fa fa-google-plus" aria-hidden="true"></i></a></li>
-                        </ul>
+                    <div class="panel body panel-collapse in" aria-expanded="true" id="ticket-overview-panel">
+                        <div class="agile_top_w3_post_sections">
+                            <div class="agile_top_w3_post agile_info_shadow">
+                                <div class="img_wthee_post">
+                                    <h3 class="w3_inner_tittle">Company Overview</h3>
+                                    <div class="stats-wrap">
+                                        <div class="count_info"><h4 class="count">@totaladmincount</h4><span class="year">Total Administrators</span></div>
+                                        <div class="year-info"><p class="text-no">20 </p><span class="year">Tickets Today:</span></div>
+                                        <div class="clearfix"></div>
+                                    </div>
+                                    <div class="stats-wrap">
+                                        <div class="count_info"><h4 class="count">@totalmangrcount </h4><span class="year">Total Managers</span></div>
+                                        <div class="year-info"><p class="text-no">40 </p><span class="year">Tickets This Month</span></div>
+                                        <div class="clearfix"></div>
+                                    </div>
+                                    <div class="stats-wrap">
+                                        <div class="count_info"><h4 class="count">@totaldevcount</h4><span class="year">Total Developers</span></div>
+                                        <div class="year-info"><p class="text-no">320 </p><span class="year">Tickets This Week</span></div>
+                                        <div class="clearfix"></div>
+                                    </div>
+                                    <div class="stats-wrap">
+                                        <div class="count_info"><h4 class="count">@totalsubcount</h4><span class="year">Total Submitters</span></div>
+                                        <div class="year-info"><p class="text-no">5 </p><span class="year">Your total tickets</span></div>
+                                        <div class="clearfix"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-
                 </div>
             </div>
         </div>
-        <div class="col-md-8 chart_agile agile_info_shadow">
-            <h3 class="w3_inner_tittle two">Stacked Bar Chart</h3>
-            <div id="chartdiv1"></div>
-        </div>
-
-
-        <div class="clearfix"></div>
-    </div>*@
-<!-- //bottom_agileits_grids-->
-<!-- /weather_w3_agile_info-->
-@*<div class="weather_w3_agile_info agile_info_shadow">*@
-@*<div class="weather_w3_inner_info">
-
-            <div class="over_lay_agile">
-                <h3 class="w3_inner_tittle">Weather Report</h3>
-                <ul>
-                    <li>
-                        <figure class="icons">
-                            <canvas id="partly-cloudy-day" width="60" height="60"></canvas>
-                        </figure>
-                        <h3>25 °C</h3>
-                        <div class="clearfix"></div>
-                    </li>
-                    <li>
-                        <figure class="icons">
-                            <canvas id="clear-day" width="60" height="60"></canvas>
-                        </figure>
-                        <div class="weather-text">
-                            <h4>WED</h4>
-                            <h5>27 °C</h5>
-                        </div>
-                        <div class="clearfix"></div>
-                    </li>
-                    <li>
-                        <figure class="icons">
-                            <canvas id="snow" width="60" height="60"></canvas>
-                        </figure>
-                        <div class="weather-text">
-                            <h4>THU</h4>
-                            <h5>13 °C</h5>
-                        </div>
-                        <div class="clearfix"></div>
-                    </li>
-                    <li>
-                        <figure class="icons">
-                            <canvas id="partly-cloudy-night" width="60" height="60"></canvas>
-                        </figure>
-                        <div class="weather-text">
-                            <h4>FRI</h4>
-                            <h5>18 °C</h5>
-                        </div>
-                        <div class="clearfix"></div>
-                    </li>
-                    <li>
-                        <figure class="icons">
-                            <canvas id="cloudy" width="60" height="60"></canvas>
-                        </figure>
-                        <div class="weather-text">
-                            <h4>SAT</h4>
-                            <h5>15 °C</h5>
-                        </div>
-                        <div class="clearfix"></div>
-                    </li>
-                    <li>
-                        <figure class="icons">
-                            <canvas id="fog" width="60" height="60"></canvas>
-                        </figure>
-                        <div class="weather-text">
-                            <h4>SUN</h4>
-                            <h5>11 °C</h5>
-                        </div>
-                        <div class="clearfix"></div>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </div>*@
-<!-- //weather_w3_agile_info-->
-<!-- /social_media-->
-@*<div class="social_media_w3ls">
-
-        <div class="col-md-3 socail_grid_agile facebook">
-            <ul class="icon_w3_info">
-                <li><a href="#" class="wthree_facebook"> <i class="fa fa-facebook" aria-hidden="true"></i></a></li>
-                <li>Facebook</li>
-            </ul>
-            <ul class="icon_w3_social">
-                <li><i class="fa fa-comment-o" aria-hidden="true"></i></li>
-                <li><i class="fa fa-envelope-o" aria-hidden="true"></i></li>
-                <li><i class="fa fa-user" aria-hidden="true"></i></li>
-            </ul>
-            <div class="clearfix"></div>
-            <div class="bottom_info_social">
-                <div class="col-md-4 agile_w3l_social_media_text_img">
-                    <img src="~/images/admin.jpg" alt="">
-                </div>
-                <div class="col-md-8 agile_w3l_social_media_text">
-                    <h4>Hurisa Joe</h4>
-                    <p>Lorem ipsum dolor sit amet</p>
-                </div>
-
-                <div class="clearfix"></div>
-            </div>
-        </div>
-        <div class="col-md-3 socail_grid_agile twitter">
-            <ul class="icon_w3_info">
-                <li><a href="#" class="wthree_facebook"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
-                <li>Twitter</li>
-            </ul>
-            <ul class="icon_w3_social">
-                <li><i class="fa fa-comment-o" aria-hidden="true"></i></li>
-                <li><i class="fa fa-envelope-o" aria-hidden="true"></i></li>
-                <li><i class="fa fa-user" aria-hidden="true"></i></li>
-            </ul>
-            <div class="clearfix"></div>
-            <div class="bottom_info_social">
-                <div class="col-md-4 agile_w3l_social_media_text_img">
-                    <img src="~/images/a1.jpg" alt="">
-                </div>
-                <div class="col-md-8 agile_w3l_social_media_text">
-                    <h4>Jasmin Joe</h4>
-                    <p>Lorem ipsum dolor sit amet</p>
-                </div>
-
-                <div class="clearfix"></div>
-            </div>
-        </div>
-        <div class="col-md-3 socail_grid_agile gmail">
-            <ul class="icon_w3_info">
-                <li><a href="#" class="wthree_facebook"><i class="fa fa-google-plus" aria-hidden="true"></i></a></li>
-                <li>Google+</li>
-            </ul>
-            <ul class="icon_w3_social">
-                <li><i class="fa fa-comment-o" aria-hidden="true"></i></li>
-                <li><i class="fa fa-envelope-o" aria-hidden="true"></i></li>
-                <li><i class="fa fa-user" aria-hidden="true"></i></li>
-            </ul>
-            <div class="clearfix"></div>
-            <div class="bottom_info_social">
-                <div class="col-md-4 agile_w3l_social_media_text_img">
-                    <img src="~/images/a2.jpg" alt="">
-                </div>
-                <div class="col-md-8 agile_w3l_social_media_text">
-                    <h4>John Pal</h4>
-                    <p>Lorem ipsum dolor sit amet</p>
-                </div>
-
-                <div class="clearfix"></div>
-            </div>
-        </div>
-        <div class="col-md-3 socail_grid_agile dribble">
-
-            <ul class="icon_w3_info">
-                <li><a href="#" class="wthree_facebook"><i class="fa fa-dribbble" aria-hidden="true"></i></a></li>
-                <li>Dribbble</li>
-            </ul>
-            <ul class="icon_w3_social">
-                <li><i class="fa fa-comment-o" aria-hidden="true"></i></li>
-                <li><i class="fa fa-envelope-o" aria-hidden="true"></i></li>
-                <li><i class="fa fa-user" aria-hidden="true"></i></li>
-            </ul>
-            <div class="clearfix"></div>
-            <div class="bottom_info_social">
-                <div class="col-md-4 agile_w3l_social_media_text_img">
-                    <img src="~/images/a4.jpg" alt="">
-                </div>
-                <div class="col-md-8 agile_w3l_social_media_text">
-                    <h4>Honey Pal</h4>
-                    <p>Lorem ipsum dolor sit amet</p>
-                </div>
-
-                <div class="clearfix"></div>
-            </div>
-
-        </div>
-        <div class="clearfix"></div>
-
-    </div>*@
-<!-- //social_media-->
-<!-- //inner_content_w3_agile_info-->    @*</div>*@
-
-@*</div>*@
-<!-- //inner_content-->
-@*</div>*@
-<!-- banner -->
-<!--copy rights start here-->
-@section scripts{
-    <script>
+    </div>
+    <!--Company Overview Ends-->
+    @section scripts{
+        <script src="~/Scripts/BugsBeGoneCharts.js"></script>
+        <script>
         //Ajax Code for 3D Donut Highcharts for Ticket Statuses
         $.ajax({
             url: '@Url.Action("TicketStatusData", "Home")',
@@ -686,6 +488,37 @@ color:white;
                     data: TransformData(data)
                 }]
             });
-        }
-    </script>
-}
+                    }
+                    //TaskLoadChart
+            var taskloaddata = '@opendevticketsarr';
+            taskloaddata = taskloaddata.slice(0, taskloaddata.length - 2);
+            taskloaddata = taskloaddata != null ? taskloaddata.split(",") : [];
+            var dataFortaskloadChart = [];
+            for (var i = 0; i < taskloaddata.length; i++) {
+                var tempArr = taskloaddata[i].split(" ");
+                var colorForTicketNumber = "";
+                if (Number(tempArr[1]) > 5) {
+                    colorForTicketNumber = "#FF0F00";
+                }
+                else if (5 > Number(tempArr[1]) > 3) {
+                    colorForTicketNumber = "#FF6600";
+                }
+                else if (3 > Number(tempArr[1])) {
+                    colorForTicketNumber = "#FF9E01";
+                }
+                else {
+                    colorForTicketNumber = "#FCD202";
+                }
+
+                var taskLoadObj = {
+                    "country": tempArr[0],
+                    "visits": Number(tempArr[1]),
+                    "color": colorForTicketNumber
+                }
+
+                dataFortaskloadChart.push(taskLoadObj);
+            }
+
+            devtaskloadchart(dataFortaskloadChart);
+        </script>
+    }

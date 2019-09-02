@@ -9,6 +9,10 @@
     @*<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>*@
 
     <style>
+        .agile_w3l_social_media_text_img {
+            width: 33.33333333%;
+        }
+
         .avatar {
             max-height: 30px;
             max-width: 30px;
@@ -48,15 +52,53 @@
             cursor: move;
         }
 
+        a.badge.removeTicketAttach {
+            background-color: darkred;
+            color: lightgray;
+        }
+
+            a.badge.removeTicketAttach:hover {
+                background-color: orangered;
+                color: white;
+            }
+
+        a.badge.downloadTicketAttach {
+            background-color: darkblue;
+            color: lightgray;
+        }
+
+            a.badge.downloadTicketAttach:hover {
+                background-color: blue;
+                color: white;
+            }
+
+        a.badge.previewTicketAttach {
+            background-color: black;
+            color: gray;
+        }
+
+            a.badge.previewTicketAttach:hover {
+                background-color: dimgray;
+                color: white;
+            }
+
         a.badge:hover {
             background-color: lightgray;
-            color: black;
+            color: blue;
         }
 
         a#addAttachBtn:hover {
             background-color: #cae3f7 !important;
             color: #007ee5;
         }
+
+        i.fa-envelope-o{
+            cursor:pointer;
+        }
+            i.fa-envelope-o:hover {
+                color:yellow;
+                transform:scale(1.2);
+            }
     </style>
     <link href="~/Content/Timeline.css" rel="stylesheet" />
 </head>
@@ -85,82 +127,102 @@
 
 
 <div class="row">
-        <h2>Ticket Dashboard</h2>
-    </div>
-  
+    <h2>
+        "@Model.Title" Ticket Dashboard
+    </h2>
+    <h4>Description: @Model.Description</h4>
+</div>
 
-    <hr />
-    <table class="table">
-        <tr>
-            <th>
+
+<hr />
+<table class="table">
+    <tr>
+        @*<th>
                 Title
-            </th>
-            <th>
-                Project Name
-            </th>
-            <th>
-                Priority
-            </th>
+            </th>*@
+        <th>
+            Project Name
+        </th>
+        <th>
+            Priority
+        </th>
 
-            <th>
-                Status
-            </th>
-            <th>
-                Type
-            </th>
-            <th>
-                Assigned Developer
-            </th>
-            <th>
-                Created by
-            </th>
-            <th>
-                Created Date
-            </th>
-        </tr>
+        <th>
+            Status
+        </th>
+        <th>
+            Type
+        </th>
+        <th>
+            Assigned Developer
+        </th>
+        <th>
+            Created by
+        </th>
+        <th>
+            Created Date
+        </th>
+        <th>
 
-        <tr>
-            <td>
+        </th>
+    </tr>
+
+    <tr>
+        @*<td>
                 @Html.DisplayFor(model => model.Title)
-            </td>
-            <td>
-                @Html.DisplayFor(model => model.Project.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(model => model.TicketPriority.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(model => model.TicketStatus.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(model => model.TicketType.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(model => model.AssignedToUser.FullName)
-                @if (User.IsInRole("Manager") || User.IsInRole("Admin") && Model.AssignedToUser == null)
-                {
-                    @Html.ActionLink("Assign", "AssignTicket", new { id = Model.Id })
-                }
-                @if (User.IsInRole("Manager") || User.IsInRole("Admin") && Model.AssignedToUser != null)
-                {
-                    @Html.ActionLink("Reassign", "AssignTicket", new { id = Model.Id })
-                }
-            </td>
-            <td>
-                @Html.DisplayFor(model => model.OwnerUser.FullName)
-            </td>
-            <td>
-                @Html.DisplayFor(model => model.Created)
-            </td>
-        </tr>
-    </table>
-    <br>
+            </td>*@
+        <td>
+            @Html.DisplayFor(model => model.Project.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(model => model.TicketPriority.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(model => model.TicketStatus.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(model => model.TicketType.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(model => model.AssignedToUser.FullName)
+            @if (User.IsInRole("Manager") || User.IsInRole("Admin") && Model.AssignedToUser == null)
+            {
+                @Html.ActionLink("Assign", "AssignTicket", "Tickets", new { id = Model.Id }, new { @class = "label label-danger" })
+            }
+            @if (User.IsInRole("Manager") || User.IsInRole("Admin") && Model.AssignedToUser != null)
+            {
+                @Html.ActionLink("Reassign", "AssignTicket", "Tickets", new { id = Model.Id }, new { @class = "label label-danger" })
+            }
+        </td>
+        <td>
+            @Html.DisplayFor(model => model.OwnerUser.FullName)
+        </td>
+        <td>
+            @Html.DisplayFor(model => model.Created)
+        </td>
+        <td>
+            @Html.ActionLink("Edit Ticket", "Edit", "Tickets", new { id = Model.Id }, new { @class = "label label-danger" })
+            @if (User.IsInRole("Developer"))
+            {
+                <button class="label label-danger">Mark as In Progress</button>
+                <br />
+            }
+            @if (User.IsInRole("Manager"))
+            {
+                <button class="label label-success">Mark as Completed</button>
 
-    <h3>Ticket Team</h3>
-    <hr />
-    <div class="social_media_w3ls">
+            }
 
+        </td>
+    </tr>
+</table>
+<br>
 
+@*<h3>Ticket Team</h3>*@
+<hr />
+<div class="social_media_w3ls">
+
+    <div class="row">
         @foreach (var user in ticketProjectTeam)
         {
             if (user == null)
@@ -176,13 +238,20 @@
                     </ul>
                     <ul class="icon_w3_social">
                         @*<li><i class="fa fa-comment-o" aria-hidden="true"></i></li>*@
-                        <li><i class="fa fa-envelope-o" aria-hidden="true"></i></li>
+                        <li><i class="fa fa-envelope-o" title="email this user" aria-hidden="true" onclick="showEmailModal('@user.Id')"></i></li>
                         @*<li><i class="fa fa-user" aria-hidden="true"></i></li>*@
                     </ul>
                     <div class="clearfix"></div>
                     <div class="bottom_info_social">
                         <div class="col-md-4 agile_w3l_social_media_text_img">
-                            <img src="@Url.Content(user.AvatarUrl)" class="img-responsive teamAvatar" />
+                            @if (!string.IsNullOrEmpty(user.AvatarUrl))
+                            {
+                                <img src="@Url.Content(user.AvatarUrl)" class="img-responsive teamAvatar" />
+                            }
+                            else
+                            {
+                                <img src="~/Uploads/avatar-1577909_1280.png" class="img-responsive teamAvatar" />
+                            }
                         </div>
                         <div class="col-md-8 agile_w3l_social_media_text">
                             <h4>
@@ -210,13 +279,20 @@
                     </ul>
                     <ul class="icon_w3_social">
                         @*<li><i class="fa fa-comment-o" aria-hidden="true"></i></li>*@
-                        <li><i class="fa fa-envelope-o" aria-hidden="true"></i></li>
+                        <li><i class="fa fa-envelope-o" title="email this user" aria-hidden="true" onclick="showEmailModal('@user.Id')"></i></li>
                         @*<li><i class="fa fa-user" aria-hidden="true"></i></li>*@
                     </ul>
                     <div class="clearfix"></div>
                     <div class="bottom_info_social">
                         <div class="col-md-4 agile_w3l_social_media_text_img">
-                            <img src="@Url.Content(user.AvatarUrl)" class="img-responsive teamAvatar" />
+                            @if (!string.IsNullOrEmpty(user.AvatarUrl))
+                            {
+                                <img src="@Url.Content(user.AvatarUrl)" class="img-responsive teamAvatar" />
+                            }
+                            else
+                            {
+                                <img src="~/Uploads/avatar-1577909_1280.png" class="img-responsive teamAvatar" />
+                            }
                         </div>
                         <div class="col-md-8 agile_w3l_social_media_text">
                             <h4>@user.FullName</h4>
@@ -240,13 +316,20 @@
                     </ul>
                     <ul class="icon_w3_social">
                         @*<li><i class="fa fa-comment-o" aria-hidden="true"></i></li>*@
-                        <li><i class="fa fa-envelope-o" aria-hidden="true"></i></li>
+                        <li><i class="fa fa-envelope-o" title="email this user" aria-hidden="true" onclick="showEmailModal('@user.Id')"></i></li>
                         @*<li><i class="fa fa-user" aria-hidden="true"></i></li>*@
                     </ul>
                     <div class="clearfix"></div>
                     <div class="bottom_info_social">
                         <div class="col-md-4 agile_w3l_social_media_text_img">
-                            <img src="@Url.Content(user.AvatarUrl)" class="img-responsive teamAvatar" />
+                            @if (!string.IsNullOrEmpty(user.AvatarUrl))
+                            {
+                                <img src="@Url.Content(user.AvatarUrl)" class="img-responsive teamAvatar" />
+                            }
+                            else
+                            {
+                                <img src="~/Uploads/avatar-1577909_1280.png" class="img-responsive teamAvatar" />
+                            }
                         </div>
                         <div class="col-md-8 agile_w3l_social_media_text">
                             <h4>
@@ -257,7 +340,6 @@
                             <p></p>
                         </div>
 
-                        <div class="clearfix"></div>
                     </div>
                 </div>}
             if (user == null)
@@ -275,13 +357,20 @@
                     </ul>
                     <ul class="icon_w3_social">
                         @*<li><i class="fa fa-comment-o" aria-hidden="true"></i></li>*@
-                        <li><i class="fa fa-envelope-o" aria-hidden="true"></i></li>
+                        <li><i class="fa fa-envelope-o" title="email this user" aria-hidden="true" onclick="showEmailModal('@user.Id')"></i></li>
                         @*<li><i class="fa fa-user" aria-hidden="true"></i></li>*@
                     </ul>
                     <div class="clearfix"></div>
                     <div class="bottom_info_social">
                         <div class="col-md-4 agile_w3l_social_media_text_img">
-                            <img src="@Url.Content(user.AvatarUrl)" class="img-responsive teamAvatar" />
+                            @if (!string.IsNullOrEmpty(user.AvatarUrl))
+                            {
+                                <img src="@Url.Content(user.AvatarUrl)" class="img-responsive teamAvatar" />
+                            }
+                            else
+                            {
+                                <img src="~/Uploads/avatar-1577909_1280.png" class="img-responsive teamAvatar" />
+                            }
                         </div>
                         <div class="col-md-8 agile_w3l_social_media_text">
                             <h4>@Html.DisplayFor(modelItem => Model.OwnerUser.FullName)</h4>
@@ -292,284 +381,428 @@
                     </div>
 
                 </div>}
+
+            <!-- Email Modal -->
+            <div id="@user.Id" class="modal fade" role="dialog">
+                <div class="modal-dialog">
+
+                    <!-- Email Form -->
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h4 class="modal-title">Email @user.FirstName</h4>
+                        </div>
+                        <div class="modal-body">
+                            @using (Ajax.BeginForm("SendEmailAjax", "Home", new AjaxOptions { HttpMethod = "POST", OnSuccess = "showSuccessMessage" }))
+                            {
+                                @Html.AntiForgeryToken()
+                                @Html.ValidationSummary("", new { @class = "text-danger" })
+                                <input type="hidden" name="ToUserId" value="@user.Id" />
+
+                                <!--Name-->
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <!-- Subject -->
+                                        <div class="form-group">
+                                            <input id="email-subject" type="text" class="form-control" name="Subject" placeholder="Subject" maxlength="200" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <!-- Message Area -->
+                                        <div class="form-group">
+                                            <textarea id="email-body" class="form-control" name="Body" placeholder="Write your message here..." style="height:232px;" maxlength="1000" required></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Subtmit Button -->
+                                <button type="submit" class="btn btn-send">
+                                    Send message
+                                </button>
+                            }
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
         }
-        </div>
-        <br />
-        <br />
-        <hr />
+    </div>
+</div>
+<hr />
+
 <div class="row">
     <div class="col-md-4">
-        <h3>Ticket Information & Actions</h3>
-    <div class="col-md-4">
-        @Html.ActionLink("Edit Ticket", "Edit", "Tickets", new { id = Model.Id }, new { @class = "label label-danger" })
-    </div>
-    <div class="col-md-4">
+        @*<h3>Ticket Information & Actions</h3>*@
+        <div class="col-md-4">
+        </div>
+        <div class="col-md-4">
 
-    @if (User.IsInRole("Developer"))
-    {
-        <button class="label label-danger">Mark as In Progress</button>
-
-        <br />
-    }
-    @if (User.IsInRole("Manager"))
-    {
-        <button class="label label-success">Mark as Completed</button>
-
-    }
-    </div>
+        </div>
 
     </div>
 </div>
-        <div class="row">
-            <div class="col-md-6">
-                <div class="panel panel-danger">
-                    <div class="panel-heading">
-                        Ticket History
-                        <a href="#ticket-history-panel" data-toggle="collapse" aria-expanded="true" id="ticket-history-collapse-button" title="collapse">
-                            <i class="fa fa-chevron-up pull-right"></i>
-                        </a>
-                    </div>
-                    <div class="panel body panel-collapse in" aria-expanded="true" id="ticket-history-panel">
-                        @foreach (var history in Model.TicketHistories)
-                        {
-                        <p>@history.PropertyName has changed from @history.OldValue to @history.NewValue on @history.Updated.ToString("g")</p>
-                            <hr>
-                        }
-                    </div>
-                </div>
+@*<div class="row">
+    <div class="col-md-6">
+        <div class="panel panel-danger">
+            <div class="panel-heading">
+                Ticket History
+                <a href="#ticket-history-panel" data-toggle="collapse" aria-expanded="true" id="ticket-history-collapse-button" title="collapse">
+                    <i class="fa fa-chevron-up pull-right"></i>
+                </a>
             </div>
-            <div class="col-md-6">
-                <div class="panel panel-danger">
-                    <div class="panel-heading">
-                        Ticket Description
-                        <a href="#ticket-description-panel" data-toggle="collapse" aria-expanded="true" id="ticket-description-collapse-button" title="collapse">
-                            <i class="fa fa-chevron-up pull-right"></i>
-                        </a>
-                    </div>
-                    <div class="panel body panel-collapse in" aria-expanded="true" id="ticket-description-panel">
-                        @Model.Description
-                    </div>
+            <div class="panel body panel-collapse in" aria-expanded="true" id="ticket-history-panel">
+                @foreach (var history in Model.TicketHistories)
+                {
+                <p>@history.PropertyName has changed from @history.OldValue to @history.NewValue on @history.Updated.ToString("g")</p>
+                    <hr>
+                }
+            </div>
+        </div>
+    </div>*@
+@*<div class="col-md-6">
+            <div class="panel panel-danger">
+                <div class="panel-heading">
+                    Ticket Description
+                    <a href="#ticket-description-panel" data-toggle="collapse" aria-expanded="true" id="ticket-description-collapse-button" title="collapse">
+                        <i class="fa fa-chevron-up pull-right"></i>
+                    </a>
+                </div>
+                <div class="panel body panel-collapse in" aria-expanded="true" id="ticket-description-panel">
+                    @Model.Description
                 </div>
             </div>
         </div>
+    </div>*@
 
 
-        <div class="row">
-            <div class="col-md-6">
-                <div class="panel panel-danger">
-                    <div class="panel-heading">
-                        Ticket Attachments
-                        <a href="#ticket-attachments-panel" data-toggle="collapse" aria-expanded="true" id="ticket-attachment-collapse-button" title="collapse">
-                            <i class="fa fa-chevron-up pull-right"></i>
-                        </a>
-                    </div>
-                    <div class="panel body panel-collapse in" aria-expanded="true" id="ticket-attachment-panel">
-                        @if (Model.TicketAttachments != null)
-                        {
-                            if (Model.TicketAttachments.Count > 0)
+<div class="row">
+    <div class="col-md-6">
+        <div class="panel panel-danger">
+            <div class="panel-heading">
+                Ticket Attachments
+                <a href="#ticket-attachments-panel" data-toggle="collapse" aria-expanded="true" id="ticket-attachment-collapse-button" title="collapse">
+                    <i class="fa fa-chevron-up pull-right"></i>
+                </a>
+            </div>
+            <div class="panel body panel-collapse in" aria-expanded="true" id="ticket-attachments-panel">
+                @if (Model.TicketAttachments != null)
+                {
+                    <div class="row">
+                        <div class="col-md-12">
+                            @if (Model.TicketAttachments.Count > 0)
                             {
+
+
                                 foreach (var attachment in Model.TicketAttachments)
                                 {
-                                    <a href="@Url.Content(attachment.AttachmentUrl)" download style="margin-right:10px;"><i class="fa @attachment.Description"></i> @attachment.Title</a>@Html.ActionLink("Remove", "Delete", "TicketAttachments", new { id = attachment.Id, originAction = "Details" }, new { @class = "badge" })<br />
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <a href="@Url.Content(attachment.AttachmentUrl)" download style="margin-right:10px;"><i class="fa @attachment.Description"></i> @attachment.Title</a>
+                                            @using (Html.BeginForm("Delete", "TicketAttachments", new { id = attachment.Id }, FormMethod.Post, new { @id = "ticketAttachmentDelete-" + attachment.Id, style = "display:inline-block;" }))
+                                            {
+                                                TempData["originAction"] = "Details";
+                                                @Html.AntiForgeryToken()
+                                                <a href="@Url.Content(attachment.AttachmentUrl)" class="badge previewTicketAttach" target="_blank" title="Preview">Preview</a>
+                                                <a href="@Url.Content(attachment.AttachmentUrl)" class="badge downloadTicketAttach" download title="Download">Download</a>
+                                                if (User.IsInRole("Admin") || User.Identity.GetUserId() == attachment.UserId)
+                                                {
+                                                    <a href="#" class="badge removeTicketAttach" onclick="document.getElementById('ticketAttachmentDelete-'+@attachment.Id).submit();" title="Remove">Remove</a>
+                                                }
+                                            }
+                                        </div>
+                                    </div>
                                 }
+
                             }
                             else
                             {
                                 <p>No attachment </p><br />
                             }
-                        }
-
-                        <div class="panel-footer">
-                            <a href="" id="addAttachBtn" class="badge" style="background-color:#007ee5;padding:1.5%;width:150px;" onclick="toggleAddAttachmentForm()">Add attachments</a>
-                            @using (Html.BeginForm("Create", "TicketAttachments", FormMethod.Post, new { @id = "attachmentAddForm", hidden = "hidden", enctype = "Multipart/form-data" }))
-                            {
-                                <a href="" id="cancelAttachBtn" class="badge" style="background-color:#007ee5;padding:1.5%;width:150px;" onclick="toggleAddAttachmentForm()">Cancel</a><br /><br />
-                                @Html.AntiForgeryToken()
-                                <input name="ticketId" type="hidden" value="@Model.Id" />
-                                <div class="col-md-8">
-                                    <input name="files" type="file" class="form-control" id="fileUpload" multiple />
-                                </div>
-
-                                <div class="col-md-4">
-                                    <input type="submit" value="Add" class="btn btn-default" style="height:5vh;" />
-                                </div>
-                            }
                         </div>
+                    </div>
+                }
+                <div class="row">
+                    <div class="col-md-12">
+                        <a href="" id="addAttachBtn" class="badge" style="background-color:#007ee5;padding:1.5%;width:150px;" onclick="toggleAddAttachmentForm()">Add attachments</a>
+                        @using (Html.BeginForm("Create", "TicketAttachments", FormMethod.Post, new { @id = "attachmentAddForm", hidden = "hidden", enctype = "Multipart/form-data" }))
+                        {
+                            <a href="" id="cancelAttachBtn" class="badge" style="background-color:#007ee5;padding:1.5%;width:150px;" onclick="toggleAddAttachmentForm()">Cancel</a><br /><br />
+                            @Html.AntiForgeryToken()
+                            <input name="ticketId" type="hidden" value="@Model.Id" />
+                            <div class="col-md-8">
+                                <input name="files" type="file" class="form-control" id="fileUpload" multiple />
+                            </div>
+
+                            <div class="col-md-4">
+                                <input type="submit" value="Add" class="btn btn-default" style="height:5vh;" />
+                            </div>
+                        }
                     </div>
                 </div>
             </div>
-            <div class="col-md-6">
-                <div class="panel panel-danger">
-                    <div class="panel-heading">
-                        Ticket Comments
-                        <a href="#ticket-comments-panel" data-toggle="collapse" aria-expanded="true" id="ticket-comment-collapse-button" title="collapse">
-                            <i class="fa fa-chevron-up pull-right"></i>
-                        </a>
-                    </div>
-                    <div class="panel body panel-collapse in" aria-expanded="true" id="comment-panel">
-                        @if (Request.IsAuthenticated)
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <div class="panel panel-danger">
+            <div class="panel-heading">
+                Ticket Comments
+                <a href="#ticket-comments-panel" data-toggle="collapse" aria-expanded="true" id="ticket-comment-collapse-button" title="collapse">
+                    <i class="fa fa-chevron-up pull-right"></i>
+                </a>
+            </div>
+            <div class="panel body panel-collapse in" aria-expanded="true" id="ticket-comments-panel">
+                @if (Request.IsAuthenticated)
+                {
+                    foreach (var comment in Model.TicketComments)
+                    {
+                        <div class="row">
+                            <div class="col-md-12">
+                                <p id="detailticketcommentbody-@comment.Id">@comment.CommentBody</p>
+                            </div>
+                        </div>
+
+                        if (User.IsInRole("Admin") || User.Identity.GetUserId() == comment.AuthorId)
                         {
-                            foreach (var comment in Model.TicketComments)
-                            {
+                            <div class="row">
+                                @using (Html.BeginForm("Edit", "TicketComments", FormMethod.Post, new { @id = "commentsedit-" + comment.Id, hidden = "hidden" }))
+                                {
+                                    @Html.AntiForgeryToken()
+                                    @Html.ValidationSummary("", new { @class = "text-danger" })
+                                    @Html.Hidden("TicketId", Model.Id)
+                                    @Html.Hidden("AuthorId", comment.AuthorId)
+                                    @Html.Hidden("Created", comment.Created)
+                                    <input type="hidden" name="Id" value="@comment.Id" />
+                                    <div class="col-md-8">
+                                        <input class="form-control" placeholder="Edit comment" name="CommentBody" value="@comment.CommentBody" required />
+                                    </div>
+                                    <div class="col-md-4">
+                                        <input type="submit" value="Submit" class="btn btn-default" style="height:5vh;" />
+                                    </div>
 
-                                @Html.DisplayFor(c => comment.CommentBody)
-                                <p style="font-size:smaller">Submitted by @Html.DisplayFor(c => comment.Author.FullName), @Html.DisplayFor(c => comment.Created)</p>
-
-                                <br />
-
-                            }
+                                }
+                                @using (Html.BeginForm("Delete", "TicketComments", new { id = comment.Id }, FormMethod.Post, new { @id = "commentsdelete-" + comment.Id, hidden = "hidden" }))
+                                {
+                                    @Html.AntiForgeryToken()
+                                }
+                            </div>
                         }
-
+                        <div class="row">
+                            <div class="col-md-12">
+                                <p style="font-size:smaller">Submitted by @Html.DisplayFor(c => comment.Author.FullName), @Html.DisplayFor(c => comment.Created), <img src="@Url.Content(comment.Author.AvatarUrl)" class="img-responsive" style="height: 45px;width: 45px;margin:auto;margin-top:5px;display:inline-block;margin-right:10px;" alt="" /> </p>
+                            </div>
+                        </div>
+                        if (User.IsInRole("Admin") || User.Identity.GetUserId() == comment.AuthorId)
+                        {
+                            <br />
+                            <div class="row" style="font-size:small; font-style:italic; color:gray;padding-left:10px;">
+                                <div class="col-md-12">
+                                    <a href="#" onclick="toggleAddCommentEditForm(this,@comment.Id)">Edit</a> <span>&nbsp;</span>
+                                    <a href='#' onclick="removeTicketComment(@comment.Id)">Delete</a>
+                                </div>
+                            </div>
+                        }
+                        <br />
+                        <hr />
+                    }
+                }
+                <div class="row">
+                    <div class="col-md-12">
                         @using (Html.BeginForm("Create", "TicketComments", FormMethod.Post))
                         {
                             @Html.AntiForgeryToken()
                             @Html.Hidden("TicketId", Model.Id)
 
-                            <div style="margin-left:30px">
-                                <textarea type="text" id="TicketCommentBody" name="CommentBody" rows="5" cols="70"></textarea>
-                                <button class="btn btn-primary" type="submit">Add</button>
+                            <div class="row">
+                                <textarea class="col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 col-xs-10 col-sm-10 col-md-10 col-lg-10" type="text" id="TicketCommentBody" name="CommentBody" rows="5"></textarea>
+                                <button class="btn btn-primary col-xs-offset-8 col-sm-offset-8 col-md-offset-8 col-lg-offset-8 col-xs-3 col-sm-3 col-md-3 col-lg-3" type="submit">Add</button>
                             </div>
-
                         }
                     </div>
                 </div>
             </div>
-            @*</div>*@
-
-            <!-- /social_media-->
-            <div class="clearfix"></div>
         </div>
+    </div>
+    @*</div>*@
 
+    <!-- /social_media-->
+    <div class="clearfix"></div>
 
+    <div class="col-md-12">
+        <div class="panel panel-danger">
+            <div class="panel-heading">
+                Ticket History
+                <a href="#ticket-history-panel" data-toggle="collapse" aria-expanded="true" id="ticket-history-collapse-button" title="collapse">
+                    <i class="fa fa-chevron-up pull-right"></i>
+                </a>
+            </div>
+            <div class="panel body panel-collapse in" aria-expanded="true" id="ticket-history-panel">
+                <div class="page-header">
+                    <h1>Ticket History Timeline</h1>
+                </div>
+                <div style="display:inline-block;width:100%;overflow-y:auto;">
+                    <ul class="timeline timeline-horizontal">
+                        @foreach (var history in Model.TicketHistories)
 
+                        {
 
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="page-header">
-                        <h1>Ticket History Timeline</h1>
-                    </div>
-                    <div style="display:inline-block;width:100%;overflow-y:auto;">
-                        <ul class="timeline timeline-horizontal">
-                            @foreach (var history in Model.TicketHistories)
-
-                            {
-
-                                <li class="timeline-item">
-                                    <div class="timeline-badge primary"><i class="fa fa-check"></i></div>
-                                    <div class="timeline-panel">
-                                        <div class="timeline-heading">
-                                            <h4 class="timeline-title">@history.PropertyName</h4>
-                                            <p><small class="text-muted"><i class="fa fa-times"></i> @history.Updated.ToString("g")</small></p>
-                                        </div>
-                                        <div class="timeline-body">
-                                                <p>@history.PropertyName has changed from @history.OldValue to @history.NewValue</p>
-
-                                        </div>
-                                    </div>
-                                </li>
-                            }
-
-                            @*<li class="timeline-item">
-                                <div class="timeline-badge success"><i class="glyphicon glyphicon-check"></i></div>
-                                <div class="timeline-panel">
-                                    <div class="timeline-heading">
-                                        <h4 class="timeline-title">Mussum ipsum cacilds 2</h4>
-                                        <p><small class="text-muted"><i class="glyphicon glyphicon-time"></i> 11 hours ago via Twitter</small></p>
-                                    </div>
-                                    <div class="timeline-body">
-                                        <p>Mussum ipsum cacilds, vidis faiz elementum girarzis, nisi eros gostis.</p>
-                                    </div>
-                                </div>
-                            </li>
                             <li class="timeline-item">
-                                <div class="timeline-badge info"><i class="glyphicon glyphicon-check"></i></div>
+                                <div class="timeline-badge primary"><i class="fa fa-check"></i></div>
                                 <div class="timeline-panel">
                                     <div class="timeline-heading">
-                                        <h4 class="timeline-title">Mussum ipsum cacilds 3</h4>
-                                        <p><small class="text-muted"><i class="glyphicon glyphicon-time"></i> 11 hours ago via Twitter</small></p>
+                                        <h4 class="timeline-title">@history.PropertyName</h4>
+                                        <p><small class="text-muted"><i class="fa fa-times"></i> @history.Updated.ToString("g")</small></p>
                                     </div>
                                     <div class="timeline-body">
-                                        <p>Mussum ipsum cacilds, vidis litro abertis. Consetis adipisci. Mé faiz elementum girarzis, nisi eros gostis.</p>
+                                        @if (string.IsNullOrEmpty(history.OldValue))
+                                        {
+                                            <p>New ticket is created with a @history.PropertyName of @history.NewValue</p>
+                                        }
+                                        else
+                                        {
+                                            <p>@history.PropertyName has changed from @history.OldValue to @history.NewValue</p>
+                                        }
                                     </div>
                                 </div>
                             </li>
-                            <li class="timeline-item">
-                                <div class="timeline-badge danger"><i class="glyphicon glyphicon-check"></i></div>
-                                <div class="timeline-panel">
-                                    <div class="timeline-heading">
-                                        <h4 class="timeline-title">Mussum ipsum cacilds 4</h4>
-                                        <p><small class="text-muted"><i class="glyphicon glyphicon-time"></i> 11 hours ago via Twitter</small></p>
-                                    </div>
-                                    <div class="timeline-body">
-                                        <p>Mussum ipsum cacilds, vidis litro abertis. Consetis adipiscings elitis. Pra lá , depois divoltis porris, paradis. Paisis, filhis, espiritis santis.</p>
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="timeline-item">
-                                <div class="timeline-badge warning"><i class="glyphicon glyphicon-check"></i></div>
-                                <div class="timeline-panel">
-                                    <div class="timeline-heading">
-                                        <h4 class="timeline-title">Mussum ipsum cacilds 5</h4>
-                                        <p><small class="text-muted"><i class="glyphicon glyphicon-time"></i> 11 hours ago via Twitter</small></p>
-                                    </div>
-                                    <div class="timeline-body">
-                                        <p>Mussum ipsum cacilds, vidis litro abertis. Consetis adipiscings elitis. Pra lá , depois divoltis porris, paradis. Paisis, filhis, espiritis santis.</p>
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="timeline-item">
-                                <div class="timeline-badge"><i class="glyphicon glyphicon-check"></i></div>
-                                <div class="timeline-panel">
-                                    <div class="timeline-heading">
-                                        <h4 class="timeline-title">Mussum ipsum cacilds 6</h4>
-                                        <p><small class="text-muted"><i class="glyphicon glyphicon-time"></i> 11 hours ago via Twitter</small></p>
-                                    </div>
-                                    <div class="timeline-body">
-                                        <p>Mussum ipsum cacilds, vidis litro abertis. Consetis adipiscings elitis. Pra lá , depois divoltis porris, paradis. Paisis, filhis, espiritis santis.</p>
-                                    </div>
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
+                        }
+                    </ul>
                 </div>
             </div>
-        </div>*@
+        </div>
+    </div>
+</div>
 
 
 
-        @*@using (Html.BeginForm())
-        {@Html.AntiForgeryToken()
-        @Html.Hidden("ticketid", Model.Id)
 
-        <p>
-            @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
-            @Html.ActionLink("Back to List", "Index")
-        </p>}*@
-        @section scripts{
-            <script>
-                function toggleAddAttachmentForm() {
-                    event.preventDefault();
-                    $('#attachmentAddForm').toggle();
-                    $('#addAttachBtn').toggle();
-                }
+@*<li class="timeline-item">
+                            <div class="timeline-badge success"><i class="glyphicon glyphicon-check"></i></div>
+                            <div class="timeline-panel">
+                                <div class="timeline-heading">
+                                    <h4 class="timeline-title">Mussum ipsum cacilds 2</h4>
+                                    <p><small class="text-muted"><i class="glyphicon glyphicon-time"></i> 11 hours ago via Twitter</small></p>
+                                </div>
+                                <div class="timeline-body">
+                                    <p>Mussum ipsum cacilds, vidis faiz elementum girarzis, nisi eros gostis.</p>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="timeline-item">
+                            <div class="timeline-badge info"><i class="glyphicon glyphicon-check"></i></div>
+                            <div class="timeline-panel">
+                                <div class="timeline-heading">
+                                    <h4 class="timeline-title">Mussum ipsum cacilds 3</h4>
+                                    <p><small class="text-muted"><i class="glyphicon glyphicon-time"></i> 11 hours ago via Twitter</small></p>
+                                </div>
+                                <div class="timeline-body">
+                                    <p>Mussum ipsum cacilds, vidis litro abertis. Consetis adipisci. Mé faiz elementum girarzis, nisi eros gostis.</p>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="timeline-item">
+                            <div class="timeline-badge danger"><i class="glyphicon glyphicon-check"></i></div>
+                            <div class="timeline-panel">
+                                <div class="timeline-heading">
+                                    <h4 class="timeline-title">Mussum ipsum cacilds 4</h4>
+                                    <p><small class="text-muted"><i class="glyphicon glyphicon-time"></i> 11 hours ago via Twitter</small></p>
+                                </div>
+                                <div class="timeline-body">
+                                    <p>Mussum ipsum cacilds, vidis litro abertis. Consetis adipiscings elitis. Pra lá , depois divoltis porris, paradis. Paisis, filhis, espiritis santis.</p>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="timeline-item">
+                            <div class="timeline-badge warning"><i class="glyphicon glyphicon-check"></i></div>
+                            <div class="timeline-panel">
+                                <div class="timeline-heading">
+                                    <h4 class="timeline-title">Mussum ipsum cacilds 5</h4>
+                                    <p><small class="text-muted"><i class="glyphicon glyphicon-time"></i> 11 hours ago via Twitter</small></p>
+                                </div>
+                                <div class="timeline-body">
+                                    <p>Mussum ipsum cacilds, vidis litro abertis. Consetis adipiscings elitis. Pra lá , depois divoltis porris, paradis. Paisis, filhis, espiritis santis.</p>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="timeline-item">
+                            <div class="timeline-badge"><i class="glyphicon glyphicon-check"></i></div>
+                            <div class="timeline-panel">
+                                <div class="timeline-heading">
+                                    <h4 class="timeline-title">Mussum ipsum cacilds 6</h4>
+                                    <p><small class="text-muted"><i class="glyphicon glyphicon-time"></i> 11 hours ago via Twitter</small></p>
+                                </div>
+                                <div class="timeline-body">
+                                    <p>Mussum ipsum cacilds, vidis litro abertis. Consetis adipiscings elitis. Pra lá , depois divoltis porris, paradis. Paisis, filhis, espiritis santis.</p>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>*@
 
-                //ticket history collapse button title
-                $('a[data-toggle="collapse"]').click(function () {
-                    if ($(this).hasClass('collapsed')) {
-                        $(this).attr('title', 'collapse');
-                    }
-                    else {
-                        $(this).attr('title', 'expand');
-                    }
-                });
 
 
+@*@using (Html.BeginForm())
+    {@Html.AntiForgeryToken()
+    @Html.Hidden("ticketid", Model.Id)
 
-                //sortable rows
-                $('div.row').sortable();
-
-                                                                                                    //timeline
-
-            </script>
+    <p>
+        @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+        @Html.ActionLink("Back to List", "Index")
+    </p>}*@
+@section scripts{
+        <script>
+            function toggleAddAttachmentForm() {
+                event.preventDefault();
+            $('#attachmentAddForm').toggle();
+            $('#addAttachBtn').toggle();
         }
+
+            function toggleAddCommentEditForm(cObj, eachCommId) {
+                event.preventDefault();
+            $('#commentsedit-' + eachCommId).toggle();
+            $('#detailticketcommentbody-' + eachCommId).toggle();
+            $(cObj).html($(cObj).html() == 'Edit' ? 'Cancel' : 'Edit');
+        }
+
+            function removeTicketComment(eachCommId) {
+                event.preventDefault();
+            $('#commentsdelete-' + eachCommId).submit();
+        }
+
+        //ticket history collapse button title
+            $('a[data-toggle="collapse"]').click(function () {
+                if ($(this).hasClass('collapsed')) {
+                $(this).attr('title', 'collapse');
+            }
+                else {
+                $(this).attr('title', 'expand');
+            }
+        });
+
+
+
+
+
+           //Message Sent Alert
+            function showSuccessMessage(data) {
+                if (data == "Message has been successfully sent.") {
+                    swal("Delivered!", data, "success");
+                    $('.modal').modal('hide');
+                    $('#email-subject').val('');
+                    $('#email-body').val('');
+                }
+                else {
+                    swal("Oops!", data, "error");
+                }
+            }
+            //show email modal
+            function showEmailModal(modalId) {
+                $('#' + modalId).modal('show');
+            }
+    </script>
+}

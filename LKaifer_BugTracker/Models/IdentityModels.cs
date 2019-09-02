@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity;
+using System.Data.Entity.Validation;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using LKaifer_BugTracker.Models;
@@ -12,9 +14,13 @@ namespace LKaifer_BugTracker.Models
     // You can add profile data for the user by adding more properties to your ApplicationUser class, please visit https://go.microsoft.com/fwlink/?LinkID=317594 to learn more.
     public class ApplicationUser : IdentityUser
     {
-
+        [StringLength(25, ErrorMessage = "First Name must be between 1 and 25 characters long.", MinimumLength = 1)]
         public string FirstName { get; set; }
+        [StringLength(25, ErrorMessage = "Last Name must be between 1 and 25 characters long.", MinimumLength = 1)]
+
         public string LastName { get; set; }
+        [StringLength(25, ErrorMessage = "Display Name must be between 1 and 25 characters long.", MinimumLength = 1)]
+
         public string DisplayName { get; set; }
         public string AvatarUrl { get; set; }
 

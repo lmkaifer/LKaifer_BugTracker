@@ -25,18 +25,29 @@ namespace LKaifer_BugTracker.Controllers
             return View(db.Projects.ToList());
         }
         [Authorize(Roles = "Admin, Manager, Submitter, Developer")]
-        public ActionResult MyIndex()
+        public ActionResult MyIndex(string badProj)
         {
-            
-            var userId = User.Identity.GetUserId();
-            var currentUser = db.Users.Find(userId);
-            var myProjects = currentUser.Projects.ToList();
-            
-          return View(myProjects);
+            List<Project> myProjects = new List<Project>();
+            if (!string.IsNullOrEmpty(badProj))
+            {
+                myProjects = projectHelper.ProjectsMissingRoles().ToList();
+            }
+            else
+            {
+                var userId = User.Identity.GetUserId();
+                var currentUser = db.Users.Find(userId);
+                myProjects = currentUser.Projects.ToList();
+            }
 
-            
-
+            return View(myProjects);
         }
+
+        //public ActionResult BadProjectsList()
+        //{
+        //    var userId = User.Identity.GetUserId();
+        //    var currentUser = db.Users.Find(userId);
+        //    var BadProjectsList = projectHelper.ProjectsMissingRoles;
+        //}
         [Authorize(Roles = "Admin, Manager, Submitter, Developer")]
         // GET: Projects/Details/5
         public ActionResult Details(int? id)
@@ -51,8 +62,8 @@ namespace LKaifer_BugTracker.Controllers
                 return HttpNotFound();
             }
 
-            
-           
+
+
 
             var allProjectManagers = roleHelper.UsersInRole("Manager");
             var currentProjectManagers = projectHelper.UsersInRoleOnProject(project.Id, "Manager");
@@ -64,7 +75,7 @@ namespace LKaifer_BugTracker.Controllers
 
             var allDevelopers = roleHelper.UsersInRole("Developer");
             var currentProjectDevelopers = projectHelper.UsersInRoleOnProject(project.Id, "Developer");
-            ViewBag.Developers = new MultiSelectList(allDevelopers,"Id", "FullNameWithEmail", currentProjectDevelopers);
+            ViewBag.Developers = new MultiSelectList(allDevelopers, "Id", "FullNameWithEmail", currentProjectDevelopers);
 
             var allAdministrators = roleHelper.UsersInRole("Admin");
             var currentProjectAdmnistrators = projectHelper.UsersInRoleOnProject(project.Id, "Admin");

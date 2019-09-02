@@ -8,14 +8,20 @@
 
 }
 
-<h2>Tickets Index</h2>
+    <h2>
+        Tickets Index
 
-<p>
-    @if (User.IsInRole("Submitter"))
-    {
-        @Html.ActionLink("Create New", "Create")
-    }
-</p>
+
+        @if (User.IsInRole("Submitter"))
+        {
+            <a href="@Url.Action("Create", "Tickets")">
+                <span class="label label-danger">Create A Ticket</span>
+            </a>
+        }
+    </h2>
+
+<br />
+
 <table class="table">
     <thead>
         <tr>
@@ -70,14 +76,14 @@
             <tr>
                 <td>
                     @Html.DisplayFor(modelItem => item.AssignedToUser.FirstName)
-                    @if (User.IsInRole("Manager") || (User.IsInRole("Admin") && item.AssignedToUser == null))
+                    @if (User.IsInRole("Manager") && item.AssignedToUser == null || (User.IsInRole("Admin") && item.AssignedToUser == null))
                     {
                         <a href="@Url.Action("AssignTicket", "Tickets", new { id = item.Id })">
                             <span class="label label-danger" id="hidebtn">Assign Developer</span>
                         </a>
                         <br />
                     }
-                    @if (User.IsInRole("Manager") || (User.IsInRole("Admin") && item.AssignedToUser != null))
+                    @if (User.IsInRole("Manager") && item.AssignedToUser != null || (User.IsInRole("Admin") && item.AssignedToUser != null))
                     {
                 <a href="@Url.Action("AssignTicket", "Tickets", new { id = item.Id })">
                     <span class="label label-success" id="hidebtn">Reassign Developer</span>

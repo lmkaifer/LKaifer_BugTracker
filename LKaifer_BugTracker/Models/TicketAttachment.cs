@@ -13,10 +13,10 @@ namespace LKaifer_BugTracker.Models
         public int Id { get; set; }
         public int TicketId { get; set; }
         public string UserId { get; set; }
-        [StringLength(50, ErrorMessage = "Title must be between 5 and 50 characters long.", MinimumLength = 5)]
+        [StringLength(100, ErrorMessage = "Title must be between 5 and 100 characters long.", MinimumLength = 5)]
 
         public string Title { get; set; }
-        [StringLength(200, ErrorMessage = "Description must be between 5 and 200 characters long.", MinimumLength = 5)]
+        [StringLength(1000, ErrorMessage = "Description must be between 5 and 1000 characters long.", MinimumLength = 5)]
 
 
         public string Description { get; set; }

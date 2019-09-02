@@ -94,10 +94,11 @@ namespace LKaifer_BugTracker.Controllers
             {
                 db.Entry(ticketComment).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Details", "Tickets", new { id = ticketComment.TicketId });
+
             }
-            ViewBag.TicketId = new SelectList(db.Tickets, "Id", "OwnerUserId", ticketComment.TicketId);
-            return View(ticketComment);
+
+            return RedirectToAction("Details", "Tickets", new { id = ticketComment.TicketId });
         }
 
         // GET: TicketComments/Delete/5
@@ -121,9 +122,10 @@ namespace LKaifer_BugTracker.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             TicketComment ticketComment = db.TicketComments.Find(id);
+            int ticketId = ticketComment.TicketId;
             db.TicketComments.Remove(ticketComment);
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("Details", "Tickets", new { id = ticketId });
         }
 
         protected override void Dispose(bool disposing)

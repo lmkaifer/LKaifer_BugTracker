@@ -24,7 +24,7 @@ namespace LKaifer_BugTracker.Models
         public bool TwoFactor { get; set; }
         public bool BrowserRemembered { get; set; }
 
-        [MaxLength(25, ErrorMessage = "Name cannot be greater than 25 characters")]
+        [MaxLength(25, ErrorMessage = "Password cannot be greater than 25 characters")]
         [DataType(DataType.Password)]
         [Display(Name = "Current password")]
         public string OldPassword { get; set; }

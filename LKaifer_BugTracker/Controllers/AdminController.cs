@@ -201,7 +201,7 @@ namespace LKaifer_BugTracker.Controllers
                 }
 
             }
-            return RedirectToAction("Index", "Projects");
+            return RedirectToAction("MyIndex", "Projects");
 
         }
 

@@ -31,7 +31,7 @@ namespace LKaifer_BugTracker.Controllers
             return View(tickets.ToList());
         }
         [Authorize(Roles = "Admin, Manager, Developer, Submitter")]
-        public ActionResult MyIndex()
+        public ActionResult MyIndex(string unassignedTicketsOnly)
         {
             //My index wants to fill some view with MY Tickets only. If I am a submitter, my Tickets are the Tickers
 
@@ -42,22 +42,29 @@ namespace LKaifer_BugTracker.Controllers
             var myRole = roleHelper.ListUserRoles(userId).FirstOrDefault();
             var myTickets = new List<Ticket>();
             //Then based on the Role Name we will push different data into the view
-            switch (myRole)
+            if(!string.IsNullOrEmpty(unassignedTicketsOnly))
             {
+                myTickets = db.Tickets.Where(t => t.AssignedToUserId == null).ToList();
+            }
+            else
+            {
+                switch (myRole)
+                {
 
-                case "Developer":
-                    myTickets = db.Tickets.Where(t => t.AssignedToUserId == userId).ToList();
-                    break;
-                case "Submitter":
-                    myTickets = db.Tickets.Where(t => t.OwnerUserId == userId).ToList();
-                    break;
-                case "Manager":
-                    //myTickets are going to be all the Tickets on all the Projects I am on.
-                    myTickets = db.Users.Find(userId).Projects.SelectMany(t => t.Tickets).ToList();
-                    break;
-                case "Admin":
-                    myTickets = db.Users.Find(userId).Projects.SelectMany(t => t.Tickets).ToList();
-                    break;
+                    case "Developer":
+                        myTickets = db.Tickets.Where(t => t.AssignedToUserId == userId).ToList();
+                        break;
+                    case "Submitter":
+                        myTickets = db.Tickets.Where(t => t.OwnerUserId == userId).ToList();
+                        break;
+                    case "Manager":
+                        //myTickets are going to be all the Tickets on all the Projects I am on.
+                        myTickets = db.Users.Find(userId).Projects.SelectMany(t => t.Tickets).ToList();
+                        break;
+                    case "Admin":
+                        myTickets = db.Users.Find(userId).Projects.SelectMany(t => t.Tickets).ToList();
+                        break;
+                }
             }
             return View("Index", myTickets);
 
@@ -118,7 +125,7 @@ namespace LKaifer_BugTracker.Controllers
             {
                 var myProjects = projectHelper.ListUserProjects(User.Identity.GetUserId());
                 ViewBag.ProjectId = new SelectList(myProjects, "Id", "Name");
-                
+
             }
             else
             {
@@ -151,18 +158,14 @@ namespace LKaifer_BugTracker.Controllers
                     ticketAttachment.UserId = User.Identity.GetUserId();
                     db.TicketAttachments.Add(ticketAttachment);
                     ticket.TicketAttachments.Add(ticketAttachment);
-                    TicketHistory tickethistory = new TicketHistory();
-                    db.TicketHistories.Add(tickethistory);
-                    db.SaveChanges();
+                    HistoryHelper.AnyAttachment(ticket, ticketAttachment, true);
                 }
-
-
                 ticket.TicketStatusId = db.TicketStatuses.FirstOrDefault(t => t.Name == "New/UnAssigned").Id;
                 ticket.OwnerUserId = User.Identity.GetUserId();
                 ticket.Created = DateTime.Now;
                 db.Tickets.Add(ticket);
                 db.SaveChanges();
-
+                HistoryHelper.AnyCreated(ticket);
                 return RedirectToAction("MyIndex");
             }
 
@@ -233,25 +236,16 @@ namespace LKaifer_BugTracker.Controllers
                     ticketAttachment.TicketId = ticket.Id;
                     db.TicketAttachments.Add(ticketAttachment);
                     ticket.TicketAttachments.Add(ticketAttachment);
-                    TicketHistory tickethistory = new TicketHistory();
-                    tickethistory.PropertyName = "TicketAttachment";
-                    tickethistory.NewValue = ticketAttachment.Title;
-                    tickethistory.OldValue = "No Ticket Attachment";
-                    tickethistory.Updated = DateTime.Now;
-                    tickethistory.TicketId = ticket.Id;
-                    tickethistory.UserId = User.Identity.GetUserId();
-                    db.TicketHistories.Add(tickethistory);
-                    db.SaveChanges();
-
+                    HistoryHelper.AnyAttachment(ticket, ticketAttachment, true);
                 }
 
                 var oldTicket = db.Tickets.AsNoTracking().FirstOrDefault(t => t.Id == ticket.Id);
-                
+
                 ticket.Updated = DateTime.Now;
                 db.Entry(ticket).State = EntityState.Modified;
                 db.SaveChanges();
                 var newTicket = db.Tickets.Where(n => n.Id == ticket.Id).Include(n => n.TicketPriority).Include(n => n.TicketStatus).Include(n => n.TicketType).FirstOrDefault();
-                var callbackUrl = Url.Action("Details", "Tickets",new { id = ticket.Id}, protocol: Request.Url.Scheme);
+                var callbackUrl = Url.Action("Details", "Tickets", new { id = ticket.Id }, protocol: Request.Url.Scheme);
                 await NotificationHelper.ManageNotifications(oldTicket, newTicket, callbackUrl, false);
                 HistoryHelper.AnyChanges(oldTicket, ticket);
                 return RedirectToAction("MyIndex");
@@ -354,6 +348,7 @@ namespace LKaifer_BugTracker.Controllers
 
             catch (Exception ex)
             {
+                Console.WriteLine(ex.Message);
                 await Task.FromResult(0);
             }
             return RedirectToAction("MyIndex");
@@ -365,7 +360,7 @@ namespace LKaifer_BugTracker.Controllers
             ticket.TicketStatusId = db.TicketStatuses.FirstOrDefault(s => s.Name == "In Progress")?.Id ?? 1;
             db.SaveChanges();
             return Redirect(Request.ServerVariables["http_referer"]);
-            
+
         }
 
         public ActionResult MarkAsCompleted(int? id)

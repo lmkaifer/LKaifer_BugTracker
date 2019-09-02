@@ -14,7 +14,7 @@ namespace LKaifer_BugTracker.Models
         public int TicketId { get; set; }
         public string AuthorId { get; set; }
 
-        [StringLength(200, ErrorMessage = "Comment must be between 5 and 200 characters long.", MinimumLength = 5)]
+        [StringLength(1000, ErrorMessage = "Comment must be between 5 and 1000 characters long.", MinimumLength = 5)]
 
         public string CommentBody { get; set; }
         public DateTime Created { get; set; }

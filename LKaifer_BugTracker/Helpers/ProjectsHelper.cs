@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Data.Entity.Validation;
 using System.Linq;
 using System.Web;
 
@@ -47,13 +48,28 @@ namespace LKaifer_BugTracker.Helpers
         }
         public void AddUserToProject(string userId, int projectId)
         {
-            if (!IsUserOnProject(userId, projectId))
+            try
             {
-                Project proj = db.Projects.Find(projectId);
-                var newUser = db.Users.Find(userId);
+                if (!IsUserOnProject(userId, projectId))
+                {
+                    Project proj = db.Projects.Find(projectId);
+                    var newUser = db.Users.Find(userId);
 
-                proj.Users.Add(newUser);
-                db.SaveChanges();
+                    proj.Users.Add(newUser);
+                    db.SaveChanges();
+                }
+            }
+            catch (DbEntityValidationException e)
+            {
+                foreach (var cEvent in e.EntityValidationErrors)
+                {
+                    string errorMsg = "Entity of type" + cEvent.Entry.Entity.GetType().Name + " in state " + cEvent.Entry.State + " has the following validation errors:";
+                    foreach (var ve in cEvent.ValidationErrors)
+                    {
+                        string childErrorMsg = "- Property: "+ ve.PropertyName + ", Error: " + ve.ErrorMessage;
+                    }
+                }
+                throw;
             }
         }
         public void RemoveUserFromProject(string userId, int projectId)

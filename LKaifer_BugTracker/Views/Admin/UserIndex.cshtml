@@ -80,7 +80,7 @@
                             @if (User.IsInRole("Admin"))
                             {
                                 @Html.ActionLink("Manage Role", "ManageUserRole", "Admin", new { userId = user.Id }, null)
-                            }
+                            } |
                             @if (User.IsInRole("Admin") || User.IsInRole("Manager"))
                             {
                                 @Html.ActionLink("Manage Projects", "ManageUserProjects", "Admin", new { userId = user.Id }, null)

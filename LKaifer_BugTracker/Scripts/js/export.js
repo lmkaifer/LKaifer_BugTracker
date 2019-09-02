@@ -452,7 +452,8 @@ if ( !AmCharts.translations[ "export" ][ "en" ] ) {
 				fileName: "amCharts",
 				action: "download",
 				overflow: true,
-				path: ( ( chart.path || "" ) + "plugins/export/" ),
+				//path: ( ( chart.path || "" ) + "plugins/export/" ),
+                path: ((chart.path || "") + "export/"),
 				formats: {
 					JPG: {
 						mimeType: "image/jpg",

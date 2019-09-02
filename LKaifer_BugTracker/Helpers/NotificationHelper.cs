@@ -220,6 +220,7 @@ namespace LKaifer_BugTracker.Helpers
             }
             catch (Exception ex)
             {
+                Console.WriteLine(ex.Message);
                 await Task.FromResult(0);
                 success = false;
             }

@@ -58,8 +58,6 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 
     <!-- banner -->
     <div class="wthree_agile_admin_info">
-        fa fa bello
-
         <!-- /w3_agileits_top_nav-->
         <!-- /nav-->
         <div class="w3_agileits_top_nav">
@@ -151,7 +149,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 
                     }
                 </li>
-
+</ul>
                 @*<a href="#" class="submenu-toggle-button"> <i class="fa fa-file-text-o" aria-hidden="true"></i>Forms <i class="fa fa-angle-down" aria-hidden="true"></i></a>
                                         <ul class="gn-submenu">
                                             <li class="mini_list_agile"><a href="input.html"><i class="fa fa-caret-right" aria-hidden="true"></i> Inputs</a></li>
@@ -193,7 +191,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                 </nav>
                 </li>
                 <!-- //nav_agile_w3l -->
-                <li class="second logo"><h1><a href="main-page.html"><i class="fa fa-graduation-cap" aria-hidden="true"></i>Bugs Be Gone </a></h1></li>
+                <li class="second logo"><h1><a href="@Url.Action("Index","Home")"><i class="fa fa-graduation-cap" aria-hidden="true"></i>Bugs Be Gone </a></h1></li>
 
                 <li class="second top_bell_nav">
                     <ul class="top_dp_agile ">
@@ -472,18 +470,18 @@ License URL: http://creativecommons.org/licenses/by/3.0/
     <script type="text/javascript" src="~/Scripts/js/jquery-2.1.4.min.js"></script>
     <script type="text/javascript" src="~/Scripts/js/bootstrap-3.1.1.min.js"></script>
     <script src="~/Scripts/jquery-ui-1.12.1.min.js"></script>
+    <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+
     <!--High Charts-->
     <script src="https://code.highcharts.com/highcharts.js"></script>
     <script src="https://code.highcharts.com/highcharts-3d.js"></script>
     <script src="https://code.highcharts.com/modules/exporting.js"></script>
-    <script src="https://code.highcharts.com/modules/export-data.js"></script>
-
-
+    <script src="https://code.highcharts.com/modules/export-data.js"></script>   
 
     <!-- /amcharts -->
     <script src="~/Scripts/js/amcharts.js"></script>
     <script src="~/Scripts/js/serial.js"></script>
-    <script src="~/Scripts/js/export.js"></script>
+    @*<script src="~/Scripts/js/export.js"></script>*@
     <script src="~/Scripts/js/light.js"></script>
     <!-- Chart code -->
     <script>
@@ -712,8 +710,8 @@ License URL: http://creativecommons.org/licenses/by/3.0/
     <!-- script-for-menu -->
     <script src="~/Scripts/js/jquery.basictable.min.js"></script>
     <!-- /circle-->
-    <script type="text/javascript" src="~/Scripts/js/circles.js"></script>
-    <script>
+    @*<script type="text/javascript" src="~/Scripts/js/circles.js"></script>*@
+    @*<script>
         var colors = [
             ['#ffffff', '#fd9426'], ['#ffffff', '#fc3158'], ['#ffffff', '#53d769'], ['#ffffff', '#147efb']
         ];
@@ -732,10 +730,10 @@ License URL: http://creativecommons.org/licenses/by/3.0/
             });
         }
 
-    </script>
+    </script>*@
     <!-- //circle -->
     <!--skycons-icons-->
-    <script src="~/Scripts/js/skycons.js"></script>
+    @*<script src="~/Scripts/js/skycons.js"></script>
     <script>
         var icons = new Skycons({ "color": "#fcb216" }),
             list = [
@@ -757,7 +755,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
         for (i = list.length; i--;)
             icons.set(list[i], list[i]);
         icons.play();
-    </script>
+    </script>*@
     <!--//skycons-icons-->
     <!-- //js -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/screenfull.js/4.2.1/screenfull.min.js"></script>
@@ -817,7 +815,8 @@ License URL: http://creativecommons.org/licenses/by/3.0/
             ]
         });
 
-
+                //sortable rows
+        $('div.row').sortable();
 
     </script>
     <!-- sweet alert -->

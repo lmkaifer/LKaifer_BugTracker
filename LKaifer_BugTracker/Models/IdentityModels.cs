@@ -48,6 +48,7 @@ namespace LKaifer_BugTracker.Models
         public virtual ICollection<TicketAttachment> TicketAttachments { get; set; }
         public virtual ICollection<TicketComment> TicketComments { get; set; }
         public virtual ICollection<TicketHistory> TicketHistories { get; set; }
+        public virtual ICollection<WorkNote> WorkNotes { get; set; }
 
         public ApplicationUser()
         {
@@ -55,6 +56,7 @@ namespace LKaifer_BugTracker.Models
             TicketAttachments = new HashSet<TicketAttachment>();
             TicketComments = new HashSet<TicketComment>();
             TicketHistories = new HashSet<TicketHistory>();
+            WorkNotes = new HashSet<WorkNote>();
         }
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
         {
@@ -88,4 +90,5 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     public DbSet<TicketPriority> TicketPriorities { get; set; }
     public DbSet<TicketStatus> TicketStatuses { get; set; }
     public DbSet<TicketType> TicketTypes { get; set; }
+    public DbSet<WorkNote> WorkNotes { get; set; }
 }

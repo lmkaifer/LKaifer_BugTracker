@@ -1,4 +1,6 @@
-﻿using LKaifer_BugTracker.ViewModels;
+﻿using LKaifer_BugTracker.Helpers;
+using LKaifer_BugTracker.Models;
+using LKaifer_BugTracker.ViewModels;
 using Microsoft.AspNet.Identity;
 using System;
 using System.Collections.Generic;
@@ -16,12 +18,9 @@ namespace LKaifer_BugTracker.Controllers
     public class HomeController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
-
+        private UserRolesHelper roleHelper = new UserRolesHelper();
         public ActionResult Index()
         {
-            ViewBag.AllProjectList = db.Projects.ToList();
-
-
             return View();
         }
         public ActionResult About()
@@ -40,51 +39,101 @@ namespace LKaifer_BugTracker.Controllers
 
         public JsonResult TicketStatusData()
         {
-            var statusticketlist = db.TicketStatuses.ToList();
-            List<StatusTicketChartViewModel> resultList = new List<StatusTicketChartViewModel>();
-            foreach (var item in statusticketlist)
+
+        var userId = User.Identity.GetUserId();
+            var myRole = roleHelper.ListUserRoles(userId).FirstOrDefault();
+            var myTickets = new List<Ticket>();
+
+            switch (myRole)
             {
-                StatusTicketChartViewModel viewmodel = new StatusTicketChartViewModel
-                {
-                    TicketStatusName = item.Name,
-                    TicketCount = item.Tickets.Count.ToString()
-                };
-                resultList.Add(viewmodel);
+
+                case "Developer":
+                    myTickets = db.Tickets.Where(t => t.AssignedToUserId == userId).ToList();
+                    break;
+                case "Submitter":
+                    myTickets = db.Tickets.Where(t => t.OwnerUserId == userId).ToList();
+                    break;
+                case "Manager":
+                    //myTickets are going to be all the Tickets on all the Projects I am on.
+                    myTickets = db.Users.Find(userId).Projects.SelectMany(t => t.Tickets).ToList();
+                    break;
+                case "Admin":
+                    myTickets = db.Tickets.ToList();
+                    break;
             }
+
+            List<StatusTicketChartViewModel> resultList = myTickets.GroupBy(t => t.TicketStatus.Name).Select(g => new StatusTicketChartViewModel
+            {
+                TicketStatusName = g.Key,
+                TicketCount = g.Count().ToString()
+            }).ToList();
 
             return Json(resultList, JsonRequestBehavior.AllowGet);
         }
 
         public JsonResult TicketPriorityData()
         {
-            var prioritiesticketlist = db.TicketPriorities.ToList();
-            List<PriorityTicketChartViewModel> resultList = new List<PriorityTicketChartViewModel>();
-            foreach (var item in prioritiesticketlist)
+            var userId = User.Identity.GetUserId();
+            var myRole = roleHelper.ListUserRoles(userId).FirstOrDefault();
+            var myTickets = new List<Ticket>();
+
+            switch (myRole)
             {
-                PriorityTicketChartViewModel viewmodel = new PriorityTicketChartViewModel
-                {
-                    TicketPriorityName = item.Name,
-                    TicketCount = item.Tickets.Count.ToString()
-                };
-                resultList.Add(viewmodel);
+
+                case "Developer":
+                    myTickets = db.Tickets.Where(t => t.AssignedToUserId == userId).ToList();
+                    break;
+                case "Submitter":
+                    myTickets = db.Tickets.Where(t => t.OwnerUserId == userId).ToList();
+                    break;
+                case "Manager":
+                    //myTickets are going to be all the Tickets on all the Projects I am on.
+                    myTickets = db.Users.Find(userId).Projects.SelectMany(t => t.Tickets).ToList();
+                    break;
+                case "Admin":
+                    myTickets = db.Tickets.ToList();
+                    break;
             }
+
+            List<PriorityTicketChartViewModel> resultList = myTickets.GroupBy(t => t.TicketPriority.Name).Select(g => new PriorityTicketChartViewModel
+            {
+                TicketPriorityName = g.Key,
+                TicketCount = g.Count().ToString()
+            }).ToList();
 
             return Json(resultList, JsonRequestBehavior.AllowGet);
         }
 
         public JsonResult TicketTypeData()
         {
-            var typesticketlist = db.TicketTypes.ToList();
-            var totalTicketCount = db.Tickets.Count();
-            List<TypeTicketChartViewModel> resultList = new List<TypeTicketChartViewModel>();
-            foreach (var item in typesticketlist)
+            var userId = User.Identity.GetUserId();
+            var myRole = roleHelper.ListUserRoles(userId).FirstOrDefault();
+            var myTickets = new List<Ticket>();
+
+            switch (myRole)
             {
-                TypeTicketChartViewModel viewmodel = new TypeTicketChartViewModel();
-                var percentageResult = (double)item.Tickets.Count / totalTicketCount;
-                viewmodel.TicketTypeName = item.Name;
-                viewmodel.TicketPercentage = percentageResult.ToString("0.00");
-                resultList.Add(viewmodel);
+
+                case "Developer":
+                    myTickets = db.Tickets.Where(t => t.AssignedToUserId == userId).ToList();
+                    break;
+                case "Submitter":
+                    myTickets = db.Tickets.Where(t => t.OwnerUserId == userId).ToList();
+                    break;
+                case "Manager":
+                    //myTickets are going to be all the Tickets on all the Projects I am on.
+                    myTickets = db.Users.Find(userId).Projects.SelectMany(t => t.Tickets).ToList();
+                    break;
+                case "Admin":
+                    myTickets = db.Tickets.ToList();
+                    break;
             }
+
+            var totalTicketCount = myTickets.Count();
+            List<TypeTicketChartViewModel> resultList = myTickets.GroupBy(t => t.TicketType.Name).Select(g => new TypeTicketChartViewModel
+            {
+                TicketTypeName = g.Key,
+                TicketPercentage = ((double)g.Count() / totalTicketCount).ToString("0.00")
+            }).ToList();
 
             return Json(resultList, JsonRequestBehavior.AllowGet);
         }

@@ -8,17 +8,17 @@
 
 }
 
-    <h2>
-        Tickets Index
+<h2>
+    Tickets Index
 
 
-        @if (User.IsInRole("Submitter"))
-        {
-            <a href="@Url.Action("Create", "Tickets")">
-                <span class="label label-danger">Create A Ticket</span>
-            </a>
-        }
-    </h2>
+    @if (User.IsInRole("Submitter"))
+    {
+        <a href="@Url.Action("Create", "Tickets")">
+            <span class="label label-danger">Create A Ticket</span>
+        </a>
+    }
+</h2>
 
 <br />
 
@@ -77,19 +77,53 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.AssignedToUser.FirstName)
                     @if (User.IsInRole("Manager") && item.AssignedToUser == null || (User.IsInRole("Admin") && item.AssignedToUser == null))
+                        {
+                            <a href="@Url.Action("AssignTicket", "Tickets", new { id = item.Id })">
+                                <span class="label label-danger" id="hidebtn">Assign Developer</span>
+                            </a>
+                            <br />
+                        }
+                        @if (User.IsInRole("Manager") && item.AssignedToUser != null || (User.IsInRole("Admin") && item.AssignedToUser != null))
+                        {
+                            <a href="@Url.Action("AssignTicket", "Tickets", new { id = item.Id })">
+                                <span class="label label-success" id="hidebtn">Reassign Developer</span>
+                            </a>
+                        }
+
+                    @*@if (User.IsInRole("Manager") || User.IsInRole("Admin"))
                     {
-                        <a href="@Url.Action("AssignTicket", "Tickets", new { id = item.Id })">
-                            <span class="label label-danger" id="hidebtn">Assign Developer</span>
-                        </a>
-                        <br />
-                    }
-                    @if (User.IsInRole("Manager") && item.AssignedToUser != null || (User.IsInRole("Admin") && item.AssignedToUser != null))
-                    {
-                <a href="@Url.Action("AssignTicket", "Tickets", new { id = item.Id })">
-                    <span class="label label-success" id="hidebtn">Reassign Developer</span>
-                </a>
-                    }
-                    </td>
+                        UserRolesHelper helper = new UserRolesHelper();
+                        var users = helper.UsersInRole("Developer").ToList();
+                        var currentTicketDevelopers = users.Where(u => u.Projects.Any(p => p.Id.Equals(item.ProjectId))).ToList();
+                        var AssignedToUserIdSelect = new SelectList(currentTicketDevelopers, "Id", "FullName", item.AssignedToUserId);
+                        using (Html.BeginForm("AssignTicket","Tickets",FormMethod.Post))
+                        {
+                            @Html.AntiForgeryToken()
+
+                            <div class="form-horizontal">
+                                <hr />
+                                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                                @Html.HiddenFor(model => item.Id)
+
+                                <div class="form-group">
+                                    @Html.LabelFor(model => item.AssignedToUserId, " Developer", new { @class = "control-label col-md-2" })
+                                    <div class="col-md-10">
+                                        @Html.DropDownList("AssignedToUserId", AssignedToUserIdSelect, new { @class = "form-control" })
+                                        @Html.ValidationMessageFor(model => item.AssignedToUserId, "", new { @class = "text-danger" })
+
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="col-md-offset-2 col-md-10">
+                                        <input type="submit" value="Assign" class="btn btn-default" />
+                                    </div>
+                                </div>
+
+                            </div>
+                        }
+                    }*@
+                </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.OwnerUser.FirstName)
                 </td>

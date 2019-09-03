@@ -344,7 +344,6 @@
                 </div>}
             if (user == null)
             {
-
             }
             else if (roleHelper.IsUserInRole(user.Id, "Submitter"))
             {
@@ -380,7 +379,8 @@
                         <div class="clearfix"></div>
                     </div>
 
-                </div>}
+                </div>
+
 
             <!-- Email Modal -->
             <div id="@user.Id" class="modal fade" role="dialog">
@@ -427,6 +427,7 @@
 
                 </div>
             </div>
+            }
         }
     </div>
 </div>

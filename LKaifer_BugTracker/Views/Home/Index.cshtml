@@ -4,7 +4,6 @@
 @using LKaifer_BugTracker.ViewModels
 @{
     ViewBag.Title = "Dashboard";
-    List<Project> ProjectList = ViewBag.AllProjectList as List<Project>;
     ApplicationDbContext db = new ApplicationDbContext();
     UserRolesHelper helper = new UserRolesHelper();
     ProjectsHelper projectshelper = new ProjectsHelper();
@@ -27,7 +26,7 @@
     int indexCounter = 0;
     foreach (var dev in alldevlist)
     {
-        opendevticketsarr += dev.FirstName + " " + dev.Projects.Sum(t => t.Tickets.Count) + ",";
+        opendevticketsarr += dev.FirstName + " " + dev.Projects.Sum(t => t.Tickets.Where(a => a.AssignedToUserId == dev.Id).ToList().Count) + ",";
         indexCounter++;
     }
 
@@ -102,11 +101,11 @@
         {
 
             <li>
-                <a href="@Url.Action("Create", "Projects")">
+                <a href="@Url.Action("Index", "Projects")">
                     <i class="fa fa-clone" aria-hidden="true"></i>
                     <div class="ca-content">
                         <h4 class="ca-main four">@allProjects.Count</h4>
-                        <h3 class="ca-sub four">Create A Project</h3>
+                        <h3 class="ca-sub four">All Projects Index</h3>
                     </div>
                 </a>
             </li>
@@ -184,14 +183,14 @@
             </a>
         </li>
         @*<li>
-                <a href="#">
-                    <i class="fa fa-tasks" aria-hidden="true"></i>
-                    <div class="ca-content">
-                        <h4 class="ca-main three">49,436</h4>
-                        <h3 class="ca-sub three">Old Projects</h3>
-                    </div>
-                </a>
-            </li>*@
+            <a href="#">
+                <i class="fa fa-tasks" aria-hidden="true"></i>
+                <div class="ca-content">
+                    <h4 class="ca-main three">49,436</h4>
+                    <h3 class="ca-sub three">Old Projects</h3>
+                </div>
+            </a>
+        </li>*@
         @if (User.IsInRole("Submitter"))
         {
 
@@ -211,13 +210,69 @@
         {
 
             <li>
-                <a href="#">
+                <a href="#" data-target="#dev-worknote-modal" data-toggle="modal">
                     <i class="fa fa-clone" aria-hidden="true"></i>
                     <div class="ca-content">
                         <h4 class="ca-main four"></h4>
                         <h3 class="ca-sub four">My Work Notes</h3>
                     </div>
                 </a>
+            <div id="dev-worknote-modal" class="modal fade" role="dialog">
+                <div class="modal-dialog">
+
+                    <!-- Work Note Form -->
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h4 class="modal-title">My Work Notes</h4>
+                        </div>
+                        <div class="modal-body">
+
+                                    <dl>
+                                        @foreach (var workNote in currentUser.WorkNotes)
+                                        {
+                                            <dt>
+                                                @workNote.Title :
+                                            </dt>
+                                            <dd>
+                                                @workNote.Body <span style="font-style:italic;color:lightgray;font-size:smaller;">added on @workNote.Created.ToString("g")</span>
+                                            </dd>
+                                        }
+                                    </dl>
+                            
+                            @using (Html.BeginForm("Create", "WorkNotes",FormMethod.Post))
+                            {
+                                @Html.AntiForgeryToken()
+                                @Html.ValidationSummary("", new { @class = "text-danger" })
+                                <input type="hidden" name="ToUserId" value="@currentUser.Id" />
+
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <!-- Title -->
+                                        <div class="form-group">
+                                            <input id="worknote-title" type="text" class="form-control" name="Title" placeholder="Title" maxlength="300">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <!-- Body Area -->
+                                        <div class="form-group">
+                                            <textarea id="worknote-body" class="form-control" name="Body" placeholder="Write your work note here..." style="height:232px;" maxlength="1000" required></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Subtmit Button -->
+                                <button type="submit" class="btn btn-send">
+                                    Save
+                                </button>
+                            }
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
             </li>
         }
     </ul>
@@ -270,19 +325,59 @@
                             <div class="bars_agileits agile_info_shadow">
                                 <h3 class="w3_inner_tittle two">Projects with Open Tickets</h3>
                                 <div class='bar_group'>
-                                    @foreach (var project in allProjects)
+                                    @if (User.IsInRole("Admin"))
                                     {
-                                        <div class='bar_group__bar thin' label='@project.Name' show_values='true' tooltip='true' value='@project.Tickets.Where(t => !t.TicketStatus.Name.Equals("Completed")&&!t.TicketStatus.Name.Equals("Archvied")).Count()'></div>
+                                        foreach (var project in allProjects)
+                                        {
+                                            var openTicketCount = project.Tickets.Where(t => !t.TicketStatus.Name.Equals("Completed") && !t.TicketStatus.Name.Equals("Archived")).Count();
+                                            if (openTicketCount != 0)
+                                            {
+                                                <div class='bar_group__bar thin' label='@project.Name' show_values='true' tooltip='true' value='@openTicketCount'></div>
+                                            }
+                                        }
+                                    }
+                                    else if (User.IsInRole("Manager"))
+                                    {
+                                        foreach (var project in currentUser.Projects.ToList())
+                                        {
+                                            var openTicketCount = project.Tickets.Where(t => !t.TicketStatus.Name.Equals("Completed") && !t.TicketStatus.Name.Equals("Archived")).Count();
+                                            if (openTicketCount != 0)
+                                            {
+                                                <div class='bar_group__bar thin' label='@project.Name' show_values='true' tooltip='true' value='@openTicketCount'></div>
+                                            }
+                                        }
+                                    }
+                                    else if (User.IsInRole("Developer"))
+                                    {
+                                        foreach (var project in currentUser.Projects.ToList())
+                                        {
+                                            var openTicketCount = project.Tickets.Where(t => !t.TicketStatus.Name.Equals("Completed") && !t.TicketStatus.Name.Equals("Archived") && t.AssignedToUserId == currentUser.Id).Count();
+                                            if (openTicketCount != 0)
+                                            {
+                                                <div class='bar_group__bar thin' label='@project.Name' show_values='true' tooltip='true' value='@openTicketCount'></div>
+                                            }
+                                        }
+                                    }
+                                    else if (User.IsInRole("Submitter"))
+                                    {
+                                        foreach (var project in currentUser.Projects.ToList())
+                                        {
+                                            var openTicketCount = project.Tickets.Where(t => !t.TicketStatus.Name.Equals("Completed") && !t.TicketStatus.Name.Equals("Archived") && t.OwnerUserId == currentUser.Id).Count();
+                                            if (openTicketCount != 0)
+                                            {
+                                                <div class='bar_group__bar thin' label='@project.Name' show_values='true' tooltip='true' value='@openTicketCount'></div>
+                                            }
+                                        }
                                     }
                                     @*<div class='bar_group__bar thin' label='Cloud Solution' show_values='true' tooltip='true' value='5'></div>
-                                        <div class='bar_group__bar thin' label='Financial Portal' show_values='true' tooltip='true' value='550'></div>
-                                        <div class='bar_group__bar thin' label='Financial Portal Mobile App' show_values='true' tooltip='true' value='456'></div>
-                                        <div class='bar_group__bar thin' label='School Dashboard' show_values='true' tooltip='true' value='343'></div>
-                                        <div class='bar_group__bar thin' label='Leadership Dashboard' show_values='true' tooltip='true' value='235'></div>
-                                        <div class='bar_group__bar thin' label='LKaifer Blog' show_values='true' tooltip='true' value='550'></div>
-                                        <div class='bar_group__bar thin' label='LKaifer Portfolio' show_values='true' tooltip='true' value='456'></div>
-                                        <div class='bar_group__bar thin' label='Visitor Check In App' show_values='true' tooltip='true' value='550'></div>
-                                        <div class='bar_group__bar thin' label='Taekwondo Mobile App' show_values='true' tooltip='true' value='456'></div>*@
+        <div class='bar_group__bar thin' label='Financial Portal' show_values='true' tooltip='true' value='550'></div>
+        <div class='bar_group__bar thin' label='Financial Portal Mobile App' show_values='true' tooltip='true' value='456'></div>
+        <div class='bar_group__bar thin' label='School Dashboard' show_values='true' tooltip='true' value='343'></div>
+        <div class='bar_group__bar thin' label='Leadership Dashboard' show_values='true' tooltip='true' value='235'></div>
+        <div class='bar_group__bar thin' label='LKaifer Blog' show_values='true' tooltip='true' value='550'></div>
+        <div class='bar_group__bar thin' label='LKaifer Portfolio' show_values='true' tooltip='true' value='456'></div>
+        <div class='bar_group__bar thin' label='Visitor Check In App' show_values='true' tooltip='true' value='550'></div>
+        <div class='bar_group__bar thin' label='Taekwondo Mobile App' show_values='true' tooltip='true' value='456'></div>*@
                                 </div>
                             </div>
                         </div>
@@ -308,22 +403,22 @@
                                     <h3 class="w3_inner_tittle">Company Overview</h3>
                                     <div class="stats-wrap">
                                         <div class="count_info"><h4 class="count">@totaladmincount</h4><span class="year">Total Administrators</span></div>
-                                        <div class="year-info"><p class="text-no">20 </p><span class="year">Tickets Today:</span></div>
+                                        <div class="year-info"><p class="text-no">5 </p><span class="year">Tickets Today:</span></div>
                                         <div class="clearfix"></div>
                                     </div>
                                     <div class="stats-wrap">
                                         <div class="count_info"><h4 class="count">@totalmangrcount </h4><span class="year">Total Managers</span></div>
-                                        <div class="year-info"><p class="text-no">40 </p><span class="year">Tickets This Month</span></div>
+                                        <div class="year-info"><p class="text-no">25 </p><span class="year">Tickets This Month</span></div>
                                         <div class="clearfix"></div>
                                     </div>
                                     <div class="stats-wrap">
                                         <div class="count_info"><h4 class="count">@totaldevcount</h4><span class="year">Total Developers</span></div>
-                                        <div class="year-info"><p class="text-no">320 </p><span class="year">Tickets This Week</span></div>
+                                        <div class="year-info"><p class="text-no">7 </p><span class="year">Tickets This Week</span></div>
                                         <div class="clearfix"></div>
                                     </div>
                                     <div class="stats-wrap">
                                         <div class="count_info"><h4 class="count">@totalsubcount</h4><span class="year">Total Submitters</span></div>
-                                        <div class="year-info"><p class="text-no">5 </p><span class="year">Your total tickets</span></div>
+                                        <div class="year-info"><p class="text-no">@currentUser.Projects.Sum(t => t.Tickets.Count) </p><span class="year">Your total tickets</span></div>
                                         <div class="clearfix"></div>
                                     </div>
                                 </div>
@@ -495,7 +590,7 @@
         url: dataUrl,
         success: function (response) {
         Highchartinitforticketstatuses(response);
-        }
+            }
         });
         }
         //Ajax for Ticket Priority Charts
@@ -684,7 +779,7 @@
     });
 
     var containers = document.getElementsByClassName('tickets-type-liquid-chart');
- 
+
     for (var i = 0; i < options.length; ++i) {
     var chart = echarts.init(containers[i]);
 

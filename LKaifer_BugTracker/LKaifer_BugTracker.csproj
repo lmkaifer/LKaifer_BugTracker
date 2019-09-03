@@ -184,6 +184,7 @@
     <Compile Include="Controllers\TicketsController.cs" />
     <Compile Include="Controllers\TicketStatusController.cs" />
     <Compile Include="Controllers\TicketTypesController.cs" />
+    <Compile Include="Controllers\WorkNotesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -211,6 +212,7 @@
     <Compile Include="Models\TicketStatus.cs" />
     <Compile Include="Models\TicketType.cs" />
     <Compile Include="Models\UserProfileViewModel.cs" />
+    <Compile Include="Models\WorkNote.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="Utilities\FileUploadValidator.cs" />
@@ -661,6 +663,11 @@
     <Content Include="Scripts\tinymce\skins\ui\oxide-dark\fonts\tinymce-mobile.woff" />
     <Content Include="Scripts\tinymce\langs\readme.md" />
     <Content Include="Scripts\js\echarts-liquidfill.min.js.map" />
+    <Content Include="Views\WorkNotes\Create.cshtml" />
+    <Content Include="Views\WorkNotes\Delete.cshtml" />
+    <Content Include="Views\WorkNotes\Details.cshtml" />
+    <Content Include="Views\WorkNotes\Edit.cshtml" />
+    <Content Include="Views\WorkNotes\Index.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

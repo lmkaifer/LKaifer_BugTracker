@@ -292,7 +292,8 @@ namespace LKaifer_BugTracker.Controllers
             UserRolesHelper helper = new UserRolesHelper();
             var ticket = db.Tickets.Find(id);
             var users = helper.UsersInRole("Developer").ToList();
-            ViewBag.AssignedToUserId = new SelectList(users, "Id", "FullName", ticket.AssignedToUserId);
+            var currentTicketDevelopers = users.Where(u => u.Projects.Any(p => p.Id.Equals(ticket.ProjectId)));
+            ViewBag.AssignedToUserId = new SelectList(currentTicketDevelopers, "Id", "FullName", ticket.AssignedToUserId);
 
             return View(ticket);
 

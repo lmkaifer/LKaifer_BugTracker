@@ -516,10 +516,12 @@
     <Content Include="Uploads\application-1934972_1920.jpg" />
     <Content Include="Uploads\Attachments\achieve-1822503_1920.jpg" />
     <Content Include="Uploads\Attachments\apple-touch-icon.png" />
+    <Content Include="Uploads\Attachments\avatar-2027366_1280.png" />
     <Content Include="Uploads\Attachments\blog-2355684_1920 %281%29.jpg" />
-    <Content Include="Uploads\Attachments\blog-2355684_1920.jpg" />
+    <Content Include="Uploads\Attachments\business-3560916_1920.jpg" />
     <Content Include="Uploads\Attachments\butterfly-1278815_1920 %281%29.jpg" />
     <Content Include="Uploads\Attachments\butterfly-17057_1920.jpg" />
+    <Content Include="Uploads\Attachments\c-logo-icon-28402.png" />
     <Content Include="Uploads\Attachments\dovetail-1548465_1920.jpg" />
     <Content Include="Uploads\Attachments\iconfinder_code-programming-javascript-software-develop-command-language_652581.png" />
     <Content Include="Uploads\Attachments\iris-3347806_1920.jpg" />
@@ -545,6 +547,7 @@
     <Content Include="Uploads\smile-1726471_1920.jpg" />
     <Content Include="Uploads\smilers-1726471_1920.jpg" />
     <Content Include="Uploads\spiderman_avatar.jpg" />
+    <Content Include="Uploads\spiderman_avatarrs.jpg" />
     <Content Include="Uploads\teacher-295387_1280.png" />
     <Content Include="Views\Account\ConfirmEmail.cshtml" />
     <Content Include="Views\Account\ExternalLoginConfirmation.cshtml" />
@@ -668,6 +671,7 @@
     <Content Include="Views\WorkNotes\Details.cshtml" />
     <Content Include="Views\WorkNotes\Edit.cshtml" />
     <Content Include="Views\WorkNotes\Index.cshtml" />
+    <Content Include="Uploads\Attachments\Bugs Be Gone  Lisa Kaifer, Web Developer %282%29.pdf" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

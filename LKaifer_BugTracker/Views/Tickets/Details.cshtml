@@ -99,6 +99,27 @@
                 color:yellow;
                 transform:scale(1.2);
             }
+            .panel-statistics {
+        background-color: #fd9426;
+        color: white
+    }
+
+    .panel-projects {
+        background-color: #147efb;
+        color: white;
+    }
+
+    .panel-red {
+        background-color: #e53238;
+        color: black;
+    }
+        div.panel-red {
+        -webkit-box-shadow: 0px 1px 1px 1px rgba(0,0,0,0.15);
+        -moz-box-shadow: 0px 1px 1px 1px rgba(0,0,0,0.15);
+        box-shadow: 0px 1px 1px 1px rgba(0,0,0,0.15);
+    }
+
+
     </style>
     <link href="~/Content/Timeline.css" rel="stylesheet" />
 </head>
@@ -480,7 +501,7 @@
 
 <div class="row">
     <div class="col-md-6">
-        <div class="panel panel-danger">
+        <div class="panel panel-red">
             <div class="panel-heading">
                 Ticket Attachments
                 <a href="#ticket-attachments-panel" data-toggle="collapse" aria-expanded="true" id="ticket-attachment-collapse-button" title="collapse">
@@ -547,7 +568,7 @@
     </div>
 
     <div class="col-md-6">
-        <div class="panel panel-danger">
+        <div class="panel panel-red">
             <div class="panel-heading">
                 Ticket Comments
                 <a href="#ticket-comments-panel" data-toggle="collapse" aria-expanded="true" id="ticket-comment-collapse-button" title="collapse">
@@ -632,7 +653,7 @@
     <div class="clearfix"></div>
 
     <div class="col-md-12">
-        <div class="panel panel-danger">
+        <div class="panel panel-red">
             <div class="panel-heading">
                 Ticket History
                 <a href="#ticket-history-panel" data-toggle="collapse" aria-expanded="true" id="ticket-history-collapse-button" title="collapse">

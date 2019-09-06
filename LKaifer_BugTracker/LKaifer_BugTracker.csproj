@@ -244,6 +244,7 @@
     <Content Include="Content\css\font-awesome.css" />
     <Content Include="Content\css\ionicons.min.css" />
     <Content Include="Content\css\jQuery-plugin-progressbar1.css" />
+    <Content Include="Content\css\material-dashboard.css" />
     <Content Include="Content\css\monthly.css" />
     <Content Include="Content\css\multi-select.css" />
     <Content Include="Content\css\style.css" />
@@ -310,11 +311,14 @@
     <Content Include="images\a4.jpg" />
     <Content Include="images\admin-user-icon.png" />
     <Content Include="images\admin.jpg" />
+    <Content Include="images\apple-icon.png" />
     <Content Include="images\bottom.jpg" />
+    <Content Include="images\cornflower-102585_1920.jpg" />
     <Content Include="images\favicon-32x32.png" />
     <Content Include="images\iconfinder_docx_win_65892.png" />
     <Content Include="images\iconfinder_pdf_65920 %281%29.png" />
     <Content Include="images\IMG_20130413_155050.jpg" />
+    <Content Include="images\ladybug-4344164_1920.jpg" />
     <Content Include="images\overlay.png" />
     <Content Include="images\pic.jpg" />
     <Content Include="images\pic1.jpg" />
@@ -330,10 +334,14 @@
     <Content Include="fonts\fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="fonts\fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="images\strip-bug-4361218_1920.jpg" />
     <Content Include="images\Thumbs.db" />
+    <Content Include="Scripts\bootstrap-material-design.min.js" />
+    <Content Include="Scripts\bootstrap-notify.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\BugsBeGoneCharts.js" />
+    <Content Include="Scripts\chartist.min.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
     <Content Include="Scripts\jquery-3.3.1.min.map" />
@@ -343,6 +351,7 @@
     <Content Include="Scripts\jquery-ui-1.12.1.js" />
     <Content Include="Scripts\jquery-ui-1.12.1.min.js" />
     <Content Include="Scripts\jquery.dataTables.min.js" />
+    <Content Include="Scripts\jquery.min.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
     <Content Include="Scripts\jquery.validate.js" />
@@ -385,7 +394,10 @@
     <Content Include="Scripts\js\valida.2.1.6.min.js" />
     <Content Include="Scripts\js\validator.min.js" />
     <Content Include="Scripts\js\xy.js" />
+    <Content Include="Scripts\material-dashboard.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="Scripts\perfect-scrollbar.jquery.min.js" />
+    <Content Include="Scripts\popper.min.js" />
     <Content Include="Scripts\tinymce\jquery.tinymce.min.js" />
     <Content Include="Scripts\tinymce\license.txt" />
     <Content Include="Scripts\tinymce\plugins\advlist\plugin.js" />

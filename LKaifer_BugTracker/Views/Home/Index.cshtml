@@ -706,14 +706,14 @@
         for (var i = 0; i < taskloaddata.length; i++) {
         var tempArr = taskloaddata[i].split(" ");
         var colorForTicketNumber = "";
-        if (Number(tempArr[1]) > 5) {
+        if (Number(tempArr[1]) > 6) {
         colorForTicketNumber = "#FF0F00";
         }
-        else if (5 > Number(tempArr[1]) > 3) {
+        else if (6 > Number(tempArr[1]) > 4) {
         colorForTicketNumber = "#FF6600";
         }
-        else if (3 > Number(tempArr[1])) {
-        colorForTicketNumber = "#FF9E01";
+        else if (4 > Number(tempArr[1])) {
+        colorForTicketNumber = "#0000FF";
         }
         else {
         colorForTicketNumber = "#FCD202";

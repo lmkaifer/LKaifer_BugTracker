@@ -315,7 +315,7 @@
             <div class="panel panel-danger">
                 <div class="panel-statistics">
                     <div class="panel-heading">
-                        Task Loads Per Developer
+                        Projects with Open Tickets
                         <a href="#project-with-ticket-open-panel" data-toggle="collapse" aria-expanded="true" id="project-with-ticket-open-collapse-button" title="collapse">
                             <i class="fa fa-chevron-up pull-right"></i>
                         </a>
@@ -700,7 +700,7 @@
         }
         //TaskLoadChart
         var taskloaddata = '@opendevticketsarr';
-        taskloaddata = taskloaddata.slice(0, taskloaddata.length - 2);
+        taskloaddata = taskloaddata.slice(0, taskloaddata.length - 1);
         taskloaddata = taskloaddata != null ? taskloaddata.split(",") : [];
         var dataFortaskloadChart = [];
         for (var i = 0; i < taskloaddata.length; i++) {

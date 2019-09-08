@@ -9,116 +9,127 @@
     @*<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>*@
 
     <style>
-        .agile_w3l_social_media_text_img {
-            width: 33.33333333%;
-        }
-
-        .avatar {
-            max-height: 30px;
-            max-width: 30px;
-        }
-
-        .socail_grid_agile.facebook {
-            background: #3d5da2;
-            height: 200px !important;
-        }
-
-        .socail_grid_agile.twitter {
-            background: #1da1f2;
-            height: 200px !important;
-        }
-
-        .socail_grid_agile.gmail {
-            background: #ea4335;
-            height: 200px !important;
-        }
-
-        .socail_grid_agile.dribble {
-            background: #ea4c89;
-            height: 200px !important
-        }
-
-        .img-responsive teamAvatar, .thumbnail > img, .thumbnail a > img, .carousel-inner > .item > img, .carousel-inner > .item > a > img {
-            display: block;
-            width: 90px;
-            height: 90px;
-        }
-
-        a.collapsed > i.fa-chevron-up {
-            transform: rotate(180deg);
-        }
-
-        div.panel-heading {
-            cursor: move;
-        }
-
-        a.badge.removeTicketAttach {
-            background-color: darkred;
-            color: lightgray;
-        }
-
-            a.badge.removeTicketAttach:hover {
-                background-color: orangered;
-                color: white;
+            .agile_w3l_social_media_text_img {
+                width: 33.33333333%;
             }
 
-        a.badge.downloadTicketAttach {
-            background-color: darkblue;
-            color: lightgray;
-        }
-
-            a.badge.downloadTicketAttach:hover {
-                background-color: blue;
-                color: white;
+            .avatar {
+                max-height: 30px;
+                max-width: 30px;
             }
 
-        a.badge.previewTicketAttach {
-            background-color: black;
-            color: gray;
-        }
-
-            a.badge.previewTicketAttach:hover {
-                background-color: dimgray;
-                color: white;
+            .socail_grid_agile.facebook {
+                background: #3d5da2;
+                height: 200px !important;
             }
 
-        a.badge:hover {
-            background-color: lightgray;
-            color: blue;
-        }
-
-        a#addAttachBtn:hover {
-            background-color: #cae3f7 !important;
-            color: #007ee5;
-        }
-
-        i.fa-envelope-o{
-            cursor:pointer;
-        }
-            i.fa-envelope-o:hover {
-                color:yellow;
-                transform:scale(1.2);
+            .socail_grid_agile.twitter {
+                background: #1da1f2;
+                height: 200px !important;
             }
+
+            .socail_grid_agile.gmail {
+                background: #ea4335;
+                height: 200px !important;
+            }
+
+            .socail_grid_agile.dribble {
+                background: #ea4c89;
+                height: 200px !important
+            }
+
+            .img-responsive teamAvatar, .thumbnail > img, .thumbnail a > img, .carousel-inner > .item > img, .carousel-inner > .item > a > img {
+                display: block;
+                width: 90px;
+                height: 90px;
+            }
+
+            a.collapsed > i.fa-chevron-up {
+                transform: rotate(180deg);
+            }
+
+            div.panel-heading {
+                cursor: move;
+            }
+
+            a.badge.removeTicketAttach {
+                background-color: darkred;
+                color: lightgray;
+            }
+
+                a.badge.removeTicketAttach:hover {
+                    background-color: orangered;
+                    color: white;
+                }
+
+            a.badge.downloadTicketAttach {
+                background-color: darkblue;
+                color: lightgray;
+            }
+
+                a.badge.downloadTicketAttach:hover {
+                    background-color: blue;
+                    color: white;
+                }
+
+            a.badge.previewTicketAttach {
+                background-color: black;
+                color: gray;
+            }
+
+                a.badge.previewTicketAttach:hover {
+                    background-color: dimgray;
+                    color: white;
+                }
+
+            a.badge:hover {
+                background-color: lightgray;
+                color: blue;
+            }
+
+            a#addAttachBtn:hover {
+                background-color: #cae3f7 !important;
+                color: #007ee5;
+            }
+
+            i.fa-envelope-o {
+                cursor: pointer;
+            }
+
+                i.fa-envelope-o:hover {
+                    color: yellow;
+                    transform: scale(1.2);
+                }
+
             .panel-statistics {
-        background-color: #fd9426;
-        color: white
-    }
+                background-color: #fd9426;
+                color: white
+            }
 
-    .panel-projects {
-        background-color: #147efb;
-        color: white;
-    }
+            .panel-projects {
+                background-color: #147efb;
+                color: white;
+            }
 
-    .panel-red {
-        background-color: #e53238;
-        color: black;
-    }
-        div.panel-red {
-        -webkit-box-shadow: 0px 1px 1px 1px rgba(0,0,0,0.15);
-        -moz-box-shadow: 0px 1px 1px 1px rgba(0,0,0,0.15);
-        box-shadow: 0px 1px 1px 1px rgba(0,0,0,0.15);
-    }
 
+            .panel-heading {
+                background: #e53238!important;
+                color: #fff!important;
+                text-transform: uppercase!important;
+            }
+            /*div.panel-red {
+            -webkit-box-shadow: 0px 1px 1px 1px rgba(0,0,0,0.15);
+            -moz-box-shadow: 0px 1px 1px 1px rgba(0,0,0,0.15);
+            box-shadow: 0px 1px 1px 1px rgba(0,0,0,0.15);
+        }*/
+            .panel.body{
+                border-width:0 1px 1px 1px;
+                border-style:solid;
+                border-color:lightgray;
+                border-top-left-radius:0;
+                border-top-right-radius:0;
+                padding:15px;
+            }
 
     </style>
     <link href="~/Content/Timeline.css" rel="stylesheet" />
@@ -146,12 +157,12 @@
 
 
 
-
+<div class="bugs-begone-presentation">
 <div class="row">
-    <h2>
+    <h3>
         "@Model.Title" Ticket Dashboard
-    </h2>
-    <h4>Description: @Model.Description</h4>
+    </h3>
+    <h5 style="margin-left:1%;color:dimgray;font-style:italic;">Description: @Model.Description</h5>
 </div>
 
 
@@ -401,53 +412,55 @@
                     </div>
 
                 </div>
+            }
 
+            if (user != null)
+            {
+                <!-- Email Modal -->
+                <div id="@user.Id" class="modal fade" role="dialog">
+                    <div class="modal-dialog">
 
-            <!-- Email Modal -->
-            <div id="@user.Id" class="modal fade" role="dialog">
-                <div class="modal-dialog">
+                        <!-- Email Form -->
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                <h4 class="modal-title">Email @user.FirstName</h4>
+                            </div>
+                            <div class="modal-body">
+                                @using (Ajax.BeginForm("SendEmailAjax", "Home", new AjaxOptions { HttpMethod = "POST", OnSuccess = "showSuccessMessage" }))
+                                {
+                                    @Html.AntiForgeryToken()
+                                    @Html.ValidationSummary("", new { @class = "text-danger" })
+                                    <input type="hidden" name="ToUserId" value="@user.Id" />
 
-                    <!-- Email Form -->
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal">&times;</button>
-                            <h4 class="modal-title">Email @user.FirstName</h4>
-                        </div>
-                        <div class="modal-body">
-                            @using (Ajax.BeginForm("SendEmailAjax", "Home", new AjaxOptions { HttpMethod = "POST", OnSuccess = "showSuccessMessage" }))
-                            {
-                                @Html.AntiForgeryToken()
-                                @Html.ValidationSummary("", new { @class = "text-danger" })
-                                <input type="hidden" name="ToUserId" value="@user.Id" />
-
-                                <!--Name-->
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <!-- Subject -->
-                                        <div class="form-group">
-                                            <input id="email-subject" type="text" class="form-control" name="Subject" placeholder="Subject" maxlength="200" required>
+                                    <!--Name-->
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <!-- Subject -->
+                                            <div class="form-group">
+                                                <input id="email-subject" type="text" class="form-control" name="Subject" placeholder="Subject" maxlength="200" required>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <!-- Message Area -->
+                                            <div class="form-group">
+                                                <textarea id="email-body" class="form-control" name="Body" placeholder="Write your message here..." style="height:232px;" maxlength="1000" required></textarea>
+                                            </div>
                                         </div>
                                     </div>
-                                    <div class="col-md-12">
-                                        <!-- Message Area -->
-                                        <div class="form-group">
-                                            <textarea id="email-body" class="form-control" name="Body" placeholder="Write your message here..." style="height:232px;" maxlength="1000" required></textarea>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- Subtmit Button -->
-                                <button type="submit" class="btn btn-send">
-                                    Send message
-                                </button>
-                            }
+                                    <!-- Subtmit Button -->
+                                    <button type="submit" class="btn btn-send">
+                                        Send message
+                                    </button>
+                                }
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            </div>
                         </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        </div>
+
                     </div>
-
                 </div>
-            </div>
             }
         }
     </div>
@@ -501,9 +514,9 @@
 
 <div class="row">
     <div class="col-md-6">
-        <div class="panel panel-red">
+        <div class="panel">
             <div class="panel-heading">
-                Ticket Attachments
+                <i class="fa fa-file"></i> Ticket Attachments
                 <a href="#ticket-attachments-panel" data-toggle="collapse" aria-expanded="true" id="ticket-attachment-collapse-button" title="collapse">
                     <i class="fa fa-chevron-up pull-right"></i>
                 </a>
@@ -568,9 +581,9 @@
     </div>
 
     <div class="col-md-6">
-        <div class="panel panel-red">
+        <div class="panel">
             <div class="panel-heading">
-                Ticket Comments
+                <i class="fa fa-comments"></i> Ticket Comments
                 <a href="#ticket-comments-panel" data-toggle="collapse" aria-expanded="true" id="ticket-comment-collapse-button" title="collapse">
                     <i class="fa fa-chevron-up pull-right"></i>
                 </a>
@@ -653,16 +666,16 @@
     <div class="clearfix"></div>
 
     <div class="col-md-12">
-        <div class="panel panel-red">
+        <div class="panel">
             <div class="panel-heading">
-                Ticket History
+                <i class="fa fa-history"></i> Ticket History
                 <a href="#ticket-history-panel" data-toggle="collapse" aria-expanded="true" id="ticket-history-collapse-button" title="collapse">
                     <i class="fa fa-chevron-up pull-right"></i>
                 </a>
             </div>
             <div class="panel body panel-collapse in" aria-expanded="true" id="ticket-history-panel">
-                <div class="page-header">
-                    <h1>Ticket History Timeline</h1>
+                <div>
+                    <h4>Ticket History Timeline</h4>
                 </div>
                 <div style="display:inline-block;width:100%;overflow-y:auto;">
                     <ul class="timeline timeline-horizontal">
@@ -776,32 +789,35 @@
         @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
         @Html.ActionLink("Back to List", "Index")
     </p>}*@
+ </div>
+
 @section scripts{
-        <script>
-            function toggleAddAttachmentForm() {
-                event.preventDefault();
+    <script>
+        $('#ticket-history-panel').niceScroll();
+        function toggleAddAttachmentForm() {
+            event.preventDefault();
             $('#attachmentAddForm').toggle();
             $('#addAttachBtn').toggle();
         }
 
-            function toggleAddCommentEditForm(cObj, eachCommId) {
-                event.preventDefault();
+        function toggleAddCommentEditForm(cObj, eachCommId) {
+            event.preventDefault();
             $('#commentsedit-' + eachCommId).toggle();
             $('#detailticketcommentbody-' + eachCommId).toggle();
             $(cObj).html($(cObj).html() == 'Edit' ? 'Cancel' : 'Edit');
         }
 
-            function removeTicketComment(eachCommId) {
-                event.preventDefault();
+        function removeTicketComment(eachCommId) {
+            event.preventDefault();
             $('#commentsdelete-' + eachCommId).submit();
         }
 
         //ticket history collapse button title
-            $('a[data-toggle="collapse"]').click(function () {
-                if ($(this).hasClass('collapsed')) {
+        $('a[data-toggle="collapse"]').click(function () {
+            if ($(this).hasClass('collapsed')) {
                 $(this).attr('title', 'collapse');
             }
-                else {
+            else {
                 $(this).attr('title', 'expand');
             }
         });
@@ -810,21 +826,21 @@
 
 
 
-           //Message Sent Alert
-            function showSuccessMessage(data) {
-                if (data == "Message has been successfully sent.") {
-                    swal("Delivered!", data, "success");
-                    $('.modal').modal('hide');
-                    $('#email-subject').val('');
-                    $('#email-body').val('');
-                }
-                else {
-                    swal("Oops!", data, "error");
-                }
+        //Message Sent Alert
+        function showSuccessMessage(data) {
+            if (data == "Message has been successfully sent.") {
+                swal("Delivered!", data, "success");
+                $('.modal').modal('hide');
+                $('#email-subject').val('');
+                $('#email-body').val('');
             }
-            //show email modal
-            function showEmailModal(modalId) {
-                $('#' + modalId).modal('show');
+            else {
+                swal("Oops!", data, "error");
             }
+        }
+        //show email modal
+        function showEmailModal(modalId) {
+            $('#' + modalId).modal('show');
+        }
     </script>
 }

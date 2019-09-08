@@ -307,7 +307,14 @@ namespace LKaifer_BugTracker.Controllers
             var callbackUrl = Url.Action("Details", "Tickets", new { id = ticket.Id }, protocol: Request.Url.Scheme);
             var oldTicket = db.Tickets.AsNoTracking().FirstOrDefault(t => t.Id == ticket.Id);
             ticket.AssignedToUserId = model.AssignedToUserId;
-            ticket.TicketStatusId = db.TicketStatuses.FirstOrDefault(s => s.Name == "Assigned")?.Id ?? 1;
+            if(!string.IsNullOrEmpty(ticket.AssignedToUserId))
+            {
+                ticket.TicketStatusId = db.TicketStatuses.FirstOrDefault(s => s.Name == "Assigned")?.Id ?? 2;
+            }
+            else
+            {
+                ticket.TicketStatusId = db.TicketStatuses.FirstOrDefault(s => s.Name == "New/Unassigned")?.Id ?? 1;
+            }
             db.SaveChanges();
 
             if (oldTicket.AssignedToUserId != ticket.AssignedToUserId)

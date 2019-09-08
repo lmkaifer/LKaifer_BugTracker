@@ -142,6 +142,14 @@ namespace LKaifer_BugTracker.Controllers
             foreach (var project in projectHelper.ListUserProjects(userId).ToList())
             {
                 projectHelper.RemoveUserFromProject(userId, project.Id);
+                foreach (var ticket in project.Tickets)
+                {
+                    if (ticket.AssignedToUserId == userId)
+                    {
+                        ticket.AssignedToUserId = null;
+                        ticket.TicketStatusId = db.TicketStatuses.FirstOrDefault(s => s.Name == "New/Unassigned")?.Id ?? 1;
+                    }
+                }
             }
 
             //Then if the incoming list is not null we will reassign them.

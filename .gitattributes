@@ -1,2 +1,15 @@
 # Auto detect text files and perform LF normalization
 * text=auto
+LKaifer_BugTracker/Scripts/* linguist-vendored
+LKaifer_BugTracker/Scripts/js/amcharts.js linguist-vendored=false
+LKaifer_BugTracker/Content/* linguist-vendored
+LKaifer_BugTracker/Content/Timeline.css linguist-vendored=false
+LKaifer_BugTracker/Views/Account/* linguist-vendored
+LKaifer_BugTracker/Views/Home/* linguist-vendored
+LKaifer_BugTracker/Views/Tickets1/* linguist-vendored
+LKaifer_BugTracker/Views/TicketStatus/* linguist-vendored
+LKaifer_BugTracker/Views/TicketTypes/* linguist-vendored
+LKaifer_BugTracker/Views/TicketPriorities/* linguist-vendored
+LKaifer_BugTracker/Views/TicketAttachments/* linguist-vendored
+LKaifer_BugTracker/Views/TicketComments/* linguist-vendored
+LKaifer_BugTracker/Views/TicketHistories/* linguist-vendored

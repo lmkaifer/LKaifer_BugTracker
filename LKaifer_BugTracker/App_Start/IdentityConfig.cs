@@ -14,6 +14,11 @@ using LKaifer_BugTracker.Models;
 using System.Web.Configuration;
 using System.Net.Mail;
 using System.Net;
+using FluentEmail.Mailgun;
+using FluentEmail.Core;
+using RestSharp;
+using RestSharp.Authenticators;
+using Google.Apis.Gmail.v1;
 
 namespace LKaifer_BugTracker
 { 
@@ -21,34 +26,74 @@ namespace LKaifer_BugTracker
 {
     public async Task SendAsync(MailMessage message)
     {
-        var GmailUsername = WebConfigurationManager.AppSettings["username"];
-        var GmailPassword = WebConfigurationManager.AppSettings["password"];
-        var host = WebConfigurationManager.AppSettings["host"];
-        int port = Convert.ToInt32(WebConfigurationManager.AppSettings["port"]);
+            //var mailgunApiKey = WebConfigurationManager.AppSettings["mailgunapikey"];
+            //var mailgundomain = WebConfigurationManager.AppSettings["mailgundomain"];
 
-        using (var smtp = new SmtpClient()
-        {
-            Host = host,
-            Port = port,
-            EnableSsl = true,
-            DeliveryMethod = SmtpDeliveryMethod.Network,
-            UseDefaultCredentials = false,
-            Credentials = new NetworkCredential(GmailUsername, GmailPassword)
-        })
-        {
-            try
+            //            var sender = new MailgunSender(
+            //    mailgundomain, // Mailgun Domain
+            //    mailgunApiKey // Mailgun API Key
+            //);
+            //            Email.DefaultSender = sender;
+            //            var email = Email
+            //    .From(message.From.Address)
+            //    .To(message.To.FirstOrDefault().Address)
+            //    .Subject(message.Subject)
+            //    .Body(message.Body);
+
+            //            try
+            //            {
+            //                var response = await email.SendAsync();
+            //            }
+            //            catch(Exception ex)
+            //            {
+            //                Console.WriteLine(ex.Message);
+            //            }
+
+
+            //RestClient client = new RestClient();
+            //client.BaseUrl = new Uri("https://api.mailgun.net/v3");
+            //client.Authenticator =
+            //    new HttpBasicAuthenticator("api",
+            //                                mailgunApiKey);
+            //RestRequest request = new RestRequest();
+            //request.AddParameter("domain", mailgundomain, ParameterType.UrlSegment);
+            //request.Resource = "{domain}/messages";
+            //request.AddParameter("from", "Excited User <lmkaifer@hotmail.com>");
+            //request.AddParameter("to", message.To.FirstOrDefault().Address);
+            //request.AddParameter("to", message.To.FirstOrDefault().Address);
+            //request.AddParameter("subject", "Hello");
+            //request.AddParameter("text", "Testing some Mailgun awesomness!");
+            //request.Method = Method.POST;
+            //var response = client.Execute(request);
+
+            var GmailUsername = WebConfigurationManager.AppSettings["username"];
+            var GmailPassword = WebConfigurationManager.AppSettings["password"];
+            var host = WebConfigurationManager.AppSettings["host"];
+            int port = Convert.ToInt32(WebConfigurationManager.AppSettings["port"]);
+
+            using (var smtp = new SmtpClient()
             {
-                await smtp.SendMailAsync(message);
-
-            }
-            catch (Exception e)
+                Host = host,
+                Port = port,
+                EnableSsl = true,
+                DeliveryMethod = SmtpDeliveryMethod.Network,
+                UseDefaultCredentials = false,
+                Credentials = new NetworkCredential(GmailUsername, GmailPassword)
+            })
             {
-                Console.WriteLine(e.Message);
-                await Task.FromResult(0);
-            }
-        };
+                try
+                {
+                    await smtp.SendMailAsync(message);
 
-    }
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.Message);
+                    await Task.FromResult(0);
+                }
+            };
+
+        }
 }
 
     public class EmailService : IIdentityMessageService

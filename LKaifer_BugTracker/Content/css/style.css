@@ -464,15 +464,14 @@ li.second.w3l_search input[type="search"] {
     font-weight:400;
 }
 li.second.w3l_search button.btn.btn-default {
-    outline:none;
+    outline: none;
     padding: 10px 0 11px;
     width: 15%;
     position: relative;
-    background: #e53238;
-    border: solid 1px #e53238;
+    background: #0b7bc1;
+    border: solid 1px #0b7bc1;
     border-radius: 0;
-	color:#fff;
-
+    color: #fff;
 }
 /* placeholder */
 
@@ -545,9 +544,9 @@ h3.w3_inner_tittle.two {
     font-weight: 600;
 }
 p.text-no {
-      color: #fff;
+    color: #fff;
     font-size: 1.1em;
-    background: #e53238;
+    background: #0b7bc1;
     padding: 5px 21px;
     border-radius: 30px;
     -webkit-border-radius: 30px;
@@ -1079,11 +1078,11 @@ figure.icons,.weather-text {
 	font-family: 'Open Sans', sans-serif;
 	letter-spacing:1px;
 }
-.w3l_agileits_breadcrumbs ul li a{
-    color: #e53238;
-	text-decoration:none;
-	font-family: 'Open Sans', sans-serif;
-}
+    .w3l_agileits_breadcrumbs ul li a {
+        color: #1da1f2;
+        text-decoration: none;
+        font-family: 'Open Sans', sans-serif;
+    }
 .w3l_agileits_breadcrumbs ul li a:hover{
 	color:#212121;
 }
@@ -1519,14 +1518,14 @@ h2.w3_inner_tittle {
   box-shadow: 0px 1px 2px rgba(0,0,0,.2);
 }
 .btnTwo {
-  position : relative;
-  width : 200px;
-  height : 100px;
+    position: relative;
+    width: 200px;
+    height: 100px;
     margin-top: -64px;
-  padding-top: 2px;
-    background: #e53238;
-  left : -250px;
-  transition : .3s;
+    padding-top: 2px;
+    background: #0b7bc1;
+    left: -250px;
+    transition: .3s;
 }
 .btnText {
     color: #fff;
@@ -1800,7 +1799,7 @@ input.form-control1.icon {
 }
 .signin-form input[type="submit"] {
     outline: none;
-       padding: 0.8em 0;
+    padding: 0.8em 0;
     width: 100%;
     text-align: center;
     font-size: 1.2em;
@@ -1808,10 +1807,9 @@ input.form-control1.icon {
     border: none;
     color: #FFFFFF;
     cursor: pointer;
-    background: #e53238;
+    background: #0b7bc1;
     box-shadow: 0px 2px 1px rgba(28, 28, 29, 0.42);
     font-weight: 600;
-	
 }
 .signin-form input[type="submit"]:hover {
 
@@ -1904,7 +1902,7 @@ margin: 0.5em 0 1.5em 0;
 }
 .registration h6 a {
     text-transform: uppercase;
-    color: #e53238;
+    color: #0b7bc1;
     font-weight: 700;
     font-size: 1.1em;
     letter-spacing: 2px;
@@ -2030,7 +2028,7 @@ margin: 0.5em 0 1.5em 0;
 }
 h3.icon-subheading {
     font-size: 1.4em;
-    color: #e53238!important;
+    color: #0b7bc1 !important;
     font-weight: 600;
     margin: 30px 0 15px;
     text-transform: uppercase;
@@ -2179,13 +2177,13 @@ li.list-group-item1 {
 	background:none;
 	padding:2em 0;
 }
-.grid_5 h3, .grid_5 h2, .grid_5 h1, .grid_5 h4, .grid_5 h5, h3.hdg, h3.bars {
-	margin-bottom: 1em;
-    color: #e53238;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-}
+    .grid_5 h3, .grid_5 h2, .grid_5 h1, .grid_5 h4, .grid_5 h5, h3.hdg, h3.bars {
+        margin-bottom: 1em;
+        color: #0b7bc1;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
 .pagination > .active > a, .pagination > .active > span, .pagination > .active > a:hover, .pagination > .active > span:hover, .pagination > .active > a:focus, .pagination > .active > span:focus {
 	z-index: 0;
 }

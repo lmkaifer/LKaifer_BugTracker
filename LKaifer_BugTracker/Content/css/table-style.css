@@ -71,12 +71,11 @@ table td {
   text-align: left;
 }
 
-table th {
-   
-    background: #e53238;
-    color: #fff;
-    text-transform: uppercase;
-}
+    table th {
+        background: #0b7bc1;
+        color: #fff;
+        text-transform: uppercase;
+    }
 
 table tr td {
     background: #f3faff;

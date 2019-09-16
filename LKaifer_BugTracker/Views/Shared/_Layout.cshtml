@@ -7,6 +7,7 @@ author URL: http://w3layouts.com
 License: Creative Commons Attribution 3.0 Unported
 License URL: http://creativecommons.org/licenses/by/3.0/
 -->
+
 <!DOCTYPE html>
 <html lang="zxx">
 <head>
@@ -52,15 +53,18 @@ License URL: http://creativecommons.org/licenses/by/3.0/
             ul.top_dp_agile li.profile_details_drop.open a.dropdown-toggle i.fa-chevron-down {
                 transform: rotate(180deg);
             }
+
         div.wthree_agile_admin_info {
             background-color: aliceblue;
             background-image: url('../../images/brick-wall.png');
-            background-repeat:repeat;
+            background-repeat: repeat;
+            min-height: 110rem;
         }
-        div.bugs-begone-presentation{
-            background-color:white;
+
+        div.bugs-begone-presentation {
+            background-color: white;
             box-shadow: 1px 1px 5px 2px lightgray;
-            padding:40px;
+            padding: 40px;
         }
     </style>
 </head>
@@ -104,11 +108,11 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                                     }
                                 </li>
                                 @*<li>
-            <a href="#" class="submenu-toggle-button"><i class="fa fa-cogs" aria-hidden="true"></i>Tickets <i class="fa fa-angle-down" aria-hidden="true"></i></a>
-            <ul class="gn-submenu">
-                <li class="mini_list_w3_line"><a href="@Url.Action("Index", "TicketHistories")"><i class="fa fa-caret-right" aria-hidden="true"></i>Ticket Histories</a></li>
-            </ul>
-        </li>*@
+                                        <a href="#" class="submenu-toggle-button"><i class="fa fa-cogs" aria-hidden="true"></i>Tickets <i class="fa fa-angle-down" aria-hidden="true"></i></a>
+                                        <ul class="gn-submenu">
+                                            <li class="mini_list_w3_line"><a href="@Url.Action("Index", "TicketHistories")"><i class="fa fa-caret-right" aria-hidden="true"></i>Ticket Histories</a></li>
+                                        </ul>
+                                    </li>*@
                                 <li>
                                     @if (User.IsInRole("Admin"))
                                     {
@@ -132,73 +136,73 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                                     }
                                 </li>
 
-                <li>
-                    @if (User.IsInRole("Submitter"))
-                       
-
-                    {
-                        <a href="#" class="submenu-toggle-button"><i class="fa fa-cogs" aria-hidden="true"></i>My Work<i class="fa fa-angle-down" aria-hidden="true"></i></a>
-                        <ul class="gn-submenu">
-                            <li class="mini_list_agile"><a href="@Url.Action("MyIndex", "Tickets")"><i class="fa fa-caret-right" aria-hidden="true"></i>My Tickets</a></li>
-                            <li class="mini_list_w3_line"><a href="@Url.Action("MyIndex", "Projects")"><i class="fa fa-caret-right" aria-hidden="true"></i>My Projects</a></li>
-                            <li class="mini_list_w3_line"><a href="@Url.Action("Create", "Tickets")"><i class="fa fa-caret-right" aria-hidden="true"></i>Create Tickets</a></li>
-                        </ul>
-
-                    }
-                </li>
-                <li>
-                    @if (User.IsInRole("Developer"))
-                    {
-                        <a href="#" class="submenu-toggle-button"><i class="fa fa-cogs" aria-hidden="true"></i>My Work<i class="fa fa-angle-down" aria-hidden="true"></i></a>
-                        <ul class="gn-submenu">
-                            <li class="mini_list_agile"><a href="@Url.Action("MyIndex", "Tickets")"><i class="fa fa-caret-right" aria-hidden="true"></i>My Tickets</a></li>
-                            <li class="mini_list_w3_line"><a href="@Url.Action("MyIndex", "Projects")"><i class="fa fa-caret-right" aria-hidden="true"></i>My Projects</a></li>
-                            <li class="mini_list_w3_line"><a href="@Url.Action("MyNotifications", "TicketNotifications")"><i class="fa fa-caret-right" aria-hidden="true"></i>My Notifications</a></li>
-                        </ul>
+                                <li>
+                                    @if (User.IsInRole("Submitter"))
 
 
-                    }
-                </li>
-</ul>
-                @*<a href="#" class="submenu-toggle-button"> <i class="fa fa-file-text-o" aria-hidden="true"></i>Forms <i class="fa fa-angle-down" aria-hidden="true"></i></a>
+                                    {
+                                        <a href="#" class="submenu-toggle-button"><i class="fa fa-cogs" aria-hidden="true"></i>My Work<i class="fa fa-angle-down" aria-hidden="true"></i></a>
                                         <ul class="gn-submenu">
-                                            <li class="mini_list_agile"><a href="input.html"><i class="fa fa-caret-right" aria-hidden="true"></i> Inputs</a></li>
-                                            <li class="mini_list_w3"><a href="validation.html"><i class="fa fa-caret-right" aria-hidden="true"></i> Validation</a></li>
+                                            <li class="mini_list_agile"><a href="@Url.Action("MyIndex", "Tickets")"><i class="fa fa-caret-right" aria-hidden="true"></i>My Tickets</a></li>
+                                            <li class="mini_list_w3_line"><a href="@Url.Action("MyIndex", "Projects")"><i class="fa fa-caret-right" aria-hidden="true"></i>My Projects</a></li>
+                                            <li class="mini_list_w3_line"><a href="@Url.Action("Create", "Tickets")"><i class="fa fa-caret-right" aria-hidden="true"></i>Create Tickets</a></li>
                                         </ul>
-                        </li>
-                        <li><a href="table.html"> <i class="fa fa-table" aria-hidden="true"></i> Tables</a></li>
-                        <li>
-                            <a href="#" class="submenu-toggle-button"><i class="fa fa-list" aria-hidden="true"></i>Short Codes <i class="fa fa-angle-down" aria-hidden="true"> </i></a>
-                            <ul class="gn-submenu">
-                                <li class="mini_list_agile"><a href="typo.html"><i class="fa fa-caret-right" aria-hidden="true"></i> Typography</a></li>
-                                <li class="mini_list_w3"><a href="icons.html"> <i class="fa fa-caret-right" aria-hidden="true"></i> Icons</a></li>
 
+                                    }
+                                </li>
+                                <li>
+                                    @if (User.IsInRole("Developer"))
+                                    {
+                                        <a href="#" class="submenu-toggle-button"><i class="fa fa-cogs" aria-hidden="true"></i>My Work<i class="fa fa-angle-down" aria-hidden="true"></i></a>
+                                        <ul class="gn-submenu">
+                                            <li class="mini_list_agile"><a href="@Url.Action("MyIndex", "Tickets")"><i class="fa fa-caret-right" aria-hidden="true"></i>My Tickets</a></li>
+                                            <li class="mini_list_w3_line"><a href="@Url.Action("MyIndex", "Projects")"><i class="fa fa-caret-right" aria-hidden="true"></i>My Projects</a></li>
+                                            <li class="mini_list_w3_line"><a href="@Url.Action("MyNotifications", "TicketNotifications")"><i class="fa fa-caret-right" aria-hidden="true"></i>My Notifications</a></li>
+                                        </ul>
+
+
+                                    }
+                                </li>
                             </ul>
-                        </li>
+                            @*<a href="#" class="submenu-toggle-button"> <i class="fa fa-file-text-o" aria-hidden="true"></i>Forms <i class="fa fa-angle-down" aria-hidden="true"></i></a>
+                                                    <ul class="gn-submenu">
+                                                        <li class="mini_list_agile"><a href="input.html"><i class="fa fa-caret-right" aria-hidden="true"></i> Inputs</a></li>
+                                                        <li class="mini_list_w3"><a href="validation.html"><i class="fa fa-caret-right" aria-hidden="true"></i> Validation</a></li>
+                                                    </ul>
+                                    </li>
+                                    <li><a href="table.html"> <i class="fa fa-table" aria-hidden="true"></i> Tables</a></li>
+                                    <li>
+                                        <a href="#" class="submenu-toggle-button"><i class="fa fa-list" aria-hidden="true"></i>Short Codes <i class="fa fa-angle-down" aria-hidden="true"> </i></a>
+                                        <ul class="gn-submenu">
+                                            <li class="mini_list_agile"><a href="typo.html"><i class="fa fa-caret-right" aria-hidden="true"></i> Typography</a></li>
+                                            <li class="mini_list_w3"><a href="icons.html"> <i class="fa fa-caret-right" aria-hidden="true"></i> Icons</a></li>
 
-                        <li><a href="charts.html"> <i class="fa fa-line-chart" aria-hidden="true"></i> Charts</a></li>
-                        <li><a href="maps.html"><i class="fa fa-map-o" aria-hidden="true"></i> Maps</a></li>
-                        <li class="page">
-                            <a href="#" class="submenu-toggle-button"><i class="fa fa-files-o" aria-hidden="true"></i> Pages <i class="fa fa-angle-down" aria-hidden="true"></i></a>
-                            <ul class="gn-submenu">
+                                        </ul>
+                                    </li>
 
-                                <li class="mini_list_agile"> <a href="signin.html"> <i class="fa fa-caret-right" aria-hidden="true"></i> Sign In</a></li>
-                                <li class="mini_list_w3"><a href="signup.html"> <i class="fa fa-caret-right" aria-hidden="true"></i> Sign Up</a></li>
-                                <li class="mini_list_agile error"><a href="404.html"> <i class="fa fa-caret-right" aria-hidden="true"></i> Error 404 </a></li>
+                                    <li><a href="charts.html"> <i class="fa fa-line-chart" aria-hidden="true"></i> Charts</a></li>
+                                    <li><a href="maps.html"><i class="fa fa-map-o" aria-hidden="true"></i> Maps</a></li>
+                                    <li class="page">
+                                        <a href="#" class="submenu-toggle-button"><i class="fa fa-files-o" aria-hidden="true"></i> Pages <i class="fa fa-angle-down" aria-hidden="true"></i></a>
+                                        <ul class="gn-submenu">
 
-                                <li class="mini_list_w3_line"><a href="calendar.html"> <i class="fa fa-caret-right" aria-hidden="true"></i> Calendar</a></li>
-                            </ul>
-                        </li>
-                        <li>
-                            <a href="#" class="submenu-toggle-button"> <i class="fa fa-suitcase" aria-hidden="true"></i>More <i class="fa fa-angle-down" aria-hidden="true"></i></a>
-                            <ul class="gn-submenu">
-                                <li class="mini_list_agile"><a href="faq.html"> <i class="fa fa-caret-right" aria-hidden="true"></i> Faq</a></li>
-                                <li class="mini_list_w3"><a href="blank.html"> <i class="fa fa-caret-right" aria-hidden="true"></i> Blank Page</a></li>
-                            </ul>
-                        </li>
-                    </ul>*@
-                </div><!-- /gn-scroller -->
-                </nav>
+                                            <li class="mini_list_agile"> <a href="signin.html"> <i class="fa fa-caret-right" aria-hidden="true"></i> Sign In</a></li>
+                                            <li class="mini_list_w3"><a href="signup.html"> <i class="fa fa-caret-right" aria-hidden="true"></i> Sign Up</a></li>
+                                            <li class="mini_list_agile error"><a href="404.html"> <i class="fa fa-caret-right" aria-hidden="true"></i> Error 404 </a></li>
+
+                                            <li class="mini_list_w3_line"><a href="calendar.html"> <i class="fa fa-caret-right" aria-hidden="true"></i> Calendar</a></li>
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        <a href="#" class="submenu-toggle-button"> <i class="fa fa-suitcase" aria-hidden="true"></i>More <i class="fa fa-angle-down" aria-hidden="true"></i></a>
+                                        <ul class="gn-submenu">
+                                            <li class="mini_list_agile"><a href="faq.html"> <i class="fa fa-caret-right" aria-hidden="true"></i> Faq</a></li>
+                                            <li class="mini_list_w3"><a href="blank.html"> <i class="fa fa-caret-right" aria-hidden="true"></i> Blank Page</a></li>
+                                        </ul>
+                                    </li>
+                                </ul>*@
+                        </div><!-- /gn-scroller -->
+                    </nav>
                 </li>
                 <!-- //nav_agile_w3l -->
                 <li class="second logo"><h1><a href="@Url.Action("Index","Home")"><i class="fa fa-graduation-cap" aria-hidden="true"></i>Bugs Be Gone </a></h1></li>
@@ -445,12 +449,12 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 
                 @*<li class="second w3l_search">
 
-                    <form action="#" method="post">
-                        <input type="search" name="search" placeholder="Search here..." required="">
-                        <button class="btn btn-default" type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
-                    </form>
+                        <form action="#" method="post">
+                            <input type="search" name="search" placeholder="Search here..." required="">
+                            <button class="btn btn-default" type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
+                        </form>
 
-                </li>*@
+                    </li>*@
                 <li class="second admin-pic">
                     @Html.Partial("_LoginPartial")
                 </li>
@@ -464,7 +468,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
         </div>
         <div class="clearfix"></div>
         <div class="inner_content">
-            <div class="inner_content_w3_agile_info two_in">
+            <div class="inner_content_w3_agile_info two_in bugs-begone-presentation">
                 @RenderBody()
             </div>
             <br />
@@ -486,7 +490,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
     <script src="https://code.highcharts.com/highcharts.js"></script>
     <script src="https://code.highcharts.com/highcharts-3d.js"></script>
     <script src="https://code.highcharts.com/modules/exporting.js"></script>
-    <script src="https://code.highcharts.com/modules/export-data.js"></script>   
+    <script src="https://code.highcharts.com/modules/export-data.js"></script>
 
     <!-- /amcharts -->
     <script src="~/Scripts/js/amcharts.js"></script>
@@ -722,50 +726,50 @@ License URL: http://creativecommons.org/licenses/by/3.0/
     <!-- /circle-->
     @*<script type="text/javascript" src="~/Scripts/js/circles.js"></script>*@
     @*<script>
-        var colors = [
-            ['#ffffff', '#fd9426'], ['#ffffff', '#fc3158'], ['#ffffff', '#53d769'], ['#ffffff', '#147efb']
-        ];
-        for (var i = 1; i <= 7; i++) {
-            var child = document.getElementById('circles-' + i),
-                percentage = 30 + (i * 10);
+            var colors = [
+                ['#ffffff', '#fd9426'], ['#ffffff', '#fc3158'], ['#ffffff', '#53d769'], ['#ffffff', '#147efb']
+            ];
+            for (var i = 1; i <= 7; i++) {
+                var child = document.getElementById('circles-' + i),
+                    percentage = 30 + (i * 10);
 
-            Circles.create({
-                id: child.id,
-                percentage: percentage,
-                radius: 80,
-                width: 10,
-                number: percentage / 1,
-                text: '%',
-                colors: colors[i - 1]
-            });
-        }
+                Circles.create({
+                    id: child.id,
+                    percentage: percentage,
+                    radius: 80,
+                    width: 10,
+                    number: percentage / 1,
+                    text: '%',
+                    colors: colors[i - 1]
+                });
+            }
 
-    </script>*@
+        </script>*@
     <!-- //circle -->
     <!--skycons-icons-->
     @*<script src="~/Scripts/js/skycons.js"></script>
-    <script>
-        var icons = new Skycons({ "color": "#fcb216" }),
-            list = [
-                "partly-cloudy-day"
-            ],
-            i;
+        <script>
+            var icons = new Skycons({ "color": "#fcb216" }),
+                list = [
+                    "partly-cloudy-day"
+                ],
+                i;
 
-        for (i = list.length; i--;)
-            icons.set(list[i], list[i]);
-        icons.play();
-    </script>
-    <script>
-        var icons = new Skycons({ "color": "#fff" }),
-            list = [
-                "clear-night", "partly-cloudy-night", "cloudy", "clear-day", "sleet", "snow", "wind", "fog"
-            ],
-            i;
+            for (i = list.length; i--;)
+                icons.set(list[i], list[i]);
+            icons.play();
+        </script>
+        <script>
+            var icons = new Skycons({ "color": "#fff" }),
+                list = [
+                    "clear-night", "partly-cloudy-night", "cloudy", "clear-day", "sleet", "snow", "wind", "fog"
+                ],
+                i;
 
-        for (i = list.length; i--;)
-            icons.set(list[i], list[i]);
-        icons.play();
-    </script>*@
+            for (i = list.length; i--;)
+                icons.set(list[i], list[i]);
+            icons.play();
+        </script>*@
     <!--//skycons-icons-->
     <!-- //js -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/screenfull.js/4.2.1/screenfull.min.js"></script>
@@ -825,7 +829,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
             ]
         });
 
-                //sortable rows
+        //sortable rows
         $('div.row').sortable();
 
     </script>

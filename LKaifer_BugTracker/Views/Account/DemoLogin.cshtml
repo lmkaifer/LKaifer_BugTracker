@@ -60,30 +60,34 @@ License URL: http://creativecommons.org/licenses/by/3.0/
             width: 90%;
             left: 5%;
             background-color: rgba(255,255,255,0.5);
-            border-radius:10px;
+            border-radius: 10px;
         }
 
-         div.signin-form.profile div.link-container{
-             position:absolute;
-             top:110%;
-             left:40%;
-             text-align:left;
+        div.link-container {
+            position: sticky;
+            text-align: left;
+            color: black;
+            display: block;
+            margin-left: 3%;
+            margin-top: 2%;
+            float: left;
         }
-         div.signin-form.profile div.link-container h6{
-             color:white;
+
+        div.signin-form.profile div.link-container h6 {
+            color: white;
         }
 
         ul.ca-menu {
             list-style: none outside none;
             margin: 0;
-            padding-left:2%;
+            padding-left: 2%;
             text-align: center;
         }
 
             ul.ca-menu li {
                 margin: 0 10px;
                 display: inline;
-                border-radius:10px;
+                border-radius: 10px;
             }
 
                 ul.ca-menu li h3 {
@@ -104,68 +108,85 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 
                 ul.ca-menu li div.ca-content {
                     top: 55%;
-                    padding-left:10px;
-                    padding-right:10px;
+                    padding-left: 10px;
+                    padding-right: 10px;
                 }
 
         div.copyrights_agile.two {
-            position: absolute;
-            top: 75%;
-            left: 30%;
-        }
-        div.copyrights_agile.two p {
-            color:white;
+            position: fixed;
+            top: 83%;
+            width: 100%;
+            background-color: rgba(0,0,0,0.7);
+            bottom: 0;
+            padding-top: 20px;
         }
 
-        @@media(max-width:1440px) and (min-height:860px){
-                    div.copyrights_agile.two {
-            top: 90%;
-            left: 20%;
-        }
-        div.copyrights_agile.two p{
-                color:black;
+            div.copyrights_agile.two p {
+                color: white;
             }
-        }
+
         @@media (max-width:500px) and (min-height:770px) {
             ul.ca-menu li h4 {
                 font-size: small;
             }
 
-            ul.ca-menu li i {
-                margin-top: 20%;
-            }
 
             ul.ca-menu li h3 {
                 font-size: small;
             }
+        }
 
-            div.copyrights_agile.two {
-                left: 5%;
-                top: 95%;
+        @@media (max-width: 384px) {
+            .ca-menu li {
+                width: 92%;
+                height: 140px;
             }
-            div.copyrights_agile.two p{
-                font-size:8px;
-                color:black;
+
+            .signin-form.profile h1 span {
+                font-size: 26px;
             }
         }
 
-        @@media (min-height:940px) {
-            div.copyrights_agile.two p{
-                color:black;
+        @@media (max-width: 500px) and (min-height: 770px) {
+            ul.ca-menu li i {
+                margin-top: 10%;
             }
-                div.copyrights_agile.two {
-                top: 90%;
+
+            div.pages_agile_info_w3l {
+                background-position-x: 650px;
+                background-position-y: 500px;
+            }
+
+            ul.ca-menu li h3 {
+                font-size: 0.8em;
+            }
+        }
+
+        @@media (max-width: 500px) and (max-height: 770px) {
+            ul.ca-menu li i {
+                margin-top: 10%;
+            }
+
+            ul.ca-menu li h4 {
+                font-size: small;
+            }
+
+            div.pages_agile_info_w3l {
+                background-position-x: 650px;
+                background-position-y: 500px;
+            }
+
+            ul.ca-menu li h3 {
+                font-size: 0.8em;
             }
         }
     </style>
 </head>
 
 <body>
-    <!-- /pages_agile_info_w3l -->
-
-    <div class="pages_agile_info_w3l">
+    <div class="pages_agile_info_w3l" style="height:140vh;">
         <!-- /login -->
-        <div class="over_lay_agile_pages_w3ls" style="height:100vh">
+        <div class="over_lay_agile_pages_w3ls" style="height:140vh;">
             <div class="registration">
                 <div class="signin-form profile">
                     <h1 style="font-weight: bolder"><span style="color:red">BUGS BE GONE</span></h1>
@@ -185,7 +206,9 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                                 <li>
                                     <a href="javascript:document.getElementById('admin-demo-login').submit()" class="demoUserLink">
                                         <h3 class="ca-sub">Admin Login</h3>
-                                        <i class="fa fa-shield" aria-hidden="true"></i>
+                                        <div>
+                                            <i class="fa fa-shield" aria-hidden="true"></i>
+                                        </div>
                                         <div class="ca-content">
                                             <h4 class="ca-main">Admin has the power.</h4>
                                         </div>
@@ -202,7 +225,9 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                                 <li>
                                     <a href="javascript:document.getElementById('manager-demo-login').submit()">
                                         <h3 class="ca-sub one">Manager Login</h3>
-                                        <i class="fa fa-list-alt" aria-hidden="true"></i>
+                                        <div>
+                                            <i class="fa fa-list-alt" aria-hidden="true"></i>
+                                        </div>
                                         <div class="ca-content">
                                             <h4 class="ca-main one">The Manager enjoys assigning tickets.</h4>
                                         </div>
@@ -218,7 +243,9 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                                 <li>
                                     <a href="javascript:document.getElementById('developer-demo-login').submit()">
                                         <h3 class="ca-sub two">Developer Login</h3>
-                                        <i class="fa fa-tasks" aria-hidden="true"></i>
+                                        <div>
+                                            <i class="fa fa-tasks" aria-hidden="true"></i>
+                                        </div>
                                         <div class="ca-content">
                                             <h4 class="ca-main two">The Developer works hard on all the tickets.</h4>
                                         </div>
@@ -236,33 +263,31 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                                 <li>
                                     <a href="javascript:document.getElementById('submitter-demo-login').submit()">
                                         <h3 class="ca-sub three">Submitter Login</h3>
-                                        <i class="fa fa-ticket" aria-hidden="true"></i>
+                                        <div>
+                                            <i class="fa fa-ticket" aria-hidden="true"></i>
+                                        </div>
                                         <div class="ca-content">
                                             <h4 class="ca-main three">The submitter starts the ticket fury.</h4>
                                         </div>
                                     </a>
                                 </li>
                             }
+
                         </ul>
-                </div>
+                    </div>
                     <div class="link-container">
-                        <h6 style="font-weight:bolder">Would you like to sign up? Click<a href="@Url.Action("Register")"> here.</a></h6>
-                        <h6 style="font-weight:bolder">Want to go back to login page? Click<a href="@Url.Action("Login")"> here.</a></h6>
+                        <h5 style="font-weight:bolder">Would you like to sign up? Click<a href="@Url.Action("Register")"> here.</a></h5>
+                        <h5 style="font-weight:bolder">Want to go back to login page? Click<a href="@Url.Action("Login")"> here.</a></h5>
                     </div>
-                    </div>
-                    <br />
+                </div>
             </div>
-            <!--copy rights start here-->
-            <div class="copyrights_agile two">
-                <p>© @DateTime.Now.Year Bug Tracker. All Rights Reserved | Design by Lisa Kaifer </p>
-            </div>
-            <!--copy rights end here-->
         </div>
     </div>
-
-
-
-
+    <!--copy rights start here-->
+    <div class="copyrights_agile two">
+        <p>© @DateTime.Now.Year Bug Tracker. All Rights Reserved | Design by Lisa Kaifer </p>
+    </div>
+    <!--copy rights end here-->
     <!-- js -->
     <script type="text/javascript" src="~/Scripts/js/jquery-2.1.4.min.js"></script>
 
@@ -279,115 +304,115 @@ License URL: http://creativecommons.org/licenses/by/3.0/
         });
     </script>
     <!-- Chart code -->
-    <script>
-        var chart = AmCharts.makeChart("chartdiv1", {
-            "type": "serial",
-            "theme": "light",
-            "legend": {
-                "horizontalGap": 10,
-                "maxColumns": 1,
-                "position": "right",
-                "useGraphSettings": true,
-                "markerSize": 10
-            },
-            "dataProvider": [{
-                "year": 2017,
-                "europe": 2.5,
-                "namerica": 2.5,
-                "asia": 2.1,
-                "lamerica": 0.3,
-                "meast": 0.2,
-                "africa": 0.1
-            }, {
-                "year": 2016,
-                "europe": 2.6,
-                "namerica": 2.7,
-                "asia": 2.2,
-                "lamerica": 0.3,
-                "meast": 0.3,
-                "africa": 0.1
-            }, {
-                "year": 2015,
-                "europe": 2.8,
-                "namerica": 2.9,
-                "asia": 2.4,
-                "lamerica": 0.3,
-                "meast": 0.3,
-                "africa": 0.1
-            }],
-            "valueAxes": [{
-                "stackType": "regular",
-                "axisAlpha": 0.5,
-                "gridAlpha": 0
-            }],
-            "graphs": [{
-                "balloonText": "<b>[[title]]</b><br><span style='font-size:14px'>[[category]]: <b>[[value]]</b></span>",
-                "fillAlphas": 0.8,
-                "labelText": "[[value]]",
-                "lineAlpha": 0.3,
-                "title": "Europe",
-                "type": "column",
-                "color": "#000000",
-                "valueField": "europe"
-            }, {
-                "balloonText": "<b>[[title]]</b><br><span style='font-size:14px'>[[category]]: <b>[[value]]</b></span>",
-                "fillAlphas": 0.8,
-                "labelText": "[[value]]",
-                "lineAlpha": 0.3,
-                "title": "North America",
-                "type": "column",
-                "color": "#000000",
-                "valueField": "namerica"
-            }, {
-                "balloonText": "<b>[[title]]</b><br><span style='font-size:14px'>[[category]]: <b>[[value]]</b></span>",
-                "fillAlphas": 0.8,
-                "labelText": "[[value]]",
-                "lineAlpha": 0.3,
-                "title": "Asia-Pacific",
-                "type": "column",
-                "color": "#000000",
-                "valueField": "asia"
-            }, {
-                "balloonText": "<b>[[title]]</b><br><span style='font-size:14px'>[[category]]: <b>[[value]]</b></span>",
-                "fillAlphas": 0.8,
-                "labelText": "[[value]]",
-                "lineAlpha": 0.3,
-                "title": "Latin America",
-                "type": "column",
-                "color": "#000000",
-                "valueField": "lamerica"
-            }, {
-                "balloonText": "<b>[[title]]</b><br><span style='font-size:14px'>[[category]]: <b>[[value]]</b></span>",
-                "fillAlphas": 0.8,
-                "labelText": "[[value]]",
-                "lineAlpha": 0.3,
-                "title": "Middle-East",
-                "type": "column",
-                "color": "#000000",
-                "valueField": "meast"
-            }, {
-                "balloonText": "<b>[[title]]</b><br><span style='font-size:14px'>[[category]]: <b>[[value]]</b></span>",
-                "fillAlphas": 0.8,
-                "labelText": "[[value]]",
-                "lineAlpha": 0.3,
-                "title": "Africa",
-                "type": "column",
-                "color": "#000000",
-                "valueField": "africa"
-            }],
-            "rotate": true,
-            "categoryField": "year",
-            "categoryAxis": {
-                "gridPosition": "start",
-                "axisAlpha": 0,
-                "gridAlpha": 0,
-                "position": "left"
-            },
-            "export": {
-                "enabled": true
-            }
-        });
-    </script>
+    @*<script>
+            var chart = AmCharts.makeChart("chartdiv1", {
+                "type": "serial",
+                "theme": "light",
+                "legend": {
+                    "horizontalGap": 10,
+                    "maxColumns": 1,
+                    "position": "right",
+                    "useGraphSettings": true,
+                    "markerSize": 10
+                },
+                "dataProvider": [{
+                    "year": 2017,
+                    "europe": 2.5,
+                    "namerica": 2.5,
+                    "asia": 2.1,
+                    "lamerica": 0.3,
+                    "meast": 0.2,
+                    "africa": 0.1
+                }, {
+                    "year": 2016,
+                    "europe": 2.6,
+                    "namerica": 2.7,
+                    "asia": 2.2,
+                    "lamerica": 0.3,
+                    "meast": 0.3,
+                    "africa": 0.1
+                }, {
+                    "year": 2015,
+                    "europe": 2.8,
+                    "namerica": 2.9,
+                    "asia": 2.4,
+                    "lamerica": 0.3,
+                    "meast": 0.3,
+                    "africa": 0.1
+                }],
+                "valueAxes": [{
+                    "stackType": "regular",
+                    "axisAlpha": 0.5,
+                    "gridAlpha": 0
+                }],
+                "graphs": [{
+                    "balloonText": "<b>[[title]]</b><br><span style='font-size:14px'>[[category]]: <b>[[value]]</b></span>",
+                    "fillAlphas": 0.8,
+                    "labelText": "[[value]]",
+                    "lineAlpha": 0.3,
+                    "title": "Europe",
+                    "type": "column",
+                    "color": "#000000",
+                    "valueField": "europe"
+                }, {
+                    "balloonText": "<b>[[title]]</b><br><span style='font-size:14px'>[[category]]: <b>[[value]]</b></span>",
+                    "fillAlphas": 0.8,
+                    "labelText": "[[value]]",
+                    "lineAlpha": 0.3,
+                    "title": "North America",
+                    "type": "column",
+                    "color": "#000000",
+                    "valueField": "namerica"
+                }, {
+                    "balloonText": "<b>[[title]]</b><br><span style='font-size:14px'>[[category]]: <b>[[value]]</b></span>",
+                    "fillAlphas": 0.8,
+                    "labelText": "[[value]]",
+                    "lineAlpha": 0.3,
+                    "title": "Asia-Pacific",
+                    "type": "column",
+                    "color": "#000000",
+                    "valueField": "asia"
+                }, {
+                    "balloonText": "<b>[[title]]</b><br><span style='font-size:14px'>[[category]]: <b>[[value]]</b></span>",
+                    "fillAlphas": 0.8,
+                    "labelText": "[[value]]",
+                    "lineAlpha": 0.3,
+                    "title": "Latin America",
+                    "type": "column",
+                    "color": "#000000",
+                    "valueField": "lamerica"
+                }, {
+                    "balloonText": "<b>[[title]]</b><br><span style='font-size:14px'>[[category]]: <b>[[value]]</b></span>",
+                    "fillAlphas": 0.8,
+                    "labelText": "[[value]]",
+                    "lineAlpha": 0.3,
+                    "title": "Middle-East",
+                    "type": "column",
+                    "color": "#000000",
+                    "valueField": "meast"
+                }, {
+                    "balloonText": "<b>[[title]]</b><br><span style='font-size:14px'>[[category]]: <b>[[value]]</b></span>",
+                    "fillAlphas": 0.8,
+                    "labelText": "[[value]]",
+                    "lineAlpha": 0.3,
+                    "title": "Africa",
+                    "type": "column",
+                    "color": "#000000",
+                    "valueField": "africa"
+                }],
+                "rotate": true,
+                "categoryField": "year",
+                "categoryAxis": {
+                    "gridPosition": "start",
+                    "axisAlpha": 0,
+                    "gridAlpha": 0,
+                    "position": "left"
+                },
+                "export": {
+                    "enabled": true
+                }
+            });
+        </script>*@
 
     <!-- //amcharts -->
     <script src="~/Scripts/js/Chart.min.js"></script>
@@ -397,90 +422,42 @@ License URL: http://creativecommons.org/licenses/by/3.0/
     <script src="~/Scripts/js/classie.js"></script>
     <script src="~/Scripts/js/gnmenu.js"></script>
     <script>
-        new gnMenu(document.getElementById('gn-menu'));
-        $(document).ready(function () {
-            initSidebarMenu();
-        });
+                                                            //new gnMenu(document.getElementById('gn-menu'));
+                                                            //$(document).ready(function () {
+                                                            //    initSidebarMenu();
+                                                            //});
     </script>
     <!-- script-for-menu -->
-    <script src="~/Scripts/js/jquery.basictable.min.js"></script>
-    <!-- /circle-->
-    <script type="text/javascript" src="~/Scripts/js/circles.js"></script>
-    <script>
-        var colors = [
-            ['#ffffff', '#fd9426'], ['#ffffff', '#fc3158'], ['#ffffff', '#53d769'], ['#ffffff', '#147efb']
-        ];
-        for (var i = 1; i <= 7; i++) {
-            var child = document.getElementById('circles-' + i),
-                percentage = 30 + (i * 10);
-
-            Circles.create({
-                id: child.id,
-                percentage: percentage,
-                radius: 80,
-                width: 10,
-                number: percentage / 1,
-                text: '%',
-                colors: colors[i - 1]
-            });
-        }
-
-    </script>
-    <!-- //circle -->
-    <!--skycons-icons-->
-    <script src="~/Scripts/js/skycons.js"></script>
-    <script>
-        var icons = new Skycons({ "color": "#fcb216" }),
-            list = [
-                "partly-cloudy-day"
-            ],
-            i;
-
-        for (i = list.length; i--;)
-            icons.set(list[i], list[i]);
-        icons.play();
-    </script>
-    <script>
-        var icons = new Skycons({ "color": "#fff" }),
-            list = [
-                "clear-night", "partly-cloudy-night", "cloudy", "clear-day", "sleet", "snow", "wind", "fog"
-            ],
-            i;
-
-        for (i = list.length; i--;)
-            icons.set(list[i], list[i]);
-        icons.play();
-    </script>
     <!--//skycons-icons-->
     <!-- //js -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/screenfull.js/4.2.1/screenfull.min.js"></script>
-    <script>
-        $(function () {
-            $('#supported').text('Supported/allowed: ' + !!screenfull.enabled);
+    @*<script src="https://cdnjs.cloudflare.com/ajax/libs/screenfull.js/4.2.1/screenfull.min.js"></script>
+        <script>
+            $(function () {
+                $('#supported').text('Supported/allowed: ' + !!screenfull.enabled);
 
-            if (!screenfull.enabled) {
-                return false;
-            }
+                if (!screenfull.enabled) {
+                    return false;
+                }
 
 
 
-            $('#toggle').click(function () {
-                screenfull.toggle($('#container')[0]);
+                $('#toggle').click(function () {
+                    screenfull.toggle($('#container')[0]);
+                });
             });
-        });
-    </script>
+        </script>*@
     <script src="~/Scripts/js/flipclock.js"></script>
 
-    <script type="text/javascript">
-        var clock;
+    @*<script type="text/javascript">
+            var clock;
 
-        $(document).ready(function () {
+            $(document).ready(function () {
 
-            clock = $('.clock').FlipClock({
-                clockFace: 'HourlyCounter'
+                clock = $('.clock').FlipClock({
+                    clockFace: 'HourlyCounter'
+                });
             });
-        });
-    </script>
+        </script>*@
     <script src="~/Scripts/js/bars.js"></script>
     <script src="~/Scripts/js/jquery.nicescroll.js"></script>
     <script src="~/Scripts/js/scripts.js"></script>
@@ -494,22 +471,22 @@ License URL: http://creativecommons.org/licenses/by/3.0/
     <script src="https://cdn.datatables.net/buttons/1.5.6/js/buttons.html5.min.js"></script>
     <script src="https://cdn.datatables.net/buttons/1.5.6/js/buttons.print.min.js"></script>
     <script type="text/javascript" src="~/Scripts/js/bootstrap-3.1.1.min.js"></script>
-    <script>
-        function initSidebarMenu() {
-            $('ul.gn-menu ul.gn-submenu').hide();
-            $('#gn-menu ul.gn-menu > li > a.submenu-toggle-button').on('click', function () {
-                //$('#gn-menu ul.gn-menu ul.gn-submenu').slideUp("slow");
-                //$(this).next().slideDown("slow");
-                $(this).next().slideToggle("slow");
+    @*<script>
+            function initSidebarMenu() {
+                $('ul.gn-menu ul.gn-submenu').hide();
+                $('#gn-menu ul.gn-menu > li > a.submenu-toggle-button').on('click', function () {
+                    //$('#gn-menu ul.gn-menu ul.gn-submenu').slideUp("slow");
+                    //$(this).next().slideDown("slow");
+                    $(this).next().slideToggle("slow");
+                });
+            }
+            $('table').dataTable({
+                dom: 'Bfrtip',
+                buttons: [
+                    'copy', 'csv', 'excel', 'pdf', 'print'
+                ]
             });
-        }
-        $('table').dataTable({
-            dom: 'Bfrtip',
-            buttons: [
-                'copy', 'csv', 'excel', 'pdf', 'print'
-            ]
-        });
-    </script>
+        </script>*@
 
 
 </body>
